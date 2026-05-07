@@ -1,0 +1,991 @@
+// SCSS ПЕРЕМЕННЫЕ
+
+// Отступы
+$space-xs: 6px;
+$space-s:  10px;
+$space-m:  16px;
+$space-l:  24px;
+
+// Скругления
+$radius-s: 8px;
+$radius-m: 10px;
+$radius-l: 12px;
+$radius-xl: 14px;
+$radius-xxl: 16px;
+
+// Анимация
+$transition: 0.3s ease;
+
+// Цвета фона
+$bg-soft:    rgba(255, 255, 255, 0.05);
+$bg-hover:   rgba(255, 255, 255, 0.07);
+$bg-overlay: rgba(0, 0, 0, 0.9);
+
+// Рамка
+$border: 1px solid rgba(255, 255, 255, 0.08);
+
+// Цвета текста
+$text-main:  #ddd;
+$text-white: #fff;
+
+// Акцентные цвета
+$accent-red:   rgba(235, 9, 9, 0.5);
+$color-red:    #e74c3c;
+$color-gold:   #f0c060;
+$color-blue:   #7ec8e3;
+
+
+// МИКСИНЫ
+
+// Стеклянная карточка
+@mixin glass-card($radius: $radius-xl) {
+    background:      $bg-soft;
+    backdrop-filter: blur(10px);
+    border-radius:   $radius;
+    border:          $border;
+}
+
+// Начальное состояние анимации появления снизу
+@mixin fade-in-up($offset: 30px) {
+    opacity:    0;
+    transform:  translateY($offset);
+    transition: all 0.5s ease;
+}
+
+// Видимое состояние
+@mixin visible {
+    opacity:   1;
+    transform: translateY(0);
+}
+
+// Ключевое слово с цветной нижней чертой
+@mixin kw-base($color, $border-color) {
+    color:          $color;
+    border-bottom:  1px solid $border-color;
+    font-weight:    500;
+    padding-bottom: 1px;
+    transition:     0.25s;
+    cursor:         default;
+}
+
+
+// ШРИФТ
+
+@font-face {
+    font-family: 'Roomach';
+    src: url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype');
+}
+
+
+// ОСНОВА СТРАНИЦЫ
+
+body {
+    margin:      0;
+    font-family: Arial, sans-serif;
+    background:  #000;
+    color:       $text-main;
+    line-height: 1.8;
+    animation:   pageFade 0.8s ease; // Плавное появление страницы при загрузке
+    cursor:      default;             // Обычный курсор везде (не текстовый)
+    overflow-x:  hidden;             // Скрываем горизонтальный скролл
+}
+
+// Анимация: страница плавно появляется из прозрачного+сжатого состояния
+@keyframes pageFade {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+
+// CANVAS ФОН
+
+#bgCanvas {
+    position:       fixed; // Не скроллится вместе со страницей
+    top:            0;
+    left:           0;
+    width:          100%;
+    height:         100%;
+    z-index:        -1;    // Позади всего контента
+    pointer-events: none;  // Canvas не мешает кликам
+}
+
+
+// ШАПКА
+
+.header {
+    background:    url("../images/header.jpg") center/cover no-repeat;
+    height:        280px;
+    position:      relative; // Нужен для позиционирования дочерних элементов
+    border-bottom: 1px solid rgb(240, 232, 232);
+
+    // Полупрозрачный чёрный слой поверх фото шапки
+    .header-overlay {
+        background:      $bg-overlay; // 90% затемнение
+        height:          100%;
+        display:         flex;
+        justify-content: center;
+        align-items:     center;
+        padding:         20px;
+    }
+}
+
+// Шапка появляется, приезжая сверху
+@keyframes headerFade {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+
+// ЛОГОТИП
+
+.logo {
+    position:   absolute; // Позиционируем относительно .header
+    top:        30px;
+    left:       30px;
+    width:      100px;
+    transition: 0.4s;
+}
+
+
+// ОБЁРТКА ЗАГОЛОВКА ГРУППЫ
+
+.title-video-wrapper {
+    position:  relative;
+    width:     420px;
+    max-width: 90%;
+    height:    250px;
+}
+
+// Картинка-название группы (кликабельный триггер видео)
+.title-img {
+    width:         100%;
+    height:        100%;
+    object-fit:    contain;   // Вписываем изображение без обрезки
+    cursor:        pointer;
+    padding-bottom: 30px;
+    filter:        drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
+    transition:    0.4s;
+    animation:     titlePulse 6s ease-in-out infinite; // Бесконечная пульсация
+
+    &:hover {
+        transform: scale(1.05);
+        filter:    drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+    }
+}
+
+// Плавная пульсация свечения заголовка
+@keyframes titlePulse {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2)); }
+    50%       { filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.35)); }
+}
+
+
+// ОСНОВНОЙ LAYOUT
+
+// Контейнер: content (flex:3) + sidebar (flex:1)
+.layout {
+    display:    flex;
+    gap:        30px;
+    max-width:  1200px;
+    margin:     30px auto 40px;
+    padding:    0 20px;
+}
+
+// Основная зона контента — занимает 3/4 ширины
+.content {
+    flex: 3;
+}
+
+// Сайдбар — 1/4 ширины, прилипает к верху при скролле
+.sidebar {
+    flex:     1;
+    position: sticky;
+    top:      30px;       // Расстояние от верха viewport при прилипании
+    height:   fit-content; // Высота по содержимому
+}
+
+
+// СЕКЦИИ
+
+section {
+    @include glass-card($radius-xxl);
+    @include fade-in-up;
+
+    margin-bottom: 30px;
+    padding:       35px;
+    box-shadow:    0 10px 30px rgba(0, 0, 0, 0.5);
+    position:      relative;
+    overflow:      hidden; // Скрываем декоративную линию ::before за границей
+
+    // Декоративная красная линия в верхней части секции
+    &::before {
+        content:    "";
+        position:   absolute;
+        top:        0;
+        left:       0;
+        width:      100%;
+        height:     2px;
+        background: linear-gradient(90deg, transparent, #eb090945, transparent);
+        opacity:    0;
+        transition: 0.4s;
+    }
+
+    // Класс .show добавляется через JS (IntersectionObserver)
+    &.show {
+        @include visible;
+    }
+
+    &:hover {
+        background: $bg-hover; // Фон секции немного светлеет
+
+        // Декоративная линия появляется при наведении
+        &::before {
+            opacity: 1;
+        }
+
+        // Линия под h2 разворачивается при наведении на секцию
+        h2::after {
+            width: 100%;
+        }
+    }
+
+    // Параграфы внутри секции
+    p {
+        margin-bottom: 15px;
+        max-width:     800px; // Ограничиваем ширину для читаемости
+        transition:    0.2s;
+
+        // Лёгкий сдвиг вправо и осветление при наведении
+        &:hover {
+            transform: translateX(4px);
+            color:     white;
+        }
+    }
+}
+
+
+// ТИПОГРАФИКА
+
+// H2 — главный заголовок секции
+h2 {
+    color:         white;
+    margin-bottom: 15px;
+    position:      relative; // Нужен для позиционирования ::after (подчёркивание)
+
+    // Анимированная красная линия под h2 (0 → 100% при наведении на секцию)
+    &::after {
+        content:    "";
+        position:   absolute;
+        left:       0;
+        bottom:     -5px;
+        width:      0; // Скрыта по умолчанию
+        height:     2px;
+        background: #e10e0e40;
+        transition: 0.4s;
+    }
+}
+
+// H3 — подзаголовок с красной левой полосой
+h3 {
+    margin-top:    25px;
+    margin-bottom: 10px;
+    border-left:   3px solid #f608085d; // Акцентная вертикальная полоса
+    padding-left:  10px;
+}
+
+
+// ГАЛЕРЕЯ КАРТОЧЕК
+
+// Адаптивная сетка: колонки минимум 160px, автоматически заполняют строку
+.gallery {
+    display:               grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap:                   25px;
+    margin-top:            20px;
+}
+
+// Одна карточка
+.card {
+    background:    rgba(83, 82, 82, 0.03);
+    padding:       10px;
+    border-radius: $radius-xl;
+    text-align:    center;
+    transition:    $transition;
+    cursor:        pointer;
+
+    // Изображение внутри карточки: фиксированная высота, обрезка по центру
+    img {
+        width:         100%;
+        height:        160px;
+        object-fit:    cover; // Кадрируем изображение без искажений
+        border-radius: $radius-m;
+        box-shadow:    0 5px 15px rgba(109, 108, 108, 0.24);
+    }
+
+    // Карточка поднимается и увеличивается при наведении
+    &:hover {
+        transform:  translateY(-6px) scale(1.03);
+        box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+    }
+}
+
+
+// САЙДБАР
+
+// Стандартный инфо-блок
+.info-box {
+    @include glass-card;
+
+    padding:       20px;
+    margin-bottom: 20px;
+    transition:    $transition;
+
+    // При наведении блок немного съезжает влево
+    &:hover {
+        transform: translateX(-3px);
+    }
+
+    // Ссылки внутри блока: блочные, серые
+    a {
+        display:         block; // Каждая ссылка на отдельной строке
+        color:           #ccc;
+        text-decoration: none;
+        margin-bottom:   6px;
+        transition:      0.2s;
+
+        // При наведении ссылка белеет и сдвигается вправо
+        &:hover {
+            color:     white;
+            transform: translateX(4px);
+        }
+    }
+}
+
+// Инфо-блок для поля поиска
+// Идентичен .info-box, но ссылки при наведении краснеют
+.info-box1 {
+    @include glass-card;
+
+    padding:       20px;
+    margin-bottom: 20px;
+    transition:    $transition;
+
+    &:hover {
+        transform: translateX(-3px);
+    }
+
+    a {
+        display:         block;
+        color:           #ccc;
+        text-decoration: none;
+        margin-bottom:   6px;
+        transition:      0.2s;
+
+        // Красный ховер для ссылок в блоке поиска
+        &:hover {
+            color:     rgb(179, 38, 38);
+            transform: translateX(4px);
+        }
+    }
+}
+
+// Поле ввода поиска
+#searchInput {
+    width:      100%;
+    padding:    8px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border:     1px solid rgba(255, 255, 255, 0.15);
+    border-radius: $radius-s;
+    color:      #ddd;
+    font-size:  14px;
+    outline:    none;            // Убираем браузерный синий контур
+    transition: $transition;
+    box-sizing: border-box;      // BUG-FIX: padding включается в ширину
+
+    // Placeholder — слабее по прозрачности
+    &::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+    }
+
+    // При фокусе: красноватая рамка + чуть светлее фон
+    &:focus {
+        border-color: rgba(225, 14, 14, 0.4);
+        background:   rgba(255, 255, 255, 0.12);
+    }
+}
+
+
+// ФУТЕР
+
+.footer {
+    background: url("../images/footer.jpg") center/cover no-repeat;
+    text-align: center;
+
+    // Полупрозрачный оверлей поверх фото футера
+    &-overlay {
+        background: rgba(0, 0, 0, 0.8);
+        padding:    30px;
+    }
+}
+
+
+// МОДАЛЬНОЕ ОКНО
+
+// Фоновый оверлей — занимает весь экран, скрыт по умолчанию
+.modal {
+    position:        fixed; // Поверх всего контента
+    inset:           0;     // top:0; right:0; bottom:0; left:0
+    background:      rgba(0, 0, 0, 0.85);
+    display:         flex;
+    justify-content: center;
+    align-items:     center;
+    opacity:         0;
+    visibility:      hidden; // Полностью скрыт (не кликабелен)
+    transition:      0.4s;
+    z-index:         999;    // Выше всего остального
+
+    // Показываем модалку
+    &.show {
+        opacity:    1;
+        visibility: visible;
+
+        // Контент разворачивается до полного размера
+        .modal-content {
+            transform: scale(1);
+        }
+    }
+
+    // Изображение внутри модалки
+    img {
+        width:         100%;
+        border-radius: $radius-m;
+        margin-bottom: 10px;
+    }
+}
+
+// Контент внутри модального окна
+.modal-content {
+    background:    #111;
+    padding:       25px;
+    border-radius: $radius-l;
+    text-align:    center;
+    max-width:     400px;
+    width:         90%;
+    max-height:    80vh;       // Не выходим за 80% высоты экрана
+    overflow-y:    auto;       // Прокрутка если контента много
+    position:      relative;
+    transform:     scale(0.7); // Начальное состояние: сжат
+    transition:    0.4s;
+    box-shadow:    0 0 30px rgba(255, 255, 255, 0.2);
+
+    // Кастомный скроллбар (только WebKit)
+    &::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background:    #ffffff;
+        border-radius: $radius-m;
+    }
+}
+
+// Кнопка закрытия «×»
+.close {
+    position:   absolute;
+    top:        10px;
+    right:      15px;
+    font-size:  26px;
+    color:      white;
+    cursor:     pointer;
+    transition: $transition;
+    background: none; // Убираем фон кнопки
+    border:     none; // Убираем рамку
+
+    &:hover {
+        transform: scale(1.2); // Крестик увеличивается при наведении
+    }
+}
+
+
+// СПИСОК ТРЕКОВ
+
+// Нумерованный список треков внутри модалки
+.track-list {
+    text-align:   left;
+    padding-left: 20px;
+    margin-top:   10px;
+    list-style:   none; // Убираем браузерные маркеры (номера ставим сами в JS)
+
+    li {
+        margin-bottom: 6px;
+        color:         #ddd;
+        transition:    0.2s;
+
+        // Каждый трек сдвигается вправо при наведении
+        &:hover {
+            color:     white;
+            transform: translateX(3px);
+        }
+    }
+}
+
+
+// ПОДСВЕТКА РЕЗУЛЬТАТОВ ПОИСКА
+
+// Обёртка вокруг найденного текста
+.highlight {
+    background:    rgba(255, 0, 0, 0.3); // Красный полупрозрачный фон
+    color:         white;
+    padding:       2px 4px;
+    border-radius: 4px;
+}
+
+
+// ВИДЕО ПЛЕЕР
+
+// Контейнер плеера — прикреплён к правому нижнему углу экрана
+.video-modal {
+    position:   fixed;
+    bottom:     20px;
+    right:      20px;
+    width:      360px;
+    max-width:  90%;
+    opacity:    0;
+    transform:  translateY(20px) scale(0.9); // Начальное состояние: ниже и меньше
+    pointer-events: none;                     // Не перехватывает клики когда скрыт
+    transition: 0.4s ease;
+    z-index:    500;
+    cursor:     grab; // Указывает что элемент можно перетаскивать
+
+    // Показываем плеер
+    &.show {
+        opacity:        1;
+        transform:      translateY(0) scale(1);
+        pointer-events: auto; // Разрешаем клики
+    }
+
+    // Смена курсора на «захват» при активном перетаскивании
+    &:active {
+        cursor: grabbing;
+    }
+}
+
+// Внутренний блок с видео
+.video-box {
+    position:      relative;
+    background:    #000;
+    border-radius: $radius-l;
+    overflow:      hidden; // Скругляем углы видео через overflow
+    box-shadow:    0 10px 40px rgba(0, 0, 0, 0.7);
+
+    // Видео занимает всю ширину блока
+    video {
+        width:   100%;
+        display: block; // Убираем лишний отступ снизу у inline-элемента
+    }
+}
+
+// Кнопка закрытия плеера
+.video-close {
+    position:      absolute;
+    top:           8px;
+    right:         10px;
+    background:    rgba(0, 0, 0, 0.6);
+    border:        none;
+    color:         white;
+    cursor:        pointer;
+    padding:       4px 8px;
+    border-radius: 6px;
+    transition:    0.2s;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
+
+// ГИТАРА
+
+.hanging-guitar {
+    position:         absolute;
+    top:              0;
+    right:            20px;
+    left:             auto;    // Явно отменяем left
+    width:            120px;
+    opacity:          0.85;
+    filter:           brightness(0.7) contrast(0.9) blur(0.3px);
+    mix-blend-mode:   lighten; // Смешивание с фоном для мягкой интеграции
+    transform-origin: top center; // Точка подвеса — вверху (эффект маятника)
+    cursor:           pointer;
+    transition:       transform 0.2s ease;
+
+    // Класс .swing добавляется через JS при клике на гитару
+    &.swing {
+        animation: swing 1.8s ease; // Одноразовая анимация (не infinite)
+    }
+}
+
+// Анимация раскачивания: затухающие колебания
+@keyframes swing {
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(15deg); }   // Первый мах вправо
+    40%  { transform: rotate(-12deg); }  // Мах влево
+    60%  { transform: rotate(8deg); }    // Уменьшающийся мах вправо
+    80%  { transform: rotate(-4deg); }   // Слабый мах влево
+    100% { transform: rotate(0deg); }    // Возврат в исходное положение
+}
+
+
+// ФОТО ВНУТРИ ТЕКСТА
+
+// Обёртка параграфа с фото
+.text-with-photo {
+    margin-bottom: 20px;
+
+    // clearfix: без него родительский блок схлопнется если внутри float-элементы
+    &::after {
+        content: "";
+        display: table;
+        clear:   both; // Сбрасываем float
+    }
+}
+
+// Общие стили figure-вставки
+.inline-photo {
+    margin:        0; // Убираем браузерный отступ у <figure>
+    border-radius: $radius-l;
+    overflow:      hidden; // Скругляем углы изображения через overflow
+    border:        1px solid rgba(255, 255, 255, 0.1);
+    box-shadow:    0 8px 30px rgba(0, 0, 0, 0.6);
+    position:      relative;
+    transition:    0.4s;
+
+    // Декоративная красная линия вверху фото
+    &::before {
+        content:    "";
+        position:   absolute;
+        top:        0;
+        left:       0;
+        right:      0;
+        height:     2px;
+        background: linear-gradient(90deg, transparent, rgba(235, 9, 9, 0.6), transparent);
+        z-index:    1; // Поверх изображения
+    }
+
+    // Фото справа от текста
+    &.float-right {
+        float:         right;
+        width:         210px;
+        margin:        4px 0 16px 24px; // Слева отступ от текста (24px), снизу (16px)
+        shape-outside: margin-box;      // Текст огибает фото по форме margin-box
+    }
+
+    // Фото слева от текста
+    &.float-left {
+        float:         left;
+        width:         210px;
+        margin:        4px 24px 16px 0; // Справа отступ от текста (24px), снизу (16px)
+        shape-outside: margin-box;
+    }
+
+    // Само изображение
+    img {
+        width:      100%;
+        height:     150px;
+        object-fit: cover; // Кадрируем без искажений
+        display:    block;
+        filter:     brightness(0.8) saturate(0.9); // Немного приглушаем
+        transition: 0.4s ease;
+    }
+
+    // При наведении: осветляем и слегка зумируем изображение
+    &:hover {
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow:   0 12px 40px rgba(0, 0, 0, 0.8);
+
+        img {
+            filter:    brightness(1) saturate(1.1);
+            transform: scale(1.04);
+        }
+
+        // Подпись становится немного ярче
+        figcaption {
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    // Подпись под фото
+    figcaption {
+        padding:        7px 10px;
+        font-size:      11px;
+        color:          rgba(255, 255, 255, 0.45);
+        background:     rgba(0, 0, 0, 0.5);
+        text-align:     center;
+        letter-spacing: 0.3px;
+        transition:     $transition;
+    }
+}
+
+
+// КЛЮЧЕВЫЕ СЛОВА В ТЕКСТЕ
+
+// Базовый стиль — белый жирный текст с красной нижней чертой
+.kw {
+    @include kw-base(#fff, rgba(235, 9, 9, 0.45));
+    cursor: default;
+
+    &:hover {
+        border-color: rgba(235, 9, 9, 0.9); // Линия становится ярче
+        color:        #fff;
+    }
+}
+
+// Золотой акцент — для дат, рекордов, числовых данных
+.kw-gold {
+    @include kw-base($color-gold, rgba(240, 192, 96, 0.4));
+    cursor: default;
+
+    &:hover {
+        border-color: rgba(240, 192, 96, 0.9);
+        color:        #ffd97d; // Чуть светлее при наведении
+    }
+}
+
+// Красный акцент — для названий групп, лейблов, ключевых понятий
+.kw-red {
+    @include kw-base(#ff6b6b, rgba(255, 107, 107, 0.35));
+    cursor: default;
+
+    &:hover {
+        border-color: rgba(255, 107, 107, 0.85);
+        color:        #ff8585;
+    }
+}
+
+// Голубой акцент — для имён участников группы
+.kw-blue {
+    @include kw-base($color-blue, rgba(126, 200, 227, 0.35));
+    cursor: default;
+
+    &:hover {
+        border-color: rgba(126, 200, 227, 0.85);
+        color:        #a5d9ee;
+    }
+}
+
+
+// ФАКТ-БЛОК
+
+// Блок с интересным фактом: красная левая полоса + красноватый фон
+.fact-box {
+    background:    rgba(235, 9, 9, 0.07);
+    border-left:   3px solid rgba(235, 9, 9, 0.5);
+    border-radius: 0 $radius-m $radius-m 0; // Скругление только справа
+    padding:       14px 18px;
+    margin:        20px 0;
+    font-size:     0.93em;
+    color:         #ccc;
+    position:      relative;
+    transition:    $transition;
+
+    // При наведении фон и рамка становятся насыщеннее
+    &:hover {
+        background:        rgba(235, 9, 9, 0.11);
+        border-left-color: rgba(235, 9, 9, 0.8);
+    }
+
+    // Жирный текст внутри факт-блока — белый
+    strong {
+        color:       #fff;
+        font-weight: 500;
+    }
+}
+
+
+// ТАЙМЛАЙН
+
+.timeline {
+    display:        flex;
+    flex-direction: column;
+    gap:            0;
+    margin:         24px 0;
+    position:       relative;  // Нужен для ::before (линия)
+    padding-left:   28px;
+
+    // Вертикальная линия слева, соединяющая все события
+    // Gradient: сверху насыщеннее → снизу прозрачнее
+    &::before {
+        content:    "";
+        position:   absolute;
+        left:       7px; // Выравниваем по центру точек (10px точка, offset 7px)
+        top:        6px;
+        bottom:     6px;
+        width:      2px;
+        background: linear-gradient(to bottom, rgba(235,9,9,0.6), rgba(235,9,9,0.1));
+    }
+}
+
+// Одно событие таймлайна
+.timeline-item {
+    position:   relative; // Нужен для ::before (точка на линии)
+    padding:    10px 0 10px 16px;
+    transition: 0.2s;
+
+    // Красная круглая точка на вертикальной линии
+    &::before {
+        content:       "";
+        position:      absolute;
+        left:          -22px;      // Выравниваем по вертикальной линии
+        top:           15px;
+        width:         10px;
+        height:        10px;
+        border-radius: 50%;        // Делаем круглой
+        background:    rgba(235, 9, 9, 0.7);
+        border:        2px solid #000; // Чёрный ободок для контраста с фоном
+        transition:    $transition;
+    }
+
+    // При наведении точка загорается
+    &:hover {
+        &::before {
+            background: #e10e0e;
+            box-shadow: 0 0 8px rgba(235, 9, 9, 0.6);
+        }
+
+        .timeline-text {
+            color: #ddd; // Текст становится чуть светлее
+        }
+    }
+}
+
+// Год события: маленький, красноватый, заглавными буквами
+.timeline-year {
+    font-size:      12px;
+    font-weight:    500;
+    color:          rgba(235, 9, 9, 0.8);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom:  3px;
+}
+
+// Текст события: средний размер, серый
+.timeline-text {
+    font-size:   14px;
+    color:       #bbb;
+    line-height: 1.6;
+    margin:      0;
+}
+
+
+// SVG ИКОНКА МОЛНИИ
+// Место: строка «Итоги квиза» в блоке прогресса сайдбара.
+// Красная, мигает с редкими вспышками (boltFlicker).
+
+.svg-icon--bolt {
+    width:        22px;
+    height:       26px;
+    margin-right: 4px;
+    color:        $color-red; // Красный — рок акцент
+    animation:    boltFlicker 3.5s ease-in-out infinite;
+}
+
+// Молния мигает редко — имитирует случайный электроразряд
+@keyframes boltFlicker {
+    0%, 88%, 100% { opacity: 0.7; }
+    90%            { opacity: 0.15; }
+    92%            { opacity: 0.9; }
+    94%            { opacity: 0.25; }
+    96%            { opacity: 0.8; }
+}
+
+
+// АДАПТИВНОСТЬ
+
+// Планшеты и широкие телефоны (до 900px)
+@media (max-width: 900px) {
+
+    // Переключаем layout в вертикальный столбец
+    .layout {
+        flex-direction: column;
+    }
+
+    // Убираем sticky — на мобильных лишнее
+    .sidebar {
+        position: static;
+    }
+
+    section {
+        padding: 25px;
+    }
+
+    // Мини-плеер занимает почти всю ширину экрана
+    .video-modal {
+        width: 90%;
+        right: 5%;
+        left:  5%;
+    }
+
+    // Фото перестаёт обтекаться текстом — становится полноширинным блоком
+    .inline-photo {
+        &.float-right,
+        &.float-left {
+            float:  none;
+            width:  100%;
+            margin: 0 0 16px 0;
+        }
+    }
+}
+
+// Мобильные телефоны (до 480px)
+@media (max-width: 480px) {
+
+    .layout {
+        flex-direction: column;
+        gap:            16px;  // Уменьшаем отступ между блоками
+        padding:        0 12px; // Меньше боковые поля на маленьком экране
+    }
+
+    // Сайдбар встаёт первым в колонке (перед контентом)
+    .sidebar {
+        order:    -1;     // Отрицательное значение → элемент поднимается в начало
+        position: static; // Убираем sticky
+        width:    100%;
+    }
+
+    // Контент встаёт вторым
+    .content {
+        order: 1;
+        width: 100%;
+    }
+
+    section {
+        padding: 16px;
+    }
+
+    .header {
+        height: 200px; // Сворачиваем шапку по высоте
+    }
+
+    .logo {
+        width: 70px;
+        top:   16px;
+        left:  16px;
+    }
+
+    .title-img {
+        padding-bottom: 10px;
+    }
+
+    .gallery {
+        // Карточки в галерее — минимум 130px (меньше колонок)
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 14px;
+    }
+
+    .video-modal {
+        width:  96%;
+        right:  2%;
+        left:   2%;
+        bottom: 10px;
+    }
+}

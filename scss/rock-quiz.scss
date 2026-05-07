@@ -1,0 +1,727 @@
+
+
+// Отступы
+$space-m: 20px;
+
+// Цвета фона
+$bg-soft:    rgba(255, 255, 255, 0.05);
+$bg-hover:   rgba(255, 255, 255, 0.08);
+$bg-overlay: rgba(0, 0, 0, 0.9);
+
+// Акцентные цвета
+$accent-red:   rgba(235, 9, 9, 0.8);
+$color-green:  #2ecc71;
+$color-red:    #e74c3c;
+
+// Скругления
+$radius-s: 8px;
+$radius-m: 12px;
+$radius-l: 14px;
+
+// Анимация
+$transition: 0.3s ease;
+
+// Цвет SVG иконок
+$svg-color: rgba(255, 255, 255, 0.55);
+
+
+//  МИКСИНЫ
+
+// Стеклянная карточка (glassmorphism)
+@mixin glass-card($radius: $radius-l) {
+    background:      $bg-soft;
+    backdrop-filter: blur(10px);
+    border-radius:   $radius;
+    border:          1px solid rgba(255, 255, 255, 0.08);
+}
+
+// Анимация появления снизу (начальное состояние)
+@mixin fade-in-up {
+    opacity:    0;
+    transform:  translateY(40px);
+    transition: all 0.5s ease;
+}
+
+// Видимое состояние после появления
+@mixin visible {
+    opacity:   1;
+    transform: translateY(0);
+}
+
+
+//  CSS CUSTOM PROPERTIES
+
+:root {
+    --space-m:    #{$space-m};
+    --svg-color:  #{$svg-color}; // Приглушённый белый — не отвлекает от текста
+}
+
+
+//  ПОДКЛЮЧЕНИЕ ШРИФТА
+
+@font-face {
+    font-family: 'Roomach';
+    src: url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype');
+}
+
+
+//  ОСНОВА СТРАНИЦЫ
+
+// Плавный скролл при переходе по якорям (#id)
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin:      0;
+    font-family: Arial, sans-serif;
+    background:  #000;
+    line-height: 1.8;
+    color:       #ddd;
+    overflow-x:  hidden;           // Скрываем горизонтальный скролл
+    animation:   pageFade 1s ease; // Плавное появление страницы при загрузке
+}
+
+// Анимация плавного появления всей страницы
+@keyframes pageFade {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+
+//  CANVAS ФОН
+
+#bgCanvas {
+    position:       fixed; // Фиксируем на весь экран
+    top:            0;
+    left:           0;
+    width:          100%;
+    height:         100%;
+    z-index:        -1;    // Уводим назад
+    pointer-events: none;  // Не перехватывает клики
+}
+
+
+//  ШАПКА (HEADER)
+//  Фоновое изображение + тёмный затемняющий оверлей.
+//  Внутри: логотип, гитара, заголовок, навигация.
+
+.header {
+    background:    url("../images/header.jpg") center/cover no-repeat;
+    height:        250px;
+    position:      relative;
+    border-bottom: 1px solid rgb(62, 61, 61);
+
+    // Затемняющий слой поверх фото — центрирует содержимое по вертикали
+    .header-overlay {
+        background:      $bg-overlay;
+        height:          100%;
+        display:         flex;
+        flex-direction:  column;
+        justify-content: center;
+        align-items:     center;
+        gap:             var(--space-m);
+    }
+
+    // Заголовок — кастомный шрифт + бесконечная пульсация свечения
+    h1 {
+        margin:      10px;
+        font-size:   80px;
+        font-family: 'Roomach', sans-serif;
+        color:       white;
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 0.4),
+            0 0 25px rgba(255, 255, 255, 0.2);
+        animation:  titlePulse 4s ease-in-out infinite;
+        transition: $transition;
+
+        // При наведении заголовок немного увеличивается
+        &:hover {
+            transform:      scale(1.07);
+            letter-spacing: 1px;
+        }
+    }
+}
+
+// Бесконечная пульсация свечения заголовка
+@keyframes titlePulse {
+    0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    50%       { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+}
+
+
+//  ЛОГОТИП
+//  Абсолютно позиционирован в левом верхнем углу шапки
+
+.logo {
+    position:   absolute;
+    top:        45px;
+    left:       30px;
+    width:      100px;
+    transition: all 0.4s ease;
+
+    // При наведении — увеличение + лёгкий поворот + свечение
+    &:hover {
+        transform: scale(1.15) rotate(-5deg);
+        filter:    drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+    }
+}
+
+
+//  НАВИГАЦИЯ В ШАПКЕ
+//  Горизонтальный список ссылок
+
+nav {
+    ul {
+        display:    flex;
+        gap:        24px;
+        list-style: none;
+        padding:    0;
+        margin:     0;
+    }
+
+    a {
+        color:           #ccc;
+        text-decoration: none;
+        padding:         6px 12px;
+        border-radius:   $radius-s;
+        transition:      $transition;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color:      white;
+        }
+    }
+}
+
+
+//  ОСНОВНОЙ КОНТЕНТ
+//  Двухколонный layout: вопросы (flex:3) + сайдбар (flex:1)
+
+main {
+    max-width: 1200px;
+    margin:    25px auto;
+    padding:   0 20px;
+}
+
+.layout {
+    display: flex;
+    gap:     30px;
+}
+
+.content { flex: 3; }
+
+
+//  СЕКЦИИ
+//  Используются для итогового блока.
+//  Начально скрыты — появляются через IntersectionObserver (JS
+
+section {
+    @include fade-in-up;
+    @include glass-card;
+
+    padding:       25px;
+    margin-bottom: 25px;
+
+    // Класс .show добавляется JS когда секция входит в viewport
+    &.show {
+        @include visible;
+    }
+}
+
+
+//  ОБЩИЕ СТИЛИ КНОПОК
+
+button {
+    background:    linear-gradient(135deg, #444, #888);
+    color:         white;
+    padding:       10px;
+    border:        none;
+    border-radius: $radius-s;
+    cursor:        pointer;
+    transition:    $transition;
+
+    &:active {
+        transform: scale(0.95);
+    }
+}
+
+
+//  СТРОКА ВОПРОСА (.quiz-row)
+//  Flex-контейнер: изображение слева, ответы справа
+
+.quiz-row {
+    display:     flex;
+    gap:         20px;
+    align-items: center;
+    margin-top:  15px;
+}
+
+// Картинка в вопросе: квадрат с обрезкой по центру
+.quiz-img {
+    width:         180px;
+    height:        180px;
+    object-fit:    cover;
+    border-radius: $radius-m;
+    transition:    all 0.4s ease;
+
+    &:hover {
+        transform:  scale(1.05);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    }
+}
+
+// Столбец кнопок-ответов
+.answers {
+    flex:           1;
+    display:        flex;
+    flex-direction: column;
+    gap:            10px;
+}
+
+// Одна кнопка ответа
+.answer {
+    background:    rgba(255, 255, 255, 0.08);
+    border:        1px solid rgba(255, 255, 255, 0.1);
+    padding:       10px;
+    border-radius: $radius-s;
+    cursor:        pointer;
+    transition:    $transition;
+
+    &:hover {
+        transform:  translateX(8px) scale(1.03);
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    // Правильный ответ — зелёная подсветка
+    &.correct-active {
+        background: $color-green;
+        color:      black;
+        box-shadow: 0 0 20px rgba(46, 204, 113, 0.7);
+    }
+
+    // Неправильный ответ — красная подсветка
+    &.wrong {
+        background: $color-red;
+        box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
+    }
+}
+
+
+//  АУДИО БЛОК
+//  Кнопка воспроизведения с пульсирующим фоном
+
+.audio-box {
+    position: relative;
+    overflow: hidden;
+
+    // Пульсирующий радиальный фон — анимированная подсветка
+    &::before {
+        content:    "";
+        position:   absolute;
+        width:      200%;
+        height:     200%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+        animation:  pulse 2s infinite;
+    }
+}
+
+@keyframes pulse {
+    0%   { transform: scale(0.5); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+// Кнопка воспроизведения
+.play-btn {
+    padding:       12px 20px;
+    background:    #444;
+    border-radius: 10px;
+    color:         white;
+    cursor:        pointer;
+
+    &:hover {
+        background: #666;
+        transform:  scale(1.05);
+    }
+}
+
+
+//  САЙДБАР
+//  position:sticky — остаётся видим при скролле
+
+.sidebar {
+    flex:     1;
+    position: sticky;
+    top:      20px;
+    height:   fit-content;
+
+    // Базовый стиль всех блоков сайдбара
+    > div {
+        background:    $bg-soft;
+        padding:       20px;
+        border-radius: $radius-m;
+        margin-bottom: 20px;
+    }
+}
+
+
+//  НАВИГАЦИЯ ПО ВОПРОСАМ (.info-box1)
+//  Список ссылок с цветовой индикацией результата ответа
+
+.info-box1 {
+    backdrop-filter: blur(12px);
+    border:          1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:      0 10px 40px rgba(0, 0, 0, 0.6);
+
+    h3 {
+        margin-bottom: 15px;
+        font-size:     22px;
+        color:         white;
+    }
+
+    // Ссылка на конкретный вопрос
+    a {
+        display:         block;
+        padding:         4px 6px;
+        margin-bottom:   6px;
+        color:           #aaa;
+        text-decoration: none;
+        border-radius:   10px;
+        transition:      all $transition;
+
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color:      white;
+            transform:  translateX(6px);
+        }
+
+        // Активный вопрос (текущий в viewport)
+        &.active {
+            background: rgba(255, 255, 255, 0.15);
+            color:      white;
+        }
+
+        // Правильно отвеченный вопрос — зелёный
+        &.done {
+            color:      #2ecc53;
+            background: rgba(12, 60, 21, 0.15);
+        }
+
+        // Неправильно отвеченный вопрос — красный
+        &.wrong-link {
+            color:      $color-red;
+            background: rgba(231, 76, 60, 0.15);
+        }
+    }
+}
+
+
+//  БЛОК ПРОГРЕССА (.progress-box)
+//  Показывает текстовый счёт + визуальный прогресс-бар
+
+.progress-box {
+    background:    $bg-soft;
+    border:        1px solid rgba(255, 255, 255, 0.08);
+    border-radius: $radius-l;
+    padding:       20px;
+    margin-bottom: 20px;
+
+    h3 {
+        margin:         0 0 10px;
+        font-size:      14px;
+        color:          rgba(255, 255, 255, 0.5);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+}
+
+// Текстовый счётчик «Вопросов: X / Y | Правильных: Z»
+#progress {
+    color:       white;
+    font-size:   15px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+// Контейнер полоски прогресса
+#progressBar {
+    margin-top:    10px;
+    height:        4px;
+    background:    rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow:      hidden;
+}
+
+// Заливка прогресс-бара — ширина меняется через JS
+#progressFill {
+    height:        100%;
+    width:         0%;
+    background:    linear-gradient(90deg, $accent-red, rgba(235, 9, 9, 0.4));
+    border-radius: 2px;
+    transition:    width 0.4s ease;
+}
+
+
+//  КАРТОЧКА ВОПРОСА (.question)
+//  Glassmorphism, анимация появления и hover-эффект\
+
+.question {
+    @include glass-card;
+    @include fade-in-up;
+
+    padding:       20px;
+    margin-bottom: 20px;
+
+    // Класс .show добавляется когда вопрос входит в viewport
+    &.show {
+        @include visible;
+    }
+
+    &:hover {
+        transform:  translateY(-5px) scale(1.01);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    // Активный вопрос (текущий в зоне видимости)
+    &.active {
+        border:     1px solid rgba(255, 255, 255, 0.25);
+        box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+    }
+}
+
+
+//  INLINE SVG ИКОНКИ
+
+.svg-icon {
+    display:        inline-block;
+    vertical-align: middle; // Выравнивание по середине строки текста
+    flex-shrink:    0;
+    opacity:        0.7;    // Приглушена — не доминирует над текстом
+    transition:     opacity $transition, transform $transition;
+}
+
+// При наведении на родительский элемент иконка оживает
+a:hover .svg-icon,
+p:hover .svg-icon,
+h2:hover .svg-icon,
+h3:hover .svg-icon {
+    opacity:   1;
+    transform: scale(1.2);
+}
+
+// Молния (.svg-icon--bolt)
+.svg-icon--bolt {
+    width:       11px;
+    height:      17px;
+    margin-right: 4px;
+    color:        $color-red;  // Красный — рок-акцент
+    animation:   boltFlicker 3.5s ease-in-out infinite;
+}
+
+// Молния мигает редко — имитирует случайный электроразряд
+@keyframes boltFlicker {
+    0%, 88%, 100% { opacity: 0.7; }
+    90%            { opacity: 0.15; }
+    92%            { opacity: 0.9; }
+    94%            { opacity: 0.25; }
+    96%            { opacity: 0.8; }
+}
+
+
+//  АНИМАЦИИ ОТВЕТОВ
+
+// Правильный ответ: лёгкий масштаб-bounce
+@keyframes correctAnim {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+// Неправильный ответ: тряска влево-вправо
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-5px); }
+    50%  { transform: translateX(5px); }
+    75%  { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+
+//  ПОДСВЕТКА ПОИСКА
+
+.highlight {
+    background:    rgba(255, 0, 0, 0.3);
+    color:         white;
+    padding:       2px 4px;
+    border-radius: 4px;
+}
+
+
+//  ПОДВЕШЕННАЯ ГИТАРА
+
+.hanging-guitar {
+    position:         absolute;
+    mix-blend-mode:   lighten;
+    top:              -20px;
+    right:            20px;
+    left:             auto;
+    filter:           brightness(0.7) contrast(0.9) blur(0.3px);
+    width:            120px;
+    opacity:          0.85;
+    transform-origin: top center; // Точка подвеса — верх по центру
+    cursor:           pointer;
+    transition:       transform 0.2s ease;
+
+    // Псевдо верёвка над гитарой
+    &::before {
+        content:    "";
+        position:   absolute;
+        top:        -80px;
+        left:       50%;
+        width:      2px;
+        height:     80px;
+        background: #aaa;
+        transform:  translateX(-50%);
+    }
+
+    // Активное состояние — добавляется JS при клике
+    &.swing {
+        animation: swing 1.7s ease;
+    }
+}
+
+// Анимация затухающего раскачивания
+@keyframes swing {
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(15deg); }
+    40%  { transform: rotate(-12deg); }
+    60%  { transform: rotate(8deg); }
+    80%  { transform: rotate(-4deg); }
+    100% { transform: rotate(0deg); }
+}
+
+
+//  ФУТЕР
+
+.footer {
+    background: url("../images/footer.jpg") center/cover no-repeat;
+    text-align: center;
+
+    &-overlay {
+        background: rgba(0, 0, 0, 0.7);
+        padding:    30px;
+    }
+}
+
+
+//  АДАПТИВ
+
+// Телефоны (до 480px)
+@media (max-width: 480px) {
+
+    .header h1 {
+        font-size:  28px;
+        text-align: center;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+
+    // Меню остаётся горизонтальным, но компактнее
+    nav ul {
+        flex-direction:  row;
+        justify-content: center;
+        gap:             10px;
+    }
+
+    .sidebar {
+        position:   static; // Убираем sticky
+        width:      100%;
+        margin-top: 20px;
+        order:      -1;     // Сайдбар выше контента
+    }
+
+    main {
+        padding: 0 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+
+    .hanging-guitar {
+        max-width: none;
+        width:     80px;
+        right:     -20px;
+        top:       -10px;
+        opacity:   0.4;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .logo {
+        padding-top: 100px;
+    }
+}
+
+
+// Планшеты и большие телефоны (481px – 768px)
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width:    100%;
+        order:    -1;
+    }
+
+    .hanging-guitar {
+        max-width: none;
+        width:     100px;
+        right:     -20px;
+        top:       -10px;
+        opacity:   0.4;
+    }
+
+    nav ul {
+        flex-direction:  row;
+        justify-content: center;
+        gap:             10px;
+    }
+
+    .header h1 {
+        font-size:  42px;
+        text-align: center;
+    }
+
+    // Float-блоки переходят в блочный режим
+    .float-left,
+    .float-right {
+        float:   none;
+        display: block;
+        margin:  10px auto;
+    }
+
+    .logo {
+        padding-top: 100px;
+    }
+}
+
+
+// Ноутбуки (до 1024px)
+@media (max-width: 1024px) {
+
+    .header h1 {
+        font-size: 55px; // Немного уменьшаем заголовок
+    }
+
+    .layout {
+        gap: 15px; // Уменьшаем расстояние между колонками
+    }
+}

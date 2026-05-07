@@ -1,0 +1,807 @@
+
+//  SCSS ПЕРЕМЕННЫЕ
+//  Используются внутри SCSS логики (миксины, вычисления)
+
+
+// Отступы
+$space-xs: 6px;
+$space-s:  10px;
+$space-m:  16px;
+$space-l:  24px;
+$space-xl: 40px;
+
+// Скругления
+$radius:   12px;
+$radius-s: 8px;
+$radius-m: 10px;
+
+// Анимация
+$transition: 0.3s ease;
+
+// Цвета фона
+$bg-main:    #000;
+$bg-soft:    rgba(255, 255, 255, 0.1);
+$bg-hover:   rgba(255, 255, 255, 0.1);
+$bg-overlay: rgba(0, 0, 0, 0.9);
+
+// Рамка
+$border: 1px solid rgba(255, 255, 255, 0.08);
+
+// Цвета текста
+$text-main:  #ddd;
+$text-white: #fff;
+
+// Акцентные цвета
+$accent-red:  rgba(235, 9, 9, 0.4);
+$color-red:   #e74c3c;
+$color-green: #2ecc71;
+
+
+
+//  МИКСИНЫ
+
+
+// Стеклянная карточка (glassmorphism)
+@mixin glass-card {
+    background:      $bg-soft;
+    backdrop-filter: blur(10px);
+    border-radius:   $radius;
+    border:          $border;
+    box-shadow:      0 10px 30px rgba(0, 0, 0, 0.5);
+    transition:      all 0.4s ease;
+}
+
+// Начальное состояние анимации появления
+@mixin fade-in-up {
+    opacity:    0;
+    transform:  translateY(40px);
+    transition: all 0.4s ease;
+}
+
+// Видимое состояние после появления
+@mixin visible {
+    opacity:   1;
+    transform: translateY(0);
+}
+
+
+
+//  CSS CUSTOM PROPERTIES
+
+
+:root {
+    --space-xs: #{$space-xs};  // Минимальный отступ (иконки, мелкие элементы)
+    --space-s:  #{$space-s};   // Маленький отступ (кнопки, padding полей)
+    --space-m:  #{$space-m};   // Стандартный отступ (блоки, gap)
+    --space-l:  #{$space-l};   // Большой отступ (между секциями)
+    --space-xl: #{$space-xl};  // Очень большой (hero-зоны, крупные блоки)
+
+    --radius:     #{$radius};      // Единое скругление углов карточек
+    --transition: #{$transition};  // Стандартная анимация переходов
+
+    --bg-main:  #{$bg-main};   // Основной фон страницы — чёрный
+    --bg-soft:  #{$bg-soft};   // Полупрозрачный белый для карточек
+    --bg-hover: #{$bg-hover};  // Фон при наведении
+
+    --border: #{$border};  // Едва заметная рамка (glassmorphism)
+
+    --text-main:  #{$text-main};   // Основной цвет текста — светло-серый
+    --text-white: #{$text-white};  // Белый для заголовков и акцентов
+}
+
+
+
+//  ШРИФТ
+
+
+@font-face {
+    font-family: 'Roomach';
+    src:         url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype');
+    font-weight: normal;  // Указываем явно, чтобы браузер не синтезировал жирность
+    font-style:  normal;  // Аналогично для курсива
+}
+
+
+
+//  ОСНОВА СТРАНИЦЫ
+
+
+// Плавная прокрутка при переходе по якорным ссылкам (#id)
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin:      0;
+    font-family: Arial, sans-serif;
+    background:  #000;
+    color:       $text-main;
+    line-height: 1.8;
+    overflow-x:  hidden;           // Скрываем горизонтальный скролл
+    animation:   pageFade 1s ease; // Плавное появление страницы при загрузке
+}
+
+// Анимация fade-in: страница плавно появляется из прозрачного состояния
+@keyframes pageFade {
+    from { opacity: 0; } // Начало: прозрачная
+    to   { opacity: 1; } // Конец: полностью видимая
+}
+
+// Изображения не вылезают за границы родителя
+img {
+    max-width: 100%;
+    height:    auto;
+}
+
+
+
+//  CANVAS ФОН
+
+
+#bgCanvas {
+    position:       fixed; // Фиксирован, не скроллится вместе со страницей
+    top:            0;
+    left:           0;
+    width:          100%;
+    height:         100%;
+    z-index:        -1;    // Позади всего контента
+    pointer-events: none;  // Клики проходят сквозь canvas
+}
+
+
+
+//  ШАПКА (HEADER)
+//  Фоновое изображение + тёмный затемняющий оверлей.
+//  Внутри: логотип, гитара, заголовок, навигация.
+
+
+.header {
+    // center/cover: изображение по центру, масштабируется чтобы покрыть весь блок
+    background:    url("../images/header.jpg") center/cover no-repeat;
+    height:        250px;
+    position:      relative;                         // Контекст позиционирования для logo
+    border-bottom: 1px solid rgb(62, 61, 61);        // Тонкая разделительная линия снизу
+
+    // Тёмный полупрозрачный слой поверх фотографии.
+    // Центрирует содержимое по вертикали и горизонтали.
+    .header-overlay {
+        height:          100%;
+        background:      $bg-overlay;    // Чёрный overlay, 90% непрозрачности
+        display:         flex;
+        flex-direction:  column;         // Вертикально: заголовок над nav
+        justify-content: center;
+        align-items:     center;
+        gap:             var(--space-m);
+    }
+
+    // Заголовок: кастомный шрифт + бесконечная пульсация
+    h1 {
+        margin:      0;
+        font-size:   70px;
+        font-family: 'Roomach', sans-serif;
+        color:       white;
+
+        // Двойная тень: ближняя (яркая) + дальняя (рассеянная)
+        text-shadow:
+            0 0 10px rgba(255, 255, 255, 0.4),
+            0 0 25px rgba(255, 255, 255, 0.2);
+
+        transition: 0.3s;
+        animation:  titlePulse 4s ease-in-out infinite; // Бесконечная пульсация свечения
+
+        // При наведении заголовок слегка увеличивается
+        &:hover {
+            transform: scale(1.07);
+        }
+    }
+
+    // Ссылки навигации в шапке
+    nav a {
+        color:           #ccc;
+        text-decoration: none;
+        padding:         var(--space-xs) var(--space-m);
+        border-radius:   $radius-s;
+        transition:      $transition;
+
+        // При наведении — фон + белый цвет + подъём вверх
+        &:hover {
+            background: $bg-hover;
+            color:      white;
+            transform:  translateY(-2px);
+        }
+    }
+}
+
+// Анимация "дыхания" — свечение усиливается и ослабевает
+@keyframes titlePulse {
+    0%, 100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); } // Слабое свечение
+    50%       { text-shadow: 0 0 20px rgba(255, 255, 255, 0.6); } // Яркое свечение
+}
+
+
+
+//  ЛОГОТИП
+//  Абсолютно позиционирован относительно .header
+
+
+.logo {
+    position:    absolute;
+    top:         40px;
+    left:        30px;
+    width:       100px;
+    padding-top: 25px;
+    transition:  $transition;
+
+    // При наведении: увеличение + наклон + свечение вокруг
+    &:hover {
+        transform: scale(1.15) rotate(-5deg);
+        filter:    drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+    }
+}
+
+
+
+//  НАВИГАЦИЯ
+//  Горизонтальный список ссылок
+
+
+nav ul {
+    display:    flex;
+    gap:        var(--space-l);
+    list-style: none;
+    padding:    0;
+    margin:     0;
+}
+
+
+
+//  ОСНОВНОЙ LAYOUT
+
+
+main {
+    max-width: 1200px;
+    margin:    var(--space-l) auto; // Центрирование + отступы сверху/снизу
+    padding:   0 var(--space-m);    // Боковые отступы от края экрана
+}
+
+// Двухколонная разметка: основной контент + сайдбар
+.layout {
+    display: flex;
+    gap:     var(--space-l);
+}
+
+// Основная колонка — занимает 3/4 ширины
+.content {
+    flex: 3;
+
+    // Элементы списка внутри контента — фоновые карточки
+    ul li {
+        padding:       10px 14px;
+        border-radius: $radius-m;
+        background:    rgba(255, 255, 255, 0.04); // Едва заметный фон
+        transition:    0.3s;
+    }
+}
+
+// Сайдбар — занимает 1/4 ширины, прилипает при скролле
+.sidebar {
+    flex:     1;
+    position: sticky;
+    top:      20px;
+    height:   fit-content;
+
+    // Каждый дочерний div сайдбара
+    > div {
+        @include glass-card;
+        padding:       var(--space-m);
+        margin-bottom: var(--space-m);
+
+        &:hover {
+            transform:  translateX(-6px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.5),
+                0 0 20px rgba(255, 255, 255, 0.05);
+        }
+    }
+}
+
+
+
+//  СЕКЦИИ ЖАНРОВ
+//  Стекло: полупрозрачный фон + размытие.
+//  Начально скрыты — появляются через JS (IntersectionObserver).
+
+
+section {
+    @include glass-card;
+    @include fade-in-up;
+
+    margin-bottom: var(--space-l);
+    padding:       var(--space-l);
+
+    // Декоративная линия в верхней части секции (появляется при наведении)
+    &::before {
+        content:    "";
+        position:   absolute;
+        top:        0;
+        left:       0;
+        width:      100%;
+        height:     2px;
+        // Красный градиент: прозрачный → красный → прозрачный
+        background: linear-gradient(90deg, transparent, #eb090945, transparent);
+        opacity:    0;
+        transition: 0.4s;
+    }
+
+    // Класс .show добавляется JS когда секция попадает в viewport
+    &.show {
+        @include visible;
+    }
+
+    // При наведении — лёгкое осветление фона и подъём
+    &:hover {
+        background: rgba(255, 255, 255, 0.07);
+        transform:  translateY(-3px);
+
+        // Линия сверху становится видимой
+        &::before {
+            opacity: 1;
+        }
+    }
+
+    // :has() проверяет наличие дочернего элемента в определённом состоянии.
+    // Поддерживается в современных браузерах (Chrome 105+, Safari 15.4+).
+    &:has(p:hover),
+    &:has(li:hover),
+    &:has(h2:hover),
+    &:has(h3:hover) {
+        background: rgba(255, 255, 255, 0.09);
+        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    // Когда секция открыта (JS добавляет .open) — стрелка поворачивается
+    &.open h2::after {
+        transform: rotate(180deg); // Стрелка вниз → вверх
+    }
+
+    // Ограничение ширины параграфов для лучшей читаемости
+    p {
+        max-width:     850px; // Оптимальная длина строки ~75-80 символов
+        margin-bottom: 15px;
+        transition:    0.25s;
+
+        &:hover {
+            transform: translateX(6px);
+            color:     white;
+        }
+    }
+}
+
+
+
+//  ЗАГОЛОВКИ СЕКЦИЙ (H2)
+//  Кликабельны — открывают/закрывают содержимое секции.
+//  Стрелка (::after) показывает состояние.
+
+
+h2 {
+    color:         white;
+    cursor:        pointer; // Намекает на кликабельность
+    position:      relative;
+    padding-right: 30px;    // Место для стрелки справа
+    transition:    $transition;
+
+    &:hover {
+        letter-spacing: 1px; // Заголовок чуть расширяется
+    }
+
+    // Стрелка-индикатор: вниз = закрыто, вверх = открыто
+    &::after {
+        content:    "▼";
+        position:   absolute;
+        right:      0;
+        transition: $transition;
+    }
+}
+
+
+
+//  СВОРАЧИВАЕМЫЙ КОНТЕНТ (.genre-content)
+
+
+.genre-content {
+    max-height: 0;             // Скрыт (overflow:hidden обрезает содержимое)
+    overflow:   hidden;
+    opacity:    0;
+    transform:  translateY(-10px);
+    transition: all 0.4s ease;
+
+    // Открытое состояние — JS добавляет класс .open
+    &.open {
+        // Нельзя анимировать max-height: 0 → auto,
+        // поэтому используем большое фиксированное значение
+        max-height: 2000px;
+        opacity:    1;
+        transform:  translateY(0);
+    }
+}
+
+
+
+//  ИЗОБРАЖЕНИЯ В СЕКЦИЯХ ЖАНРОВ
+//  float: left/right — обтекание текстом с нужной стороны
+ 
+
+// Общие стили для обоих вариантов
+.genre-img-left,
+.genre-img-right {
+    width:         250px;
+    height:        160px;
+    object-fit:    cover;      // Изображение кадрируется, не деформируется
+    border-radius: $radius-m;
+}
+
+// Изображение слева — текст обтекает справа
+.genre-img-left {
+    float:  left;
+    margin: 0 var(--space-m) var(--space-s) 0;
+}
+
+// Изображение справа — текст обтекает слева
+.genre-img-right {
+    float:  right;
+    margin: 0 0 var(--space-s) var(--space-m);
+}
+
+// Сброс float: необходим после блоков с float
+.section-clear {
+    clear: both; // Отменяет обтекание с обеих сторон
+}
+
+
+
+//  ТЕКСТ (ПАРАГРАФЫ И СПИСКИ)
+
+p, li {
+    transition: $transition;
+
+    &:hover {
+        transform: translateX(5px);
+        color:     white;
+    }
+}
+
+ul {
+    padding-left: 20px; // Отступ от левого края (для маркеров)
+
+    li {
+        margin-bottom: var(--space-xs);
+
+        // При наведении — фон чуть ярче
+        &:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+    }
+}
+
+
+//  АУДИО ПЛЕЕР (.player)
+//  Карточка с кнопкой play, эквалайзером и прогресс-баром
+
+.player {
+    padding:        var(--space-m);
+    background:     rgba(255, 255, 255, 0.06);
+    border-radius:  $radius;
+    margin-bottom:  var(--space-m);
+    display:        flex;
+    flex-direction: column;
+    gap:            var(--space-s);
+    transition:     $transition;
+
+    &:hover {
+        transform:  scale(1.02);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    // Активный плеер светится
+    &.playing {
+        background: rgba(255, 255, 255, 0.1);
+        box-shadow:
+            0 0 20px rgba(255, 255, 255, 0.08),
+            0 10px 25px rgba(0, 0, 0, 0.5);
+
+        // Запускаем анимацию эквалайзера когда трек играет
+        .equalizer span {
+            animation-play-state: running;
+        }
+    }
+}
+
+// Верхняя строка плеера: кнопка + название трека + эквалайзер
+.top-row {
+    display:     flex;
+    align-items: center;
+    gap:         var(--space-s);
+}
+
+// Название трека — растягивается на оставшееся пространство
+.track {
+    flex:  1; // Занимает всё доступное место (между кнопкой и эквалайзером)
+    color: white;
+}
+
+// Кнопка play/pause — без фона, только иконка
+.play-btn {
+    background: none;
+    border:     none;
+    color:      white;
+    font-size:  18px;
+    cursor:     pointer;
+}
+
+// Анимированный эквалайзер
+.equalizer {
+    display: flex;
+    gap:     3px; // Расстояние между полосками
+
+    span {
+        width:      3px;
+        height:     6px;
+        background: white;
+        animation:            equalizer 1s infinite;
+        animation-play-state: paused; // Анимация остановлена пока не играет
+    }
+}
+
+// Анимация полосок эквалайзера: высота меняется от 5px до 15px
+@keyframes equalizer {
+    0%, 100% { height: 5px; }  // Начало и конец — маленькая полоска
+    50%       { height: 15px; } // Середина — большая полоска
+}
+
+// Контейнер прогресс-бара — кликабелен для перемотки
+.progress {
+    height:        8px;
+    background:    rgba(255, 255, 255, 0.2);
+    border-radius: $radius-m;
+    cursor:        pointer;
+}
+
+// Заливка прогресса — JS меняет ширину через style.width
+.progress-bar {
+    height:     100%;
+    width:      0%;
+    background: linear-gradient(90deg, #fff, #aaa); // Белый → серый
+}
+
+
+//  ПОДВЕШЕННАЯ ГИТАРА В ШАПКЕ
+
+
+.hanging-guitar {
+    position:         absolute;
+    mix-blend-mode:   lighten;      // Тёмные пиксели гитары становятся прозрачными
+    top:              0;
+    right:            20px;
+    left:             auto;         // Явно отменяем left
+    filter:           brightness(0.7) contrast(0.9); // Чуть темнее, меньше контраста
+    width:            120px;
+    opacity:          0.85;
+    transform-origin: top center;   // Точка поворота — верхний центр (эффект маятника)
+    cursor:           pointer;      // Гитара кликабельна
+    transition:       transform 0.2s ease;
+
+    // Класс .swing добавляется JS при клике
+    &.swing {
+        animation: swing 1.8s ease; // На этой странице медленнее, чем на главной
+    }
+}
+
+// Анимация затухающего раскачивания
+@keyframes swing {
+    0%   { transform: rotate(0deg); }   // Исходное положение
+    20%  { transform: rotate(15deg); }  // Первый взмах вправо
+    40%  { transform: rotate(-12deg); } // Отдача влево
+    60%  { transform: rotate(8deg); }   // Второй взмах вправо (меньше)
+    80%  { transform: rotate(-4deg); }  // Малое колебание влево
+    100% { transform: rotate(0deg); }   // Возврат в исходное
+}
+
+
+
+//  КЛЮЧЕВЫЕ СЛОВА
+
+
+// Базовое ключевое слово (белое с красной нижней чертой)
+.kw {
+    color:         #fff;
+    border-bottom: 1px solid rgba(235, 9, 9, 0.4);
+    transition:    0.2s;
+
+    &:hover {
+        border-color: rgba(235, 9, 9, 0.9); // Подчёркивание ярче
+    }
+}
+
+// Красные ключевые слова (названия групп, жанров)
+.kw-red {
+    color:         #ff6b6b;
+    border-bottom: 1px solid rgba(255, 107, 107, 0.4);
+}
+
+// Золотые ключевые слова (даты, эпохи)
+.kw-gold {
+    color:         #f0c060;
+    border-bottom: 1px solid rgba(240, 192, 96, 0.4);
+
+    &:hover {
+        color: #ffd97d; // Светлеет при наведении
+    }
+}
+
+// Голубые ключевые слова (дополнительный цвет, используется редко)
+.kw-blue {
+    color: #7ec8e3; // Без border-bottom — отличие от других kw вариантов
+}
+
+
+//  ССЫЛКИ В САЙДБАРЕ (.info-box1)
+
+
+.info-box1 {
+    a {
+        color:           #ccc;
+        text-decoration: none;
+        display:         block;            // Блочный элемент (на всю ширину)
+        margin-bottom:   var(--space-xs);
+        transition:      $transition;
+
+        &:hover {
+            color:     white;
+            transform: translateX(6px); // Сдвиг вправо при наведении
+        }
+    }
+}
+
+
+//  SVG ИКОНКА МОЛНИИ
+//  Место: строка «Итоги квиза» в блоке прогресса сайдбара.
+//  Красная, мигает с редкими вспышками (boltFlicker).
+
+
+.svg-icon--bolt {
+    width:        22px;
+    height:       26px;
+    margin-right: 4px;
+    color:        $color-red; // Красный — рок акцент
+    animation:    boltFlicker 3.5s ease-in-out infinite;
+}
+
+// Молния мигает редко — имитирует случайный электроразряд
+@keyframes boltFlicker {
+    0%, 88%, 100% { opacity: 0.7; }
+    90%            { opacity: 0.15; }
+    92%            { opacity: 0.9; }
+    94%            { opacity: 0.25; }
+    96%            { opacity: 0.8; }
+}
+
+
+//  ФУТЕР
+
+
+.footer {
+    background: url("../images/footer.jpg") center/cover no-repeat;
+    text-align: center;
+
+    &-overlay {
+        background: rgba(0, 0, 0, 0.7); // 70% непрозрачности
+        padding:    var(--space-l);
+    }
+}
+
+
+//  АДАПТИВНАЯ ВЁРСТКА
+
+// Телефоны (до 480px)
+@media (max-width: 480px) {
+
+    .header h1 {
+        font-size:  28px;
+        text-align: center;
+    }
+
+    .layout {
+        flex-direction: column;
+    }
+
+    // Меню остаётся горизонтальным, но компактнее
+    nav ul {
+        flex-direction:  row;
+        justify-content: center;
+        gap:             10px;
+    }
+
+    .sidebar {
+        position:   static; // Убираем sticky
+        width:      100%;
+        margin-top: 20px;
+        order:      -1;     // Сайдбар выше контента
+    }
+
+    main {
+        padding: 0 10px;
+    }
+
+    section {
+        padding: 15px;
+    }
+
+    .hanging-guitar {
+        max-width: none;
+        width:     15vw;
+        right:     1vw;
+        top:       -10px;
+        opacity:   0.4;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .logo {
+        padding-top:  35px;
+        width:        15vw;
+        padding-left: -1vw;
+    }
+}
+
+// Планшеты и большие телефоны (481px — 768px)
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width:    100%;
+        order:    -1;
+    }
+
+    .hanging-guitar {
+        width: 100px;
+    }
+
+    nav ul {
+        flex-direction:  row;
+        justify-content: center;
+        gap:             10px;
+    }
+
+    .header h1 {
+        font-size:  42px;
+        text-align: center;
+    }
+
+    // Float блоки переходят в блочный режим
+    .float-left,
+    .float-right {
+        float:   none;
+        display: block;
+        margin:  10px auto;
+    }
+}
+
+// Ноутбуки (до 1024px)
+@media (max-width: 1024px) {
+
+    .header h1 {
+        font-size: 55px; // Немного уменьшаем заголовок
+    }
+
+    .layout {
+        gap: 15px; // Уменьшаем расстояние между колонками
+    }
+}

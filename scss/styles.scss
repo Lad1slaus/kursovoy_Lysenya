@@ -1,0 +1,791 @@
+
+
+// Отступы
+$space-xs:  6px;   // Минимальный (иконки)
+$space-s:   10px;  // Маленький (кнопки)
+$space-m:   16px;  // Средний (стандарт)
+$space-l:   24px;  // Большой (между блоками)
+$space-xl:  40px;  // Очень большой (разделы)
+
+// Скругление
+$radius:     12px;
+
+// Анимация
+$transition: 0.3s ease;
+
+// Цвета фона
+$bg-main:  #000;
+$bg-soft:  rgba(255,255,255,0.05);
+$bg-hover: rgba(255,255,255,0.1);
+
+// Цвета текста
+$text-main:  #ddd;
+$text-white: #fff;
+
+// Акцентный цвет
+$accent:     rgba(225, 14, 14, 0.4);
+$accent-red: rgba(255, 107, 107, 0.4);
+
+//  Объявляются в :root — доступны глобально через var(--...)
+
+:root {
+    /* Минимальный отступ (очень маленькие элементы) */
+    --space-xs: #{$space-xs};
+
+    /* Маленький отступ (иконки, кнопки) */
+    --space-s: #{$space-s};
+
+    /* Средний отступ (основной стандарт) */
+    --space-m: #{$space-m};
+
+    /* Большой отступ (между блоками) */
+    --space-l: #{$space-l};
+
+    /* Очень большой отступ (разделы страницы) */
+    --space-xl: #{$space-xl};
+
+    /* Радиус скругления (единый для всех элементов) */
+    --radius: #{$radius};
+
+    /* Базовая анимация (используется почти везде) */
+    --transition: #{$transition};
+
+    /* Основной фон сайта (чёрный) */
+    --bg-main: #{$bg-main};
+
+    /* Полупрозрачный фон (для карточек) */
+    --bg-soft: #{$bg-soft};
+
+    /* Фон при наведении */
+    --bg-hover: #{$bg-hover};
+
+    /* Основной текст (серый) */
+    --text-main: #{$text-main};
+
+    /* Белый текст */
+    --text-white: #{$text-white};
+}
+
+
+//  МИКСИНЫ
+//  Переиспользуемые блоки стилей
+
+
+// 🔹 Стеклянная карточка (backdrop-filter + рамка + тень)
+@mixin glass-card {
+    background:        var(--bg-soft);
+    backdrop-filter:   blur(10px);
+    border-radius:     var(--radius);
+    border:            1px solid rgba(255,255,255,0.08);
+    box-shadow:        0 10px 30px rgba(0,0,0,0.5);
+    transition:        all 0.4s ease;
+}
+
+// 🔹 Сдвиг текста вправо при наведении
+@mixin hover-shift-right($px: 6px) {
+    transition: var(--transition);
+
+    &:hover {
+        transform: translateX($px);
+        color: white;
+    }
+}
+
+
+
+//  ОСНОВА СТРАНИЦЫ
+
+
+// 🔹 Универсальный фикс: предотвращает "вылезание" элементов
+*,
+*::before,
+*::after {
+    // Делает padding и border частью ширины/высоты элемента
+    box-sizing: border-box;
+}
+
+// 🔹 Базовые стили страницы
+body {
+    margin:      0;                   // Убираем стандартные отступы браузера
+    font-family: Arial, sans-serif;   // Основной шрифт
+    background:  #000;                // Фон страницы
+    color:       var(--text-main);    // Цвет текста
+    line-height: 1.8;                 // Межстрочный интервал (читабельность)
+    animation:   pageFade 1s ease;    // Анимация появления страницы
+}
+
+// 🔹 Плавное появление страницы
+@keyframes pageFade {
+    from { opacity: 0; } // Начало — полностью прозрачная страница
+    to   { opacity: 1; } // Конец — полностью видимая
+}
+
+// 🔹 Плавный скролл
+html {
+    scroll-behavior: smooth; // Плавный переход при переходе по якорям
+}
+
+// 🔹 Изображения не ломают layout
+img {
+    max-width: 100%; // Не выходят за пределы контейнера
+    height:    auto; // Сохраняют пропорции
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+
+
+//  ШРИФТ
+
+
+@font-face {
+    font-family: 'Roomach'; // Название кастомного шрифта
+    src: url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype'); // Путь к файлу
+}
+
+
+
+//  HEADER
+
+
+.header {
+    // Фоновое изображение (центр + cover = растягивается)
+    background:    url("../images/header.jpg") center/cover no-repeat;
+    height:        250px;     // Высота шапки
+    position:      relative;  // Позволяет позиционировать элементы внутри
+    border-bottom: 1px solid rgb(62, 61, 61); // Нижняя граница
+
+    // ── Затемняющий слой ──────────────────────────────────────
+    &-overlay {
+        height:          100%;              // Занимает всю высоту header
+        background:      rgba(0,0,0,0.9);   // Затемняющий слой поверх изображения
+        display:         flex;
+        flex-direction:  column;            // Элементы идут вертикально
+        justify-content: center;            // Выравнивание по вертикали
+        align-items:     center;            // Выравнивание по горизонтали
+        gap:             var(--space-m);    // Расстояние между элементами
+    }
+
+    // ── Главный заголовок ─────────────────────────────────────
+    h1 {
+        margin:      0;                       // Убираем стандартные отступы
+        font-size:   70px;                    // Очень крупный размер
+        font-family: 'Roomach', sans-serif;   // Кастомный шрифт
+        color:       var(--text-white);
+
+        // Светящийся текст
+        text-shadow:
+            0 0 10px rgba(255,255,255,0.4),
+            0 0 25px rgba(255,255,255,0.2);
+
+        transition: var(--transition);
+        animation:  titlePulse 4s ease-in-out infinite; // Постоянная "пульсация"
+
+        &:hover {
+            transform: scale(1.07); // Увеличение при наведении
+        }
+    }
+
+    // ── Навигация ─────────────────────────────────────────────
+    nav {
+        a {
+            color:           #ccc;               // Цвет ссылок
+            text-decoration: none;               // Убираем подчёркивание
+            padding:         var(--space-xs) var(--space-m);
+            border-radius:   8px;
+            transition:      var(--transition);
+
+            &:hover {
+                background: var(--bg-hover); // Фон при наведении
+                color:      white;
+                transform:  translateY(-2px); // Лёгкий "подпрыг"
+            }
+        }
+    }
+}
+
+// 🔹 Анимация "дыхания" заголовка
+@keyframes titlePulse {
+    0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.3); } // Слабое свечение
+    50%      { text-shadow: 0 0 20px rgba(255,255,255,0.5); } // Сильнее
+}
+
+
+
+//  LOGO
+
+
+.logo {
+    position:   absolute;          // Абсолютное позиционирование относительно header
+    top:        40px;
+    left:       30px;
+    width:      100px;
+    transition: var(--transition);
+
+    &:hover {
+        transform: scale(1.15) rotate(-5deg); // Увеличение + лёгкий поворот
+        filter:    drop-shadow(0 0 15px rgba(255,255,255,0.6)); // Свечение
+    }
+}
+
+
+
+//  NAVIGATION (nav ul — вне header)
+
+
+nav ul {
+    display:     flex;          // Flex для горизонтального меню
+    gap:         var(--space-l);
+    list-style:  none;          // Убираем маркеры списка
+    padding:     0;
+    margin:      0;
+}
+
+
+
+//  MAIN КОНТЕЙНЕР
+
+
+main {
+    max-width: 1200px;
+    margin:    var(--space-l) auto; // Центрирование по горизонтали
+    padding:   0 var(--space-m);    // Внутренние отступы по бокам
+}
+
+
+
+//  LAYOUT (контент + sidebar)
+
+
+.layout {
+    display: flex;
+    gap:     var(--space-l); // Расстояние между колонками
+}
+
+// 🔹 Основная часть
+.content {
+    flex: 3; // Занимает 3 части пространства
+
+    // Изображения в контенте 
+    &-img {
+        width:         100%;
+        max-width:     700px;    // Но не больше 700px
+        margin-top:    var(--space-m);
+        border-radius: var(--radius);
+    }
+}
+
+// 🔹 Боковая панель
+.sidebar {
+    flex:     1;             // Занимает 1 часть
+    position: sticky;        // "Прилипает" при скролле
+    top:      20px;
+    height:   fit-content;   // Высота по содержимому
+
+    // Каждый блок сайдбара 
+    > div {
+        @include glass-card;
+
+        padding:       var(--space-m);
+        margin-bottom: var(--space-m);
+
+        &:hover {
+            transform: translateX(-6px) scale(1.02); // Лёгкий сдвиг влево + увеличение
+        }
+    }
+}
+
+
+
+//  СЕКЦИИ
+
+
+section {
+    @include glass-card;
+
+    margin-bottom: var(--space-l);
+    padding:       var(--space-l);
+
+    // Начальное состояние для анимации появления
+    opacity:   0;
+    transform: translateY(40px);
+
+    // Плавность для всех изменений (появление, hover и т.д.)
+    transition: all 0.5s ease;
+
+    // Декоративная линия сверху 
+    // Появляется при наведении (псевдоэлемент)
+    position: relative; // нужно для позиционирования ::before
+
+    &::before {
+        content:    "";
+        position:   absolute;
+        top:        0;
+        left:       0;
+        width:      100%;
+        height:     2px;
+
+        // Градиент (почти незаметный красный)
+        background: linear-gradient(90deg, transparent, #eb090945, transparent);
+        opacity:    0;
+        transition: 0.4s;
+    }
+
+    &:hover {
+        background: rgba(255,255,255,0.07); // Ещё одно изменение фона
+        transform:  translateY(-3px);       // Лёгкий подъём
+
+        &::before {
+            opacity: 1; // Появляется при наведении
+        }
+
+        // Усиленная тень при наведении
+        box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    }
+
+    // Hover-эффект при наведении на содержимое 
+    &:has(p:hover),
+    &:has(li:hover),
+    &:has(h2:hover),
+    &:has(h3:hover) {
+        background: rgba(255,255,255,0.09);
+        box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    }
+
+    // Состояние "видимая секция" (JS добавляет .show) 
+    &.show {
+        opacity:   1;
+        transform: translateY(0);
+    }
+
+    //  Состояние "открытая секция" (JS добавляет .open) 
+    &.open h2::after {
+        transform: rotate(180deg); // Переворачиваем стрелку
+    }
+
+    //  Параграфы внутри секции 
+    p {
+        margin-bottom: 15px;
+        max-width:     850px;
+        transition:    0.25s;
+
+        &:hover {
+            transform: translateX(6px);
+            color:     white;
+        }
+    }
+
+    // Элементы списка и текст 
+    p, li {
+        transition: var(--transition);
+
+        &:hover {
+            transform: translateX(6px);
+            color:     white;
+        }
+    }
+
+    // H2 внутри секции: линия под заголовком 
+    &:hover h2::after {
+        width: 100%; // Линия растягивается при наведении на секцию
+    }
+}
+
+
+
+//  ЗАГОЛОВКИ
+
+
+h2 {
+    color:          white;
+    cursor:         pointer;
+    position:       relative;  // Нужно для псевдоэлементов
+    padding-right:  30px;      // Отступ для стрелки
+    margin-bottom:  20px;
+    transition:     var(--transition);
+
+    &:hover {
+        letter-spacing: 1px; // Лёгкое увеличение расстояния между буквами
+    }
+
+    // Декоративная линия снизу (анимируется при hover секции)
+    &::after {
+        content:    "";
+        position:   absolute;
+        left:       0;
+        bottom:     -6px;
+        width:      0;       // Линия начинается с 0 ширины
+        height:     2px;
+        background: $accent; // Красный оттенок
+        transition: 0.4s;
+    }
+}
+
+h3 {
+    border-left: 3px solid $accent; // Красная линия слева
+    padding-left: 10px;
+    margin-top:   25px;
+}
+
+
+
+//  ВЫДЕЛЕНИЕ КЛЮЧЕВЫХ СЛОВ
+
+
+// 🔹 Базовый класс
+.kw {
+    color:         #fff;
+    border-bottom: 1px solid rgba(235, 9, 9, 0.4);
+    transition:    0.25s;
+
+    &:hover {
+        border-color: rgba(235, 9, 9, 0.9);
+    }
+}
+
+// 🔹 Красные — группы
+.kw-red {
+    color:         #ff6b6b;
+    border-bottom: 1px solid rgba(255, 107, 107, 0.4);
+
+    &:hover {
+        color: #ff8a8a;
+    }
+}
+
+// 🔹 Золотые — даты
+.kw-gold {
+    color:         #f0c060;
+    border-bottom: 1px solid rgba(240, 192, 96, 0.4);
+
+    &:hover {
+        color: #ffd97d;
+    }
+}
+
+
+
+//  ИСТОРИЯ (float-блоки)
+
+
+.history {
+    //  Figure-контейнер 
+    figure {
+        width:         260px;
+        background:    #111;
+        padding:       var(--space-xs);
+        border-radius: var(--radius);
+    }
+
+    // Картинка 
+    img {
+        width:         100%;
+        border-radius: 8px;
+    }
+
+    // Подпись 
+    figcaption {
+        font-size:  13px;
+        text-align: center;
+        color:      #aaa;
+    }
+}
+
+// 🔹 Плавающие блоки
+.float-right {
+    float:  right;
+    margin: 0 0 var(--space-s) var(--space-m);
+}
+
+.float-left {
+    float:  left;
+    margin: 0 var(--space-m) var(--space-s) 0;
+}
+
+// 🔹 Очистка float
+.clear {
+    clear: both;
+}
+
+
+
+//  СПИСОК ЖАНРОВ
+
+#genreList {
+    max-height: 0;
+    overflow:   hidden;
+    opacity:    0;
+    transform:  translateY(-10px);
+    transition: all 0.5s ease;
+
+    // 🔹 Открытое состояние (JS добавляет .active)
+    &.active {
+        max-height: 2000px; // Хак для анимации высоты
+        opacity:    1;
+        transform:  translateY(0);
+    }
+
+    Элементы списка
+    li {
+        margin-bottom: 10px;
+        padding:       10px 14px;
+        background:    rgba(255,255,255,0.04);
+        border-radius: 10px;
+        transition:    0.3s;
+
+        &:hover {
+            background: rgba(255,255,255,0.08);
+            transform:  translateX(6px);
+        }
+    }
+}
+
+
+
+//  КНОПКА
+
+
+button {
+    margin-top:    var(--space-m);
+    background:    linear-gradient(135deg, #444, #888); // Градиентный фон
+    color:         white;
+    padding:       var(--space-s) var(--space-l);
+    border:        none;
+    border-radius: var(--radius);
+    cursor:        pointer;
+    transition:    var(--transition);
+
+    &:hover {
+        transform:  scale(1.05);
+        box-shadow: 0 5px 20px rgba(255,255,255,0.2);
+    }
+}
+
+
+
+//  ССЫЛКИ (сайдбар)
+
+
+.info-box1 {
+    a {
+        color:           #ccc;
+        text-decoration: none;
+        display:         block;        // Каждая ссылка с новой строки
+        margin-bottom:   var(--space-xs);
+        transition:      var(--transition);
+
+        &:hover {
+            color:     white;
+            transform: translateX(6px); // Сдвиг вправо
+        }
+    }
+}
+
+
+
+//  ПОДСВЕТКА ПОИСКА
+
+
+.highlight {
+    background:    rgba(255, 0, 0, 0.3); // Красная подсветка
+    padding:       2px 4px;
+    border-radius: 4px;
+}
+
+#searchInput {
+    width:         100%;
+    padding:       8px 12px;
+    background:    rgba(255,255,255,0.08);
+    border:        1px solid rgba(255,255,255,0.15);
+    border-radius: 8px;
+    color:         #ddd;
+    outline:       none;
+    transition:    0.3s;
+
+    &:focus {
+        border-color: rgba(225,14,14,0.5);
+        background:   rgba(255,255,255,0.12);
+    }
+}
+
+
+
+//  FOOTER
+
+
+.footer {
+    background:  url("../images/footer.jpg") center/cover no-repeat;
+    text-align:  center;
+
+    //  Затемняющий слой 
+    &-overlay {
+        background: rgba(0,0,0,0.7);
+        padding:    var(--space-l);
+    }
+}
+
+
+
+//  CANVAS (фоновый)
+
+#bgCanvas {
+    position:       fixed; // Фиксируем на весь экран
+    top:            0;
+    left:           0;
+    width:          100%;
+    height:         100%;
+    z-index:        -1;    // Уводим назад
+    pointer-events: none;  // Не перехватывает клики
+}
+
+
+
+//  ГИТАРА
+
+.hanging-guitar {
+    position:         absolute;
+    top:              -20px;
+    right:            -80px;
+    width:            400px;
+    max-width:        30vw;   // Адаптация под экран
+    opacity:          0.85;
+    transform-origin: top center; // Точка вращения
+    cursor:           pointer;
+    transition:       transform 0.2s ease;
+
+    // 🔹 Активное состояние (JS добавляет .swing)
+    &.swing {
+        animation: swing 1.2s ease;
+    }
+}
+
+// 🔹 Анимация качания как маятник
+@keyframes swing {
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(15deg); }
+    40%  { transform: rotate(-12deg); }
+    60%  { transform: rotate(8deg); }
+    80%  { transform: rotate(-4deg); }
+    100% { transform: rotate(0deg); }
+}
+
+
+
+//  АДАПТИВ
+
+//  Телефоны (до 480px) 
+
+@media (max-width: 480px) {
+
+    .header h1 {
+        font-size:  28px;
+        text-align: center;
+    }
+
+    // Меню остаётся горизонтальным, но компактнее
+    nav ul {
+        flex-direction:  row;
+        justify-content: center;
+        gap:             10px;
+    }
+
+    // Layout — в одну колонку
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position:   static;      // Убираем sticky
+        width:      100%;
+        margin-top: 20px;
+        order:      -1;          // Сайдбар выше контента
+    }
+
+    main {
+        padding: 0 10px;         // Уменьшаем боковые отступы
+    }
+
+    section {
+        padding: 15px;           // Уменьшаем внутренние отступы
+    }
+
+    .hanging-guitar {
+        max-width: none;
+        width:     200px;        // Уменьшаем размер
+        right:     -20px;
+        top:       -10px;
+        opacity:   0.4;          // Менее навязчивая
+    }
+
+    button {
+        width: 100%;             // Кнопка на всю ширину
+    }
+
+    .logo {
+        padding-top: 70px;
+    }
+}
+
+
+//  Планшеты и большие телефоны (481px – 768px) 
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .layout {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+        width:    100%;
+        order:    -1;
+    }
+
+    .hanging-guitar {
+        max-width: none;
+        width:     240px;
+        right:     -20px;
+        top:       -10px;
+        opacity:   0.4;
+    }
+
+    nav ul {
+        flex-direction:  row;
+        justify-content: center;
+        gap:             10px;
+    }
+
+    .header h1 {
+        font-size:  42px;
+        text-align: center;
+    }
+
+    // Float-блоки переходят в блочный режим
+    .float-left,
+    .float-right {
+        float:   none;
+        display: block;
+        margin:  10px auto;
+    }
+
+    .logo {
+        padding-top: 100px;
+    }
+}
+
+
+// Ноутбуки (до 1024px) 
+
+@media (max-width: 1024px) {
+
+    .header h1 {
+        font-size: 55px; // Немного уменьшаем заголовок
+    }
+
+    .layout {
+        gap: 15px; // Уменьшаем расстояние между колонками
+    }
+}
