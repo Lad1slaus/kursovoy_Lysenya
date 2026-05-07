@@ -1,0 +1,1017 @@
+
+:root {
+    /* Минимальный отступ (очень маленькие элементы) */
+    --space-xs: 6px;
+
+    /* Маленький отступ (иконки, кнопки) */
+    --space-s: 10px;
+
+    /* Средний отступ (основной стандарт) */
+    --space-m: 16px;
+
+    /* Большой отступ (между блоками) */
+    --space-l: 24px;
+
+    /* Очень большой отступ (разделы страницы) */
+    --space-xl: 40px;
+
+    /* Радиус скругления (единый для всех элементов) */
+    --radius: 12px;
+
+    /* Базовая анимация (используется почти везде) */
+    --transition: 0.3s ease;
+
+    /* Основной фон сайта (черный) */
+    --bg-main: #000;
+
+    /* Полупрозрачный фон (для карточек) */
+    --bg-soft: rgba(255,255,255,0.05);
+
+    /* Фон при наведении */
+    --bg-hover: rgba(255,255,255,0.1);
+
+    /* Основной текст (серый) */
+    --text-main: #ddd;
+
+    /* Белый текст */
+    --text-white: #fff;
+}
+
+/*  ОСНОВА СТРАНИЦЫ*/
+
+/* 🔹 универсальный фикс: предотвращает "вылезание" элементов */
+*,
+*::before,
+*::after {
+    /* Делает padding и border частью ширины/высоты элемента */
+    box-sizing: border-box;
+}
+
+/* 🔹 базовые стили страницы */
+body {
+    /* Убираем стандартные отступы браузера */
+    margin: 0;
+
+    /* Основной шрифт */
+    font-family: Arial, sans-serif;
+
+    /* Фон страницы */
+    background: #000;
+
+    /* Цвет текста */
+    color: var(--text-main);
+
+    /* Межстрочный интервал (читабельность) */
+    line-height: 1.8;
+
+    /* Анимация появления страницы */
+    animation: pageFade 1s ease;
+}
+
+/* 🔹 плавное появление страницы */
+@keyframes pageFade {
+    /* Начало — полностью прозрачная страница */
+    from { opacity: 0; }
+
+    /* Конец — полностью видимая */
+    to   { opacity: 1; }
+}
+
+/* 🔹 плавный скролл */
+html {
+    /* Плавный переход при переходе по якорям */
+    scroll-behavior: smooth;
+}
+
+/* 🔹 изображения не ломают layout */
+img {
+    /* Не выходят за пределы контейнера */
+    max-width: 100%;
+
+    /* Сохраняют пропорции */
+    height: auto;
+}
+
+/* ШРИФТ */
+@font-face {
+    /* Название кастомного шрифта */
+    font-family: 'Roomach';
+
+    /* Путь к файлу шрифта */
+    src: url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype');
+}
+
+/* HEADER */
+.header {
+    /* Фоновое изображение (центр + cover = растягивается) */
+    background: url("../images/header.jpg") center/cover no-repeat;
+
+    /* Высота шапки */
+    height: 250px;
+
+    /* Позволяет позиционировать элементы внутри */
+    position: relative;
+
+    /* Нижняя граница */
+    border-bottom: 1px solid rgb(62, 61, 61);
+}
+
+.header-overlay {
+    /* Занимает всю высоту header */
+    height: 100%;
+
+    /* Затемняющий слой поверх изображения */
+    background: rgba(0,0,0,0.9);
+
+    /* Flex-контейнер */
+    display: flex;
+
+    /* Элементы идут вертикально */
+    flex-direction: column;
+
+    /* Выравнивание по вертикали (центр) */
+    justify-content: center;
+
+    /* Выравнивание по горизонтали */
+    align-items: center;
+
+    /* Расстояние между элементами */
+    gap: var(--space-m);
+}
+
+/* 🔹 главный заголовок */
+.header h1 {
+    /* Убираем стандартные отступы */
+    margin: 0;
+
+    /* Очень крупный размер */
+    font-size: 70px;
+
+    /* Кастомный шрифт */
+    font-family: 'Roomach', sans-serif;
+
+    /* Цвет */
+    color: var(--text-white);
+
+    /* Светящийся текст */
+    text-shadow:
+        0 0 10px rgba(255,255,255,0.4),
+        0 0 25px rgba(255,255,255,0.2);
+
+    /* Плавные эффекты */
+    transition: var(--transition);
+
+    /* Постоянная "пульсация" */
+    animation: titlePulse 4s ease-in-out infinite;
+}
+
+.header h1:hover {
+    /* Увеличение при наведении */
+    transform: scale(1.07);
+}
+
+/* 🔹 анимация "дыхания" */
+@keyframes titlePulse {
+    /* Начало и конец — слабое свечение */
+    0%, 100% { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
+
+    /* Середина — сильнее */
+    50%      { text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+}
+
+/* LOGO */
+.logo {
+    /* Абсолютное позиционирование относительно header */
+    position: absolute;
+
+    /* Отступ сверху */
+    top: 40px;
+
+    /* Отступ слева */
+    left: 30px;
+
+    /* Размер */
+    width: 100px;
+
+    /* Плавные анимации */
+    transition: var(--transition);
+}
+
+.logo:hover {
+    /* Увеличение + лёгкий поворот */
+    transform: scale(1.15) rotate(-5deg);
+
+    /* Свечение */
+    filter: drop-shadow(0 0 15px rgba(255,255,255,0.6));
+}
+
+/* NAVIGATION */
+nav ul {
+    /* Flex для горизонтального меню */
+    display: flex;
+
+    /* Расстояние между пунктами */
+    gap: var(--space-l);
+
+    /* Убираем маркеры списка */
+    list-style: none;
+
+    /* Убираем отступы */
+    padding: 0;
+    margin: 0;
+}
+
+.header nav a {
+    /* Цвет ссылок */
+    color: #ccc;
+
+    /* Убираем подчёркивание */
+    text-decoration: none;
+
+    /* Внутренние отступы */
+    padding: var(--space-xs) var(--space-m);
+
+    /* Скругление */
+    border-radius: 8px;
+
+    /* Плавные эффекты */
+    transition: var(--transition);
+}
+
+.header nav a:hover {
+    /* Фон при наведении */
+    background: var(--bg-hover);
+
+    /* Белый текст */
+    color: white;
+
+    /* Лёгкий "подпрыг" */
+    transform: translateY(-2px);
+}
+
+/* MAIN КОНТЕЙНЕР */
+main {
+    
+    max-width: 1200px;
+
+    /* Центрирование по горизонтали */
+    margin: var(--space-l) auto;
+
+    /* Внутренние отступы по бокам */
+    padding: 0 var(--space-m);
+}
+
+/*  LAYOUT (контент + sidebar) */
+.layout {
+    /* Flex-контейнер */
+    display: flex;
+
+    /* Расстояние между колонками */
+    gap: var(--space-l);
+}
+
+/* 🔹 основная часть */
+.content {
+    /* Занимает 3 части пространства */
+    flex: 3;
+}
+
+/* 🔹 боковая панель */
+.sidebar {
+    /* Занимает 1 часть */
+    flex: 1;
+
+    /* "Прилипает" при скролле */
+    position: sticky;
+
+    /* Отступ сверху при прилипания */
+    top: 20px;
+
+    /* Высота по содержимому */
+    height: fit-content;
+}
+
+/* СЕКЦИИ*/
+section {
+    /* Полупрозрачный фон */
+    background: var(--bg-soft);
+
+    /* Эффект стекла (blur заднего фона) */
+    backdrop-filter: blur(10px);
+
+    /* Отступ снизу между секциями */
+    margin-bottom: var(--space-l);
+
+    /* Внутренние отступы */
+    padding: var(--space-l);
+
+    /* Скругление */
+    border-radius: var(--radius);
+
+    /* Лёгкая рамка */
+    border: 1px solid rgba(255,255,255,0.08);
+
+    /* Тень */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+
+    /* Плавные переходы */
+    transition: all 0.4s ease;
+
+    /* начальное состояние для анимации */
+    opacity: 0;
+
+    /* смещение вниз */
+    transform: translateY(40px);
+
+/*  плавность для всех изменений секции (появление, hover и т.д.) */
+    transition: all 0.5s ease;
+ 
+
+}
+
+/* 🔹 появление */
+section.show {
+    /* становится видимым */
+    opacity: 1;
+
+    /* возвращается на место */
+    transform: translateY(0);
+}
+
+/* 🔹 hover-эффект контейнера */
+section:has(p:hover),
+section:has(li:hover),
+section:has(h2:hover),
+section:has(h3:hover) {
+    /* немного ярче фон */
+    background: rgba(255,255,255,0.09);
+
+    /* усиленная тень */
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+}
+
+/* ТЕКСТ */
+section p,
+section li {
+    /* Плавные переходы при наведении */
+    transition: var(--transition);
+}
+
+section p:hover,
+section li:hover {
+    /* Сдвиг текста вправо */
+    transform: translateX(6px);
+
+    /* Осветление текста */
+    color: white;
+}
+
+/* ЗАГОЛОВКИ */
+h2 {
+    /* Белый цвет */
+    color: white;
+
+    /* Курсор показывает, что элемент интерактивный */
+    cursor: pointer;
+
+    /* Нужно для позиционирования псевдоэлементов */
+    position: relative;
+
+    /* Отступ справа (чтобы влезла стрелка) */
+    padding-right: 30px;
+
+    /* Плавные эффекты */
+    transition: var(--transition);
+}
+
+h2:hover {
+    /* Лёгкое увеличение расстояния между буквами */
+    letter-spacing: 1px;
+}
+
+
+/* если секция открыта */
+section.open h2::after {
+    /* переворачиваем стрелку */
+    transform: rotate(180deg);
+}
+
+/*  ИЗОБРАЖЕНИЯ В КОНТЕНТЕ*/
+.content-img {
+    /* На всю ширину контейнера */
+    width: 100%;
+
+    /* Но не больше 700px */
+    max-width: 700px;
+
+    /* Отступ сверху */
+    margin-top: var(--space-m);
+
+    /* Скругление */
+    border-radius: var(--radius);
+}
+
+/*  FLOAT-БЛОКИ (история) */
+.history figure {
+    /* Фиксированная ширина блока */
+    width: 260px;
+
+    /* Тёмный фон */
+    background: #111;
+
+    /* Внутренний отступ */
+    padding: var(--space-xs);
+
+    /* Скругление */
+    border-radius: var(--radius);
+}
+
+.history img {
+    /* Картинка растягивается по контейнеру */
+    width: 100%;
+
+    /* Скругление */
+    border-radius: 8px;
+}
+
+.history figcaption {
+    /* Маленький текст */
+    font-size: 13px;
+
+    /* Центрирование */
+    text-align: center;
+
+    /* Серый цвет */
+    color: #aaa;
+}
+
+/* плавающие блоки */
+.float-right { 
+    /* обтекание справа */
+    float: right; 
+
+    /* отступы */
+    margin: 0 0 var(--space-s) var(--space-m); 
+}
+
+.float-left  { 
+    /* обтекание слева */
+    float: left;  
+
+    /* отступы */
+    margin: 0 var(--space-m) var(--space-s) 0; 
+}
+
+/* очистка float */
+.clear { 
+    clear: both; 
+}
+
+/* СПИСОК ЖАНРОВ */
+#genreList {
+    /* изначально скрыт */
+    max-height: 0;
+
+    /* скрывает содержимое */
+    overflow: hidden;
+
+    /* прозрачный */
+    opacity: 0;
+
+    /* смещение вверх */
+    transform: translateY(-10px);
+
+    /* плавная анимация */
+    transition: all 0.5s ease;
+}
+
+/* 🔹 открытое состояние */
+#genreList.active {
+    /* большой max-height (хак для анимации) */
+    max-height: 2000px;
+
+    /* становится видимым */
+    opacity: 1;
+
+    /* возвращается на место */
+    transform: translateY(0);
+}
+
+/* КНОПКА*/
+button {
+    /* отступ сверху */
+    margin-top: var(--space-m);
+
+    /* градиентный фон */
+    background: linear-gradient(135deg, #444, #888);
+
+    /* цвет текста */
+    color: white;
+
+    /* внутренние отступы */
+    padding: var(--space-s) var(--space-l);
+
+    /* убираем стандартную рамку */
+    border: none;
+
+    /* скругление */
+    border-radius: var(--radius);
+
+    /* курсор */
+    cursor: pointer;
+
+    /* плавные эффекты */
+    transition: var(--transition);
+}
+
+button:hover {
+    /* увеличение */
+    transform: scale(1.05);
+
+    /* тень */
+    box-shadow: 0 5px 20px rgba(255,255,255,0.2);
+}
+
+/*  SIDEBAR */
+.sidebar > div {
+    /* фон */
+    background: var(--bg-soft);
+
+    /* стеклянный эффект */
+    backdrop-filter: blur(10px);
+
+    /* внутренние отступы */
+    padding: var(--space-m);
+
+    /* отступ снизу */
+    margin-bottom: var(--space-m);
+
+    /* скругление */
+    border-radius: var(--radius);
+
+    /* рамка */
+    border: 1px solid rgba(255,255,255,0.08);
+
+    /* плавность */
+    transition: all 0.4s ease;
+}
+
+.sidebar > div:hover {
+    /* лёгкий сдвиг влево + увеличение */
+    transform: translateX(-6px) scale(1.02);
+}
+
+/* ССЫЛКИ*/
+.info-box1 a {
+    /* цвет */
+    color: #ccc;
+
+    /* без подчёркивания */
+    text-decoration: none;
+
+    /* каждая ссылка с новой строки */
+    display: block;
+
+    /* отступ */
+    margin-bottom: var(--space-xs);
+
+    /* плавность */
+    transition: var(--transition);
+}
+
+.info-box1 a:hover {
+    /* белый цвет */
+    color: white;
+
+    /* сдвиг вправо */
+    transform: translateX(6px);
+}
+
+/*  FOOTER*/
+.footer {
+    /* Фоновое изображение */
+    background: url("../images/footer.jpg") center/cover no-repeat;
+
+    /* Центрирование текста */
+    text-align: center;
+}
+
+.footer-overlay {
+    /* Затемнение поверх картинки */
+    background: rgba(0,0,0,0.7);
+
+    /* Внутренние отступы */
+    padding: var(--space-l);
+}
+
+/* CANVAS*/
+#bgCanvas {
+    /* фиксируем на весь экран */
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /* уводим назад */
+    z-index: -1;
+
+    /* не перехватывает клики */
+    pointer-events: none;
+}
+
+
+/* ГИТАРА  */
+.hanging-guitar {
+    /* абсолютное позиционирование */
+    position: absolute;
+
+    /* немного выходит за границы */
+    top: -20px;
+    right: -80px;
+
+    /* большой размер */
+    width: 400px;
+
+    /* адаптация под экран */
+    max-width: 30vw;
+
+    /* прозрачность */
+    opacity: 0.85;
+
+    /* точка вращения */
+    transform-origin: top center;
+
+    /* курсор */
+    cursor: pointer;
+
+    /* плавные эффекты */
+    transition: transform 0.2s ease;
+}
+
+/* АНИМАЦИЯ ГИТАРЫ
+ */
+@keyframes swing {
+    /* качание как маятник */
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(15deg); }
+    40%  { transform: rotate(-12deg); }
+    60%  { transform: rotate(8deg); }
+    80%  { transform: rotate(-4deg); }
+    100% { transform: rotate(0deg); }
+}
+
+/* 🔹 активное состояние */
+.hanging-guitar.swing {
+    /* запускаем анимацию */
+    animation: swing 1.2s ease;
+}
+
+
+/* УЛУЧШЕННОЕ ОФОРМЛЕНИЕ ТЕКСТА  */
+
+/*  декоративная линия сверху секции */
+section::before {
+    /* пустой псевдоэлемент */
+    content: "";
+
+    /* позиционирование */
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    /* линия на всю ширину */
+    width: 100%;
+    height: 2px;
+
+    /* градиент (почти незаметный красный) */
+    background: linear-gradient(90deg, transparent, #eb090945, transparent);
+
+    /* скрыта по умолчанию */
+    opacity: 0;
+
+    /* плавное появление */
+    transition: 0.4s;
+}
+
+section:hover::before {
+    /* появляется при наведении */
+    opacity: 1;
+}
+
+
+/*  ПАРАГРАФЫ (живой текст) */
+section p {
+    /* отступ снизу */
+    margin-bottom: 15px;
+
+    /* ограничение ширины текста */
+    max-width: 850px;
+
+    /* плавность */
+    transition: 0.25s;
+}
+
+section p:hover {
+    /* снова сдвиг вправо */
+    transform: translateX(6px);
+
+    /* снова белый цвет */
+    color: white;
+}
+
+
+/* H2 С АНИМАЦИЕЙ ЛИНИИ */
+h2 {
+    /* относительное позиционирование */
+    position: relative;
+
+    /* отступ снизу */
+    margin-bottom: 20px;
+}
+
+h2::after {
+    /* теперь уже НЕ стрелка */
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -6px;
+
+    /* линия начинается с 0 ширины */
+    width: 0;
+    height: 2px;
+
+    /* красный оттенок */
+    background: rgba(225, 14, 14, 0.4);
+
+    /* анимация */
+    transition: 0.4s;
+}
+
+section:hover h2::after {
+    /* линия растягивается */
+    width: 100%;
+}
+
+
+/*  H3 АКЦЕНТ*/
+h3 {
+    /* красная линия слева */
+    border-left: 3px solid rgba(246, 8, 8, 0.4);
+
+    /* отступ текста */
+    padding-left: 10px;
+
+    margin-top: 25px;
+}
+
+
+/*  ВЫДЕЛЕНИЕ КЛЮЧЕВЫХ СЛОВ*/
+.kw {
+    /* белый цвет */
+    color: #fff;
+
+    /* подчёркивание */
+    border-bottom: 1px solid rgba(235, 9, 9, 0.4);
+
+    transition: 0.25s;
+}
+
+.kw:hover {
+    border-color: rgba(235, 9, 9, 0.9);
+}
+
+/* красные — группы */
+.kw-red {
+    color: #ff6b6b;
+    border-bottom: 1px solid rgba(255, 107, 107, 0.4);
+}
+
+.kw-red:hover {
+    color: #ff8a8a;
+}
+
+/* золотые — даты */
+.kw-gold {
+    color: #f0c060;
+    border-bottom: 1px solid rgba(240, 192, 96, 0.4);
+}
+
+.kw-gold:hover {
+    color: #ffd97d;
+}
+
+
+/* ЭФФЕКТ "ЖИВОЙ СЕКЦИИ" */
+section:hover {
+    /* ещё одно изменение фона */
+    background: rgba(255,255,255,0.07);
+
+    /* лёгкий подъём */
+    transform: translateY(-3px);
+}
+
+
+/* СПИСОК ЖАНРОВ  */
+#genreList li {
+    /* отступ */
+    margin-bottom: 10px;
+
+    /* внутренние отступы */
+    padding: 10px 14px;
+
+    /* фон */
+    background: rgba(255,255,255,0.04);
+
+    /* скругление */
+    border-radius: 10px;
+
+    transition: 0.3s;
+}
+
+#genreList li:hover {
+    background: rgba(255,255,255,0.08);
+    transform: translateX(6px);
+}
+
+
+/*  ПОДСВЕТКА ПОИСКА
+*/
+.highlight {
+    /* красная подсветка */
+    background: rgba(255, 0, 0, 0.3);
+
+    padding: 2px 4px;
+
+    border-radius: 4px;
+}
+
+#searchInput {
+    /* ширина */
+    width: 100%;
+
+    /* отступы */
+    padding: 8px 12px;
+
+    /* фон */
+    background: rgba(255,255,255,0.08);
+
+    /* рамка */
+    border: 1px solid rgba(255,255,255,0.15);
+
+    /* скругление */
+    border-radius: 8px;
+
+    /* цвет текста */
+    color: #ddd;
+
+    /* убираем outline */
+    outline: none;
+
+    transition: 0.3s;
+}
+
+#searchInput:focus {
+    /* активное состояние */
+    border-color: rgba(225,14,14,0.5);
+
+    background: rgba(255,255,255,0.12);
+}
+
+img {
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/*   АДАПТИВ 
+ТЕЛЕФОНЫ  */
+
+@media (max-width: 480px) {
+
+    /* уменьшаем заголовок, чтобы не ломал экран */
+    .header h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    .layout { 
+        display: flex; 
+        flex-direction: column; 
+    }
+
+    /* меню становится вертикальным */
+    nav ul { 
+    display: flex; /* на всякий случай */ 
+    flex-direction: row; /* ключевое изменение */ 
+    justify-content: center; /* выравнивание по центру */ 
+    gap: 10px; }
+    /* основной layout — в одну колонку */
+
+    .sidebar { position: static; /* убираем sticky */ 
+        width: 100%; /* занимает всю ширину */ 
+         margin-top: 20px; /* отступ от контента сверху */ 
+         order: -1; 
+     }
+    /* уменьшаем боковые отступы */
+    main {
+        padding: 0 10px;
+    }
+
+    /* уменьшаем внутренние отступы секций */
+    section {
+        padding: 15px;
+    }
+
+.hanging-guitar { 
+   max-width: none;
+    width: 200px; /* уменьшаем размер */ 
+    right: -20px; /* ближе к краю */ 
+    top: -10px; /* чуть выше */ 
+    opacity: 0.4; /* менее навязчивая */ 
+}
+
+    /* кнопка занимает всю ширину */
+    button {
+        width: 100%;
+    }
+    .logo {
+     padding-top: 70px;
+    }
+}
+
+/* =
+   ПЛАНШЕТЫ И БОЛЬШИЕ ТЕЛЕФОНЫ */
+
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .layout { 
+        display: flex; 
+        flex-direction: column; 
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        order: -1; 
+    }
+
+    .hanging-guitar { 
+   max-width: none;
+    width: 240px; /* уменьшаем размер */ 
+    right: -20px; /* ближе к краю */ 
+    top: -10px; /* чуть выше */ 
+    opacity: 0.4; /* менее навязчивая */ 
+}
+
+    /* теперь колонка только на планшетах */
+    nav ul { 
+    display: flex; /* на всякий случай */ 
+    flex-direction: row; /* ключевое изменение */ 
+    justify-content: center; /* выравнивание по центру */ 
+    gap: 10px; }
+
+    .header h1 {
+        font-size: 42px;
+        text-align: center;
+    }
+
+    .float-left,
+    .float-right {
+        float: none;
+        display: block;
+        margin: 10px auto;
+    }
+
+        .logo {
+     padding-top: 100px;
+    }
+}
+
+
+/* 
+   НОУТБУКИ */
+
+@media (max-width: 1024px) {
+
+    /* немного уменьшаем заголовок */
+    .header h1 {
+        font-size: 55px;
+    }
+
+    /* уменьшаем расстояние между колонками */
+    .layout {
+        gap: 15px;
+    }
+}
+
+
+

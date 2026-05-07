@@ -1,0 +1,671 @@
+/* 
+    ПОДКЛЮЧЕНИЕ ШРИФТА*/
+@font-face {
+    font-family: 'Roomach';
+    src: url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype');
+}
+
+:root {
+    --space-m: 20px;
+    --svg-color: rgba(255, 255, 255, 0.55); /* приглушённый белый — не отвлекает от текста */
+}
+
+/* ОСНОВА СТРАНИЦЫ */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #000;
+    line-height: 1.8;
+    color: #ddd;
+    overflow-x: hidden;            /* скрываем горизонтальный скролл */
+    animation: pageFade 1s ease;   /* плавное появление страницы при загрузке */
+}
+
+/* Анимация плавного появления всей страницы */
+@keyframes pageFade {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* Плавный скролл при переходе по якорям (#id) */
+html {
+    scroll-behavior: smooth;
+}
+
+/*  CANVAS-ФОН */
+#bgCanvas {
+    /* фиксируем на весь экран */
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    /* уводим назад */
+    z-index: -1;
+
+    /* не перехватывает клики */
+    pointer-events: none;
+}
+
+
+/* 
+    ШАПКА (HEADER)
+   Фоновое изображение + тёмный затемняющий оверлей.
+   Внутри: логотип, гитара, заголовок, навигация.*/
+.header {
+    background: url("../images/header.jpg") center/cover no-repeat;
+    height: 250px;
+    position: relative;
+    border-bottom: 1px solid rgb(62, 61, 61);
+}
+
+/* Затемняющий слой поверх фото: центрирует всё по вертикали */
+.header .header-overlay {
+    background: rgba(0, 0, 0, 0.9);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-m);
+}
+
+/* Заголовок «Rock Knowledge Test» — кастомный шрифт + пульсация */
+.header h1 {
+    margin: 10px;
+    font-size: 80px;
+    font-family: 'Roomach', sans-serif;
+    color: white;
+    text-shadow:
+        0 0 10px rgba(255, 255, 255, 0.4),
+        0 0 25px rgba(255, 255, 255, 0.2);
+    animation: titlePulse 4s ease-in-out infinite;
+    transition: 0.3s;
+}
+
+/* При наведении заголовок немного увеличивается */
+.header h1:hover {
+    transform: scale(1.07);
+    letter-spacing: 1px;
+}
+
+/* Бесконечная пульсация свечения заголовка */
+@keyframes titlePulse {
+    0%,  100% { text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+    50%        { text-shadow: 0 0 20px rgba(255, 255, 255, 0.5); }
+}
+
+/*  ЛОГОТИП
+   Абсолютно позиционирован в левом верхнем углу шапки*/
+.logo {
+    position: absolute;
+    top: 45px;
+    left: 30px;
+    width: 100px;
+    transition: all 0.4s ease;
+}
+
+/* При наведении — увеличение + лёгкий поворот + свечение */
+.logo:hover {
+    transform: scale(1.15) rotate(-5deg);
+    filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.6));
+}
+
+/* НАВИГАЦИЯ В ШАПКЕ
+   Горизонтальный список ссылок (Главная, Жанры) */
+nav ul {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav a {
+    color: #ccc;
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* 
+    ОСНОВНОЙ КОНТЕНТ
+   Двухколонный layout: вопросы (flex:3) + сайдбар (flex:1)*/
+main {
+    max-width: 1200px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
+
+.layout {
+    display: flex;
+    gap: 30px;
+}
+
+.content { flex: 3; }
+.sidebar { flex: 1; }
+
+/* 
+   📄 СЕКЦИИ
+   Используются для итогового блока.
+   Начально скрыты — появляются через IntersectionObserver (JS). */
+section {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.6s ease;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 25px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+}
+
+/* Класс .show добавляется JS когда секция входит в viewport */
+section.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ОБЩИЕ СТИЛИ КНОПОК */
+button {
+    background: linear-gradient(135deg, #444, #888);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+/* 
+    СТРОКА ВОПРОСА (.quiz-row)
+   Flex-контейнер: изображение слева, ответы справа */
+.quiz-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-top: 15px;
+}
+
+/* Картинка в вопросе: квадрат с обрезкой по центру */
+.quiz-img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+
+.quiz-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+}
+
+/* Столбец кнопок-ответов */
+.answers {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Одна кнопка ответа */
+.answer {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.answer:hover {
+    transform: translateX(8px) scale(1.03);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Правильный ответ — зелёная подсветка */
+.answer.correct-active {
+    background: #2ecc71;
+    color: black;
+    box-shadow: 0 0 20px rgba(46, 204, 113, 0.7);
+}
+
+/* Неправильный ответ — красная подсветка */
+.answer.wrong {
+    background: #e74c3c;
+    box-shadow: 0 0 20px rgba(231, 76, 60, 0.6);
+}
+
+/* 
+   АУДИО-БЛОК
+   Кнопка воспроизведения с пульсирующим фоном */
+.audio-box {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Пульсирующий радиальный фон — анимированная подсветка */
+.audio-box::before {
+    content: "";
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1), transparent);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%   { transform: scale(0.5); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Кнопка воспроизведения */
+.play-btn {
+    padding: 12px 20px;
+    background: #444;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.play-btn:hover {
+    background: #666;
+    transform: scale(1.05);
+}
+
+/* 
+   📚 САЙДБАР
+   position:sticky — остаётся видим при скролле */
+.sidebar {
+    position: sticky;
+    top: 20px;
+    height: fit-content;
+}
+
+/* Базовый стиль всех блоков сайдбара */
+.sidebar > div {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+/*  НАВИГАЦИЯ ПО ВОПРОСАМ (.info-box1)
+   Список ссылок с цветовой индикацией результата ответа */
+.info-box1 {
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.info-box1 h3 {
+    margin-bottom: 15px;
+    font-size: 22px;
+    color: white;
+}
+
+/* Ссылка на конкретный вопрос */
+.info-box1 a {
+    display: block;
+    padding: 4px 6px;
+    margin-bottom: 6px;
+    color: #aaa;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.info-box1 a:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    transform: translateX(6px);
+}
+
+/* Активный вопрос (текущий в viewport) */
+.info-box1 a.active {
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+}
+
+/* Правильно отвеченный вопрос — зелёный */
+.info-box1 a.done {
+    color: #2ecc53;
+    background: rgba(12, 60, 21, 0.15);
+}
+
+/* Неправильно отвеченный вопрос — красный */
+.info-box1 a.wrong-link {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.15);
+}
+
+/*  БЛОК ПРОГРЕССА (.progress-box)
+   Показывает текстовый счёт + визуальный прогресс-бар.
+ */
+.progress-box {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.progress-box h3 {
+    margin: 0 0 10px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Текстовый счётчик «Вопросов: X / Y | Правильных: Z» */
+#progress {
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+/* Контейнер полоски прогресса */
+#progressBar {
+    margin-top: 10px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+/* Заливка прогресс-бара — ширина меняется через JS */
+#progressFill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, rgba(235, 9, 9, 0.8), rgba(235, 9, 9, 0.4));
+    border-radius: 2px;
+    transition: width 0.4s ease;
+}
+
+/*  КАРТОЧКА ВОПРОСА (.question)
+   Glassmorphism, анимация появления и hover-эффект
+ */
+.question {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+
+    /* Начальное состояние для анимации появления */
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.4s ease;
+}
+
+/* Класс .show добавляется когда вопрос входит в viewport */
+.question.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.question:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Активный вопрос (текущий в зоне видимости) */
+.question.active {
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+}
+
+/* 
+ INLINE SVG-ИКОНКИ */
+.svg-icon {
+    display: inline-block;
+    vertical-align: middle;    /* выравнивание по середине строки текста */
+    flex-shrink: 0;
+    opacity: 0.7;              /* приглушена — не доминирует над текстом */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* При наведении на родительский элемент иконка оживает */
+a:hover .svg-icon,
+p:hover .svg-icon,
+h2:hover .svg-icon,
+h3:hover .svg-icon {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* ── Молния (.svg-icon--bolt) ──
+ */
+.svg-icon--bolt {
+    width: 11px;
+    height: 17px;
+    margin-right: 4px;
+    color: #e74c3c;            /* красный — рок-акцент */
+    animation: boltFlicker 3.5s ease-in-out infinite;
+}
+
+/* Молния мигает редко — имитирует случайный электроразряд */
+@keyframes boltFlicker {
+    0%,  88%, 100% { opacity: 0.7; }
+    90%             { opacity: 0.15; }
+    92%             { opacity: 0.9; }
+    94%             { opacity: 0.25; }
+    96%             { opacity: 0.8; }
+}
+
+/* АНИМАЦИИ ОТВЕТО */
+
+/* Правильный ответ: лёгкий масштаб-bounce */
+@keyframes correctAnim {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+/* Неправильный ответ: тряска влево-вправо */
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    25%  { transform: translateX(-5px); }
+    50%  { transform: translateX(5px); }
+    75%  { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+}
+
+/* ПОДСВЕТКА ПОИСКА */
+.highlight {
+    background: rgba(255, 0, 0, 0.3);
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+/*  ПОДВЕШЕННАЯ ГИТАРА */
+.hanging-guitar {
+    position: absolute;
+    mix-blend-mode: lighten;
+    top: -20px;
+    right: 20px;
+    left: auto;
+    filter: brightness(0.7) contrast(0.9) blur(0.3px);
+    width: 120px;
+    opacity: 0.85;
+    transform-origin: top center; /* точка подвеса — верх по центру */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+/* Псевдо-верёвка над гитарой */
+.hanging-guitar::before {
+    content: "";
+    position: absolute;
+    top: -80px;
+    left: 50%;
+    width: 2px;
+    height: 80px;
+    background: #aaa;
+    transform: translateX(-50%);
+}
+
+/* Анимация затухающего раскачивания (добавляется JS) */
+@keyframes swing {
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(15deg); }
+    40%  { transform: rotate(-12deg); }
+    60%  { transform: rotate(8deg); }
+    80%  { transform: rotate(-4deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.hanging-guitar.swing {
+    animation: swing 1.7s ease;
+}
+
+/* ФУТЕР*/
+.footer {
+    background: url("../images/footer.jpg") center/cover no-repeat;
+    text-align: center;
+}
+
+.footer-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 30px;
+}
+
+/* АДАПТИВ  */
+@media (max-width: 480px) {
+
+    /* уменьшаем заголовок, чтобы не ломал экран */
+    .header h1 {
+        font-size: 28px;
+        text-align: center;
+    }
+    .layout { 
+        display: flex; 
+        flex-direction: column; 
+    }
+
+    /* меню становится вертикальным */
+    nav ul { 
+    display: flex; /* на всякий случай */ 
+    flex-direction: row; /* ключевое изменение */ 
+    justify-content: center; /* выравнивание по центру */ 
+    gap: 10px; }
+    /* основной layout — в одну колонку */
+
+    .sidebar { position: static; /* убираем sticky */ 
+        width: 100%; /* занимает всю ширину */ 
+         margin-top: 20px; /* отступ от контента сверху */ 
+         order: -1; 
+     }
+    /* уменьшаем боковые отступы */
+    main {
+        padding: 0 10px;
+    }
+
+    /* уменьшаем внутренние отступы секций */
+    section {
+        padding: 15px;
+    }
+
+.hanging-guitar { 
+   max-width: none;
+    width: 80px; /* уменьшаем размер */ 
+    right: -20px; /* ближе к краю */ 
+    top: -10px; /* чуть выше */ 
+    opacity: 0.4; /* менее навязчивая */ 
+}
+
+    /* кнопка занимает всю ширину */
+    button {
+        width: 100%;
+    }
+    .logo {
+     padding-top: 100px;
+    }
+}
+
+/* =
+   ПЛАНШЕТЫ И БОЛЬШИЕ ТЕЛЕФОНЫ */
+
+
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+    .layout { 
+        display: flex; 
+        flex-direction: column; 
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        order: -1; 
+    }
+
+    .hanging-guitar { 
+   max-width: none;
+    width: 100px; /* уменьшаем размер */ 
+    right: -20px; /* ближе к краю */ 
+    top: -10px; /* чуть выше */ 
+    opacity: 0.4; /* менее навязчивая */ 
+}
+
+    /* теперь колонка только на планшетах */
+    nav ul { 
+    display: flex; /* на всякий случай */ 
+    flex-direction: row; /* ключевое изменение */ 
+    justify-content: center; /* выравнивание по центру */ 
+    gap: 10px; }
+
+    .header h1 {
+        font-size: 42px;
+        text-align: center;
+    }
+
+    .float-left,
+    .float-right {
+        float: none;
+        display: block;
+        margin: 10px auto;
+    }
+
+        .logo {
+     padding-top: 100px;
+    }
+}
+
+
+/* 
+   НОУТБУКИ */
+
+@media (max-width: 1024px) {
+
+    /* немного уменьшаем заголовок */
+    .header h1 {
+        font-size: 55px;
+    }
+
+    /* уменьшаем расстояние между колонками */
+    .layout {
+        gap: 15px;
+    }
+}
+
+
+

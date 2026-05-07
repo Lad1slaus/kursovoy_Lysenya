@@ -1,0 +1,1000 @@
+
+
+/* ШРИФТЫ */
+
+/* Подключаем кастомный шрифт Roomach из папки fonts */
+@font-face {
+    font-family: 'Roomach';
+    src: url('../fonts/RoomachRegular-6Rpx6.ttf') format('truetype');
+}
+
+
+/* БАЗОВЫЕ СТИЛИ */
+
+body {
+    margin: 0;                        /* убираем браузерный отступ */
+    font-family: Arial, sans-serif;   /* базовый шрифт */
+    background: #000;                 /* чёрный фон под canvas */
+    color: #ddd;                      /* светло-серый текст по умолчанию */
+    line-height: 1.8;                 /* межстрочный интервал */
+    animation: pageFade 0.8s ease;   /* плавное появление страницы при загрузке */
+    cursor: default;                  /* обычный курсор везде (не текстовый) */
+    overflow-x: hidden;               /* скрываем горизонтальный скролл */
+}
+
+/* Анимация появления всей страницы: от прозрачного+сжатого к нормальному */
+@keyframes pageFade {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+
+/* ШАПКА */
+
+.header {
+    background: url("../images/header.jpg") center/cover no-repeat; /* фоновое изображение */
+    height: 280px;
+    position: relative;               /* нужен для позиционирования дочерних элементов */
+    border-bottom: 1px solid rgb(240, 232, 232);
+}
+
+/* Шапка появляется, приезжая сверху */
+@keyframes headerFade {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Полупрозрачный чёрный слой поверх фото шапки */
+.header-overlay {
+    background: rgba(0, 0, 0, 0.9);  /* 90% затемнение */
+    height: 100%;
+    display: flex;
+    justify-content: center;          /* центрируем дочерние элементы по горизонтали */
+    align-items: center;              /* по вертикали */
+    padding: 20px;
+}
+
+/* ── Логотип ── */
+.logo {
+    position: absolute;   /* позиционируем относительно .header */
+    top: 30px;
+    left: 30px;
+    width: 100px;
+    transition: 0.4s;
+}
+
+/* ── Обёртка заголовка группы ── */
+.title-video-wrapper {
+    position: relative;
+    width: 420px;
+    max-width: 90%;
+    height: 250px;
+}
+
+/* ── Картинка-название группы (кликабельный триггер видео) ── */
+.title-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;            /* вписываем изображение без обрезки */
+    cursor: pointer;                /* намекаем, что элемент кликабельный */
+    padding-bottom: 30px;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.25));
+    transition: 0.4s;
+    animation: titlePulse 6s ease-in-out infinite; /* бесконечная пульсация */
+}
+
+.title-img:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
+
+/* Плавная пульсация свечения заголовка (туда-обратно бесконечно) */
+@keyframes titlePulse {
+    0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.2)); }
+    50%       { filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.35)); }
+}
+
+
+/*  ОСНОВНОЙ LAYOUT */
+
+/* Контейнер: content (flex:3) + sidebar (flex:1) в одну строку */
+.layout {
+    display: flex;
+    gap: 30px;                 /* отступ между колонками */
+    max-width: 1200px;
+    margin: 30px auto 40px;    /* центрируем и добавляем отступы сверху/снизу */
+    padding: 0 20px;
+}
+
+/* Основная зона контента — занимает ¾ ширины */
+.content {
+    flex: 3;
+}
+
+/* Сайдбар — ¼ ширины; sticky — прилипает к верху при скролле */
+.sidebar {
+    flex: 1;
+    position: sticky;
+    top: 30px;               /* расстояние от верха viewport при прилипании */
+    height: fit-content;     /* высота по содержимому (не по всей странице) */
+}
+
+
+/*  СЕКЦИИ
+    */
+
+section {
+    /* ── Стеклянный эффект ── */
+    background: rgba(255, 255, 255, 0.05);  /* почти прозрачный белый фон */
+    backdrop-filter: blur(10px);             /* размытие того, что под секцией */
+
+    margin-bottom: 30px;
+    padding: 35px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+    /* ── Начальное состояние для анимации появления ── */
+    opacity: 0;                      /* невидима при загрузке */
+    transform: translateY(30px);     /* смещена на 30px вниз */
+    transition: all 0.5s ease;       /* плавный переход при добавлении .show */
+
+    position: relative;
+    overflow: hidden;                /* скрываем декоративную линию ::before за границей */
+}
+
+/* Класс .show добавляется через JS (IntersectionObserver) */
+section.show {
+    opacity: 1;
+    transform: translateY(0); /* возвращаем на место */
+}
+
+/* При наведении фон секции немного светлеет */
+section:hover {
+    background: rgba(255, 255, 255, 0.07);
+}
+
+/* Декоративная красная линия в верхней части секции.
+   По умолчанию невидима — появляется при наведении. */
+section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #eb090945, transparent);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+section:hover::before {
+    opacity: 1; /* показываем линию при наведении */
+}
+
+
+/* ТИПОГРАФИКА*/
+
+/* ── Параграфы ── */
+section p {
+    margin-bottom: 15px;
+    max-width: 800px;    /* ограничиваем ширину для читаемости */
+    transition: 0.2s;
+}
+
+/* Лёгкий сдвиг вправо и осветление при наведении */
+section p:hover {
+    transform: translateX(4px);
+    color: white;
+}
+
+/* ── H2: главный заголовок секции ── */
+h2 {
+    color: white;
+    margin-bottom: 15px;
+    position: relative; /* нужен для позиционирования ::after (подчёркивание) */
+}
+
+/* Анимированная красная линия под H2 (нулевой ширины → 100% при наведении на секцию) */
+h2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;                        /* скрыта по умолчанию */
+    height: 2px;
+    background: #e10e0e40;
+    transition: 0.4s;
+}
+
+section:hover h2::after {
+    width: 100%; /* разворачиваем при наведении на секцию */
+}
+
+/* ── H3: подзаголовок с красной левой полосой ── */
+h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+    border-left: 3px solid #f608085d; /* акцентная вертикальная полоса */
+    padding-left: 10px;
+}
+
+
+/* ГАЛЕРЕЯ КАРТОЧЕК */
+
+/* Адаптивная сетка: колонки минимум 160px, автоматически заполняют строку */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+/* ── Одна карточка ── */
+.card {
+    background: rgba(83, 82, 82, 0.03); /* почти невидимый тёмный фон */
+    padding: 10px;
+    border-radius: 14px;
+    text-align: center;
+    transition: 0.3s;
+    cursor: pointer; /* кликабельный элемент */
+}
+
+/* Изображение внутри карточки: фиксированная высота, обрезка по центру */
+.card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;    /* кадрируем изображение без искажений */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(109, 108, 108, 0.24);
+}
+
+/* При наведении карточка поднимается (translateY) и увеличивается (scale) */
+.card:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.2);
+}
+
+
+/*  САЙДБАР*/
+
+/* ── Стандартный инфо-блок (.info-box) ── */
+.info-box {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: 0.3s;
+}
+
+/* При наведении блок немного съезжает влево */
+.info-box:hover {
+    transform: translateX(-3px);
+}
+
+/* Ссылки внутри .info-box: блочные, серые */
+.info-box a {
+    display: block;        /* каждая ссылка на отдельной строке */
+    color: #ccc;
+    text-decoration: none;
+    margin-bottom: 6px;
+    transition: 0.2s;
+}
+
+/* При наведении ссылка белеет и сдвигается вправо */
+.info-box a:hover {
+    color: white;
+    transform: translateX(4px);
+}
+
+/* ── Инфо-блок для поля поиска (.info-box1) ──
+   Идентичен .info-box, но ссылки при наведении краснеют,
+   а не белеют. Используется для визуального разделения
+   строки поиска от навигационных блоков. */
+.info-box1 {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    transition: 0.3s;
+}
+
+.info-box1:hover {
+    transform: translateX(-3px);
+}
+
+.info-box1 a {
+    display: block;
+    color: #ccc;
+    text-decoration: none;
+    margin-bottom: 6px;
+    transition: 0.2s;
+}
+
+/* Красный ховер для ссылок в блоке поиска */
+.info-box1 a:hover {
+    color: rgb(179, 38, 38);
+    transform: translateX(4px);
+}
+
+/* ── Поле ввода поиска ── */
+#searchInput {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    color: #ddd;
+    font-size: 14px;
+    outline: none;                   /* убираем браузерный синий контур */
+    transition: 0.3s;
+    box-sizing: border-box;          /* BUG-FIX: padding включается в ширину, поле не выезжает за края */
+}
+
+/* Placeholder — слабее по прозрачности */
+#searchInput::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+}
+
+/* При фокусе: красноватая рамка + чуть светлее фон */
+#searchInput:focus {
+    border-color: rgba(225, 14, 14, 0.4);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+
+/* ФУТЕР*/
+
+.footer {
+    background: url("../images/footer.jpg") center/cover no-repeat;
+    text-align: center;
+}
+
+/* Полупрозрачный оверлей поверх фото футера */
+.footer-overlay {
+    background: rgba(0, 0, 0, 0.8);
+    padding: 30px;
+}
+
+
+/* МОДАЛЬНОЕ ОКНО*/
+
+/* ── Фоновый оверлей ──
+   Занимает весь экран. По умолчанию невидим (opacity:0 + visibility:hidden).
+   Класс .show делает его видимым. */
+.modal {
+    position: fixed;           /* поверх всего контента */
+    inset: 0;                  /* top:0; right:0; bottom:0; left:0 */
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    visibility: hidden;        /* полностью скрыт (не кликабелен) */
+    transition: 0.4s;
+    z-index: 999;              /* выше всего остального */
+}
+
+/* Показываем модалку */
+.modal.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ── Контент внутри модального окна ── */
+.modal-content {
+    background: #111;
+    padding: 25px;
+    border-radius: 12px;
+    text-align: center;
+
+    max-width: 400px;
+    width: 90%;
+    max-height: 80vh;          /* не выходим за 80% высоты экрана */
+    overflow-y: auto;          /* прокрутка если контента много */
+
+    position: relative;
+
+    transform: scale(0.7);     /* начальное состояние: сжат */
+    transition: 0.4s;
+
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+}
+
+/* Контент разворачивается до полного размера */
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+/* Изображение внутри модалки */
+.modal img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* ── Кнопка закрытия «×» ── */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 26px;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+    background: none;          /* убираем фон кнопки */
+    border: none;              /* убираем рамку */
+}
+
+.close:hover {
+    transform: scale(1.2); /* крестик увеличивается при наведении */
+}
+
+/* Кастомный скроллбар внутри модалки (только WebKit) */
+.modal-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.modal-content::-webkit-scrollbar-thumb {
+    background: #ffffff;
+    border-radius: 10px;
+}
+
+
+/* СПИСОК ТРЕКОВ*/
+
+/* Нумерованный список треков внутри модалки */
+.track-list {
+    text-align: left;
+    padding-left: 20px;
+    margin-top: 10px;
+    list-style: none;          /* убираем браузерные маркеры (номера ставим сами в JS) */
+}
+
+.track-list li {
+    margin-bottom: 6px;
+    color: #ddd;
+    transition: 0.2s;
+}
+
+/* Каждый трек сдвигается вправо при наведении */
+.track-list li:hover {
+    color: white;
+    transform: translateX(3px);
+}
+
+
+/* ПОДСВЕТКА РЕЗУЛЬТАТОВ ПОИСКА*/
+
+/* Обёртка вокруг найденного текста */
+.highlight {
+    background: rgba(255, 0, 0, 0.3); /* красный полупрозрачный фон */
+    color: white;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+
+/* ВИДЕО ПЛЕЕР */
+
+/* ── Контейнер плеера ──
+   Прикреплён к правому нижнему углу экрана.
+   По умолчанию невидим и смещён вниз.
+   Класс .show делает его видимым.
+   cursor:grab — указывает, что элемент можно перетаскивать. */
+.video-modal {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+
+    width: 360px;
+    max-width: 90%;
+
+    opacity: 0;
+    transform: translateY(20px) scale(0.9); /* начальное состояние: ниже и меньше */
+    pointer-events: none;                    /* не перехватывает клики когда скрыт */
+    transition: 0.4s ease;
+
+    z-index: 500;
+    cursor: grab;
+}
+
+/* Показываем плеер */
+.video-modal.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto; /* разрешаем клики */
+}
+
+/* ── Внутренний блок с видео ── */
+.video-box {
+    position: relative;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;              /* скругляем углы видео через overflow */
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* Видео занимает всю ширину блока */
+.video-box video {
+    width: 100%;
+    display: block;               /* убираем лишний отступ снизу у inline-элемента */
+}
+
+/* ── Кнопка закрытия плеера ── */
+.video-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.6);
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.video-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Смена курсора на «захват» при активном перетаскивании */
+.video-modal:active {
+    cursor: grabbing;
+}
+
+
+/*  ГИТАРА */
+
+/* ── Изображение гитары в шапке ──
+   transform-origin: top center — точка вращения сверху по центру,
+   имитирует подвешенную гитару, качающуюся от грифа вниз. */
+.hanging-guitar {
+    position: absolute;
+    top: 0;
+    right: 20px;
+    left: auto;
+
+    width: 120px;
+    opacity: 0.85;
+
+    filter: brightness(0.7) contrast(0.9) blur(0.3px); /* приглушаем и слегка размываем */
+    mix-blend-mode: lighten;         /* смешивание с фоном для мягкой интеграции */
+
+    transform-origin: top center;   /* точка подвеса — вверху */
+
+    cursor: pointer;                 /* кликабельный элемент */
+    transition: transform 0.2s ease;
+}
+
+/* ПРИМЕЧАНИЕ: .hanging-guitar::before (псевдо-верёвка) убран —
+   псевдоэлементы на <img> не отображаются ни в одном браузере,
+   т.к. img — void-элемент без содержимого. Если нужна верёвка,
+   следует обернуть <img> в <div> и добавить ::before к нему. */
+
+/* Анимация раскачивания: затухающие колебания (большой угол → меньше → ноль) */
+@keyframes swing {
+    0%   { transform: rotate(0deg); }
+    20%  { transform: rotate(15deg); }   /* первый мах вправо */
+    40%  { transform: rotate(-12deg); }  /* мах влево */
+    60%  { transform: rotate(8deg); }    /* уменьшающийся мах вправо */
+    80%  { transform: rotate(-4deg); }   /* слабый мах влево */
+    100% { transform: rotate(0deg); }    /* возврат в исходное положение */
+}
+
+/* Класс .swing добавляется через JS при клике на гитару */
+.hanging-guitar.swing {
+    animation: swing 1.8s ease; /* одноразовая анимация (не infinite) */
+}
+
+
+
+/* Canvas-фон на весь экран */
+#bgCanvas {
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: -1;
+
+    /* canvas не мешает кликам */
+    pointer-events: none;
+}
+
+
+
+
+/* ФОТО ВНУТРИ ТЕКСТА */
+
+/* ── Обёртка параграфа с фото ──
+   Псевдоэлемент ::after с clear:both нужен для clearfix:
+   без него родительский блок сколлапсирует (высота станет 0),
+   если внутри есть float-элементы. */
+.text-with-photo {
+    margin-bottom: 20px;
+}
+
+.text-with-photo::after {
+    content: "";
+    display: table;
+    clear: both; /* сбрасываем float, чтобы родитель получил правильную высоту */
+}
+
+/* ── Общие стили figure-вставки ── */
+.inline-photo {
+    margin: 0;                              /* убираем браузерный отступ у <figure> */
+    border-radius: 12px;
+    overflow: hidden;                        /* скругляем углы изображения через overflow */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    position: relative;                      /* нужен для ::before (декоративная линия) */
+    transition: 0.4s;
+}
+
+/* Декоративная красная линия вверху фото (gradient от прозрачного к красному и обратно) */
+.inline-photo::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(235, 9, 9, 0.6), transparent);
+    z-index: 1; /* поверх изображения */
+}
+
+/* ── Фото справа от текста (float-right) ── */
+.inline-photo.float-right {
+    float: right;
+    width: 210px;
+    margin: 4px 0 16px 24px;   /* слева отступ от текста (24px), снизу (16px) */
+    shape-outside: margin-box; /* текст огибает фото по форме margin-box */
+}
+
+/* ── Фото слева от текста (float-left) ── */
+.inline-photo.float-left {
+    float: left;
+    width: 210px;
+    margin: 4px 24px 16px 0;   /* справа отступ от текста (24px), снизу (16px) */
+    shape-outside: margin-box;
+}
+
+/* ── Само изображение ── */
+.inline-photo img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;                      /* кадрируем без искажений */
+    display: block;
+    filter: brightness(0.8) saturate(0.9);  /* немного приглушаем */
+    transition: 0.4s ease;
+}
+
+/* При наведении: осветляем и слегка зумируем изображение */
+.inline-photo:hover img {
+    filter: brightness(1) saturate(1.1);
+    transform: scale(1.04);
+}
+
+/* При наведении на figure: усиливаем тень и делаем рамку заметнее */
+.inline-photo:hover {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8);
+}
+
+/* ── Подпись под фото (figcaption) ── */
+.inline-photo figcaption {
+    padding: 7px 10px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.45);
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    letter-spacing: 0.3px;
+    transition: 0.3s;
+}
+
+/* Подпись становится немного ярче при наведении */
+.inline-photo:hover figcaption {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+
+/* АДАПТИВНОСТЬ */
+
+/* ── Планшеты и широкие телефоны (до 900px) ── */
+@media (max-width: 900px) {
+    /* Переключаем layout в вертикальный столбец */
+    .layout {
+        flex-direction: column;
+    }
+
+    /* Убираем sticky — на мобильных лишнее */
+    .sidebar {
+        position: static;
+    }
+
+    /* Уменьшаем паддинг секций */
+    section {
+        padding: 25px;
+    }
+
+    /* Мини-плеер занимает почти всю ширину экрана */
+    .video-modal {
+        width: 90%;
+        right: 5%;
+        left: 5%;
+    }
+
+    /* Фото перестаёт обтекаться текстом — становится полноширинным блоком */
+    .inline-photo.float-right,
+    .inline-photo.float-left {
+        float: none;
+        width: 100%;
+        margin: 0 0 16px 0;
+    }
+}
+
+/* ── Мобильные телефоны (до 480px) ──
+
+   Для корректной работы order у контента принудительно ставим 1. */
+@media (max-width: 480px) {
+    /* Включаем flex-колонку (на 900px уже включена, но дублируем для надёжности) */
+    .layout {
+        flex-direction: column;
+        gap: 16px;        /* уменьшаем отступ между блоками */
+        padding: 0 12px;  /* меньше боковые поля на маленьком экране */
+    }
+
+    /* Сайдбар встаёт ПЕРВЫМ в колонке (перед контентом) */
+    .sidebar {
+        order: -1;        /* отрицательное значение → элемент поднимается в начало */
+        position: static; /* убираем sticky */
+        width: 100%;
+    }
+
+    /* Контент встаёт вторым */
+    .content {
+        order: 1;
+        width: 100%;
+    }
+
+    /* Уменьшаем паддинг секций ещё больше */
+    section {
+        padding: 16px;
+    }
+
+    /* Сворачиваем шапку по высоте */
+    .header {
+        height: 200px;
+    }
+
+    /* Логотип чуть меньше */
+    .logo {
+        width: 70px;
+        top: 16px;
+        left: 16px;
+    }
+
+    /* Заголовок группы компактнее */
+    .title-img {
+        padding-bottom: 10px;
+    }
+
+    /* Карточки в галерее — минимум 130px (меньше колонок) */
+    .gallery {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 14px;
+    }
+
+    /* Плеер занимает всю ширину */
+    .video-modal {
+        width: 96%;
+        right: 2%;
+        left: 2%;
+        bottom: 10px;
+    }
+}
+
+
+/* КЛЮЧЕВЫЕ СЛОВА В ТЕКСТЕ*/
+
+/* ── Базовый стиль .kw ──
+   Белый жирный текст с тонкой красной линией снизу.
+   Используется для названий песен, альбомов, терминов. */
+.kw {
+    color: #fff;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(235, 9, 9, 0.45);
+    padding-bottom: 1px;
+    transition: border-color 0.25s, color 0.25s;
+    cursor: default; /* не показываем текстовый курсор */
+}
+
+.kw:hover {
+    border-color: rgba(235, 9, 9, 0.9); /* линия становится ярче */
+    color: #fff;
+}
+
+/* ── .kw-gold — золотой акцент ──
+   Для дат, рекордов, числовых данных. */
+.kw-gold {
+    color: #f0c060;
+    border-bottom: 1px solid rgba(240, 192, 96, 0.4);
+    font-weight: 500;
+    padding-bottom: 1px;
+    transition: 0.25s;
+    cursor: default;
+}
+
+.kw-gold:hover {
+    border-color: rgba(240, 192, 96, 0.9);
+    color: #ffd97d; /* чуть светлее при наведении */
+}
+
+/* ── .kw-red — красный акцент ──
+   Для названий групп, лейблов, ключевых понятий. */
+.kw-red {
+    color: #ff6b6b;
+    border-bottom: 1px solid rgba(255, 107, 107, 0.35);
+    font-weight: 500;
+    padding-bottom: 1px;
+    transition: 0.25s;
+    cursor: default;
+}
+
+.kw-red:hover {
+    border-color: rgba(255, 107, 107, 0.85);
+    color: #ff8585;
+}
+
+/* ── .kw-blue — голубой акцент ──
+   Для имён участников группы. */
+.kw-blue {
+    color: #7ec8e3;
+    border-bottom: 1px solid rgba(126, 200, 227, 0.35);
+    font-weight: 500;
+    padding-bottom: 1px;
+    transition: 0.25s;
+    cursor: default;
+}
+
+.kw-blue:hover {
+    border-color: rgba(126, 200, 227, 0.85);
+    color: #a5d9ee;
+}
+
+
+/*  ФАКТ-БЛОК (.fact-box)*/
+
+/* Блок с интересным фактом: красная левая полоса + красноватый фон */
+.fact-box {
+    background: rgba(235, 9, 9, 0.07);           /* очень слабый красный фон */
+    border-left: 3px solid rgba(235, 9, 9, 0.5); /* красная вертикальная полоса */
+    border-radius: 0 10px 10px 0;                 /* скругление только справа */
+    padding: 14px 18px;
+    margin: 20px 0;
+    font-size: 0.93em;
+    color: #ccc;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* При наведении фон и рамка становятся насыщеннее */
+.fact-box:hover {
+    background: rgba(235, 9, 9, 0.11);
+    border-left-color: rgba(235, 9, 9, 0.8);
+}
+
+/* Жирный текст внутри факт-блока — белый */
+.fact-box strong {
+    color: #fff;
+    font-weight: 500;
+}
+
+
+/*ТАЙМЛАЙН (.timeline)*/
+
+/* ── Контейнер таймлайна ──
+   Вертикальный flex-столбец. padding-left освобождает место
+   для вертикальной линии (::before) и точек (item::before). */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 24px 0;
+    position: relative;   /* нужен для ::before (линия) */
+    padding-left: 28px;
+}
+
+/* Вертикальная линия слева, соединяющая все события.
+   Gradient: сверху насыщеннее → снизу прозрачнее. */
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 7px;            /* выравниваем по центру точек (10px точка, offset 7px) */
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: linear-gradient(to bottom, rgba(235,9,9,0.6), rgba(235,9,9,0.1));
+}
+
+/* ── Одно событие таймлайна ── */
+.timeline-item {
+    position: relative;   /* нужен для ::before (точка на линии) */
+    padding: 10px 0 10px 16px;
+    transition: 0.2s;
+}
+
+/* Красная круглая точка на вертикальной линии */
+.timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -22px;           /* выравниваем по вертикальной линии */
+    top: 15px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;    /* делаем круглой */
+    background: rgba(235, 9, 9, 0.7);
+    border: 2px solid #000; /* чёрный ободок для контраста с фоном */
+    transition: 0.3s;
+}
+
+/* При наведении точка загорается */
+.timeline-item:hover::before {
+    background: #e10e0e;
+    box-shadow: 0 0 8px rgba(235, 9, 9, 0.6);
+}
+
+/* Год события: маленький, красноватый, заглавными буквами */
+.timeline-year {
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(235, 9, 9, 0.8);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+}
+
+/* Текст события: средний размер, серый */
+.timeline-text {
+    font-size: 14px;
+    color: #bbb;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* При наведении текст становится чуть светлее */
+.timeline-item:hover .timeline-text {
+    color: #ddd;
+}
+
+/* ── Молния (.svg-icon--bolt) ──
+   Место: строка «Итоги квиза» в блоке прогресса сайдбара.
+   Стоит перед словом «Итоги» — <svg ...>⚡</svg> Итоги квиза
+   Красная, мигает с редкими вспышками (boltFlicker). */
+.svg-icon--bolt {
+    width: 22px;
+    height: 26px;
+    margin-right: 4px;
+    color: #e74c3c;            /* красный — рок-акцент */
+    animation: boltFlicker 3.5s ease-in-out infinite;
+}
+
+/* Молния мигает редко — имитирует случайный электроразряд */
+@keyframes boltFlicker {
+    0%,  88%, 100% { opacity: 0.7; }
+    90%             { opacity: 0.15; }
+    92%             { opacity: 0.9; }
+    94%             { opacity: 0.25; }
+    96%             { opacity: 0.8; }
+}
