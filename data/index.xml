@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genres>
+
+    <genre>
+        <name>Классический рок</name>
+        <description>Традиционное звучание 60–70-х годов</description>
+    </genre>
+
+    <genre>
+        <name>Хард-рок</name>
+        <description>Более тяжёлый и энергичный стиль</description>
+    </genre>
+
+    <genre>
+        <name>Панк-рок</name>
+        <description>Простой, быстрый и протестный жанр</description>
+    </genre>
+
+    <genre>
+        <name>Хэви-метал</name>
+        <description>Мощное звучание и гитарные риффы</description>
+    </genre>
+
+    <genre>
+        <name>Трэш-метал</name>
+        <description>Высокая скорость и агрессия</description>
+    </genre>
+
+    <genre>
+        <name>Блэк-метал</name>
+        <description>Мрачная атмосфера и экстремальный звук</description>
+    </genre>
+
+    <genre>
+        <name>Альтернативный рок</name>
+        <description>Экспериментальный подход</description>
+    </genre>
+
+    <genre>
+        <name>Дэткор</name>
+        <description>Брутальные брейкдауны и гроулинг</description>
+    </genre>
+
+    <genre>
+        <name>Металкор</name>
+        <description>Сочетание мелодики и агрессии</description>
+    </genre>
+
+    <genre>
+        <name>Нью-метал</name>
+        <description>Смесь металла, рэпа и альтернативы</description>
+    </genre>
+
+</genres>

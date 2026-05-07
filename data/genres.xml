@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genres>
+
+    <genre id="classic">
+        <name>Классический рок</name>
+        <bands>
+            <band>The Beatles</band>
+            <band>The Rolling Stones</band>
+        </bands>
+    </genre>
+
+    <genre id="hard">
+        <name>Хард-рок</name>
+        <bands>
+            <band>AC/DC</band>
+            <band>Led Zeppelin</band>
+            <band>Black Sabbath</band>
+        </bands>
+    </genre>
+
+    <genre id="punk">
+        <name>Панк-рок</name>
+        <bands>
+            <band>Ramones</band>
+            <band>Sex Pistols</band>
+            <band>The Clash</band>
+            <band>Kiss</band>
+        </bands>
+    </genre>
+
+    <genre id="metal">
+        <name>Хэви-метал</name>
+        <bands>
+            <band>Metallica</band>
+            <band>Black Sabbath</band>
+            <band>Deep Purple</band>
+        </bands>
+    </genre>
+
+    <genre id="alt">
+        <name>Альтернативный рок</name>
+        <bands>
+            <band>Nirvana</band>
+            <band>Radiohead</band>
+        </bands>
+    </genre>
+
+    <genre id="nu-metal">
+        <name>Нью-метал</name>
+        <bands>
+            <band>Linkin Park</band>
+            <band>Slipknot</band>
+            <band>Korn</band>
+            <band>Limp Bizkit</band>
+            <band>Deftones</band>
+        </bands>
+    </genre>
+
+    <genre id="metalcore">
+        <name>Металкор</name>
+        <bands>
+            <band>Bring Me the Horizon</band>
+            <band>Architects</band>
+            <band>Bullet for My Valentine</band>
+            <band>As I Lay Dying</band>
+            <band>Killswitch Engage</band>
+            <band>Landmvrks</band>
+        </bands>
+    </genre>
+
+    <genre id="alt-metal">
+        <name>Альтернативный метал</name>
+        <bands>
+            <band>System of a Down</band>
+            <band>Faith No More</band>
+            <band>Deftones</band>
+        </bands>
+    </genre>
+
+    <genre id="deathcore">
+        <name>Дэткор</name>
+        <bands>
+            <band>Lorna Shore</band>
+            <band>Suicide Silence</band>
+            <band>Angelmaker</band>
+            <band>Slaughter to Prevail</band>
+            <band>Bring Me the Horizon</band>
+        </bands>
+    </genre>
+
+    <genre id="black-metal">
+        <name>Блэк метал</name>
+        <bands>
+            <band>Behemoth</band>
+            <band>Mayhem</band>
+            <band>Burzum</band>
+            <band>Immortal</band>
+        </bands>
+    </genre>
+
+</genres>
