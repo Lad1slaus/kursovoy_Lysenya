@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Тест по рок-музыке</title>
+
+    <!-- НОВЫЕ файлы -->
+    <link rel="stylesheet" href="css/rock-quiz.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-overlay">
+        <img src="images/logo.jpg" class="logo">
+        <img src="images/guitar7.png" class="hanging-guitar" id="guitar">
+        <h1>Rock Knowledge Test</h1>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="genres.html">Жанры</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+<div class="layout">
+
+<!-- ОСНОВНОЙ КОНТЕНТ -->
+<div class="content">
+    <canvas id="bgCanvas"></canvas>
+<div class="question" id="v1">
+
+    <p>Кто изображён на фото?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/kurt.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer correct">Kurt Cobain</button>
+            <button class="answer">James Hetfield</button>
+            <button class="answer">Ozzy Osbourne</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v2">
+
+    <p>Кто изображён на фото?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/chriss.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer">John Cooper</button>
+            <button class="answer">Jonny Depp</button>
+            <button class="answer correct">Chriss Motionless</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v3">
+
+    <p>Кто изображён на фото?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/oli.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer">Till Lindemann</button>
+            <button class="answer correct">Oliver Sykes</button>
+            <button class="answer">Philip Kirkorov</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v4">
+
+    <p>Кто изображён на фото?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/chest.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer correct">Chester Bennington</button>
+            <button class="answer">Freddie Mercury</button>
+            <button class="answer">John Lenon</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v5">
+
+    <p>Кто изображён на фото?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/adam.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer">Vinny Mauro</button>
+            <button class="answer correct">Adam Gontier</button>
+            <button class="answer">Jefry Epstein</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="question" id="v6">
+
+    <p>Что это за альбом?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/semp.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer">Nirvana - Nevermind</button>
+            <button class="answer">Coldplay - A head Full Of Dreams</button>
+            <button class="answer correct">BMTH - Sempiternal</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="question" id="v7">
+
+    <p>Что это за альбом?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/alien.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer">Motionless in White - Disguise</button>
+            <button class="answer">Three Days Grace - OneX</button>
+            <button class="answer correct">Three Days Grace - Alienation</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="question" id="v8">
+
+    <p>Что это за альбом?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/spirit.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer correct">BMTH - That’s the Spirit</button>
+            <button class="answer">Red Hot Chili Peppers - By the Way</button>
+            <button class="answer">Ozzy Osbourne - No more tears</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="question" id="v9">
+
+    <p>Угадай песню 🎵</p>
+
+    <div class="quiz-row">
+
+        <!-- КНОПКА АУДИО -->
+        <div class="audio-box">
+            <button class="play-btn">▶ Воспроизвести</button>
+            <audio src="song/lonlyday.mp3"></audio>
+        </div>
+
+        <!-- ОТВЕТЫ -->
+        <div class="answers">
+            <button class="answer">Rammstain - mother</button>
+            <button class="answer correct">System of a down - lonly day</button>
+            <button class="answer">Slipknot - Duality</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<div class="question" id="v10">
+
+    <p>Угадай песню 🎵</p>
+
+    <div class="quiz-row">
+
+        <!-- КНОПКА АУДИО -->
+        <div class="audio-box">
+            <button class="play-btn">▶ Воспроизвести</button>
+            <audio src="song/numb.mp3"></audio>
+        </div>
+
+        <!-- ОТВЕТЫ -->
+        <div class="answers">
+            <button class="answer correct">Numb — Linkin Park</button>
+            <button class="answer">Smells Like Teen Spirit — Nirvana</button>
+            <button class="answer">Enter Sandman — Metallica</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v11">
+
+    <p>Угадай песню 🎵</p>
+
+    <div class="quiz-row">
+
+        <!-- КНОПКА АУДИО -->
+        <div class="audio-box">
+            <button class="play-btn">▶ Воспроизвести</button>
+            <audio src="song/Back In Black.mp3"></audio>
+        </div>
+
+        <!-- ОТВЕТЫ -->
+        <div class="answers">
+            <button class="answer">Limp Bizkit - behind blue eyes</button>
+            <button class="answer">BMTH - Can you feel my heart</button>
+            <button class="answer correct">Ac/Dc - Back in Black</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v12">
+
+    <p>Кто вокалист Metallica?</p>
+
+    <div class="quiz-row">
+
+        <img src="images/james.jpg" class="quiz-img">
+
+        <div class="answers">
+            <button class="answer">Corey Tailor</button>
+            <button class="answer">Kurt Cobain</button>
+            <button class="answer correct">James Hetfield</button>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="question" id="v13">
+<p>В каком году вышел "Nevermind"?</p>
+<div class="quiz-row">
+    <img src="images/nevermind.jpg" class="quiz-img">
+    <div class="answers">
+<button class="answer">1985</button>
+<button class="answer correct">1991</button>
+<button class="answer">2000</button>
+</div>
+</div>
+</div>
+
+<div class="question" id="v14">
+<p>Чей это логотип?</p>
+<div class="quiz-row">
+<img src="images/nirlogo.jpg" class="quiz-img">
+<div class="answers">
+<button class="answer correct">Nirvana</button>
+<button class="answer">Metallica</button>
+<button class="answer">Slipknot</button>
+</div>
+</div>
+</div>
+
+<div class="question" id="v15">
+<p>Какой жанр у Deep Purple?</p>
+<div class="quiz-row">
+<img src="images/deeppurple.jpg" class="quiz-img">
+<div class="answers">
+<button class="answer">Альтернативный рок</button>
+<button class="answer correct">Хэви-метал</button>
+<button class="answer">Панк-рок</button>
+</div>
+</div>
+</div>
+
+<section class="final-summary">
+    <h2>Итог</h2>
+
+
+<p>
+    Рок-музыка — это не просто жанр, а целая культура, которая объединяет
+    миллионы людей по всему миру. Она отражает эмоции, протест, свободу и
+    индивидуальность.
+</p>
+
+<p>
+Внутри этих жанров возникло огромное количество поджанров: от лиричного прогрессив-метала и мрачного дум-метала до скоростного трэша и брутального дэт-метала. Это разделение позволило музыке оставаться живой, постоянно эволюционируя и находя новые способы выражать эмоции — от глубокой меланхолии до неистовой ярости.
+</p>
+
+<p>
+Сегодня рок и метал — это не просто музыка, а глобальная культура со своими ценностями, эстетикой и многомиллионной армией поклонников по всему миру. Их краткий итог заключается в уникальной способности сочетать виртуозную технику с глубокой эмоциональностью, оставаясь для слушателя одновременно и способом уйти от реальности, и инструментом для ее осмысления.
+</p>
+
+
+</section>
+</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+
+    <div class="info-box1">
+        <h3>Навигация</h3>
+        <a href="#v1">Вопрос 1</a>
+        <a href="#v2">Вопрос 2</a>
+        <a href="#v3">Вопрос 3</a>
+   <a href="#v4">Вопрос 4</a>
+        <a href="#v5">Вопрос 5</a>
+        <a href="#v6">Вопрос 6</a>
+        <a href="#v7">Вопрос 7</a>
+        <a href="#v8">Вопрос 8</a>
+        <a href="#v9">Вопрос 9</a>
+        <a href="#v10">Вопрос 10</a>
+        <a href="#v11">Вопрос 11</a>
+        <a href="#v12">Вопрос 12</a>
+        <a href="#v13">Вопрос 13</a>
+        <a href="#v14">Вопрос 14</a>
+        <a href="#v15">Вопрос 15</a>
+    </div>
+
+    <div>
+        <h3></h3>
+        <p>        <svg class="svg-icon svg-icon--bolt">
+             viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg"
+             aria-hidden="true">
+            <!-- Зигзаг молнии: верхний правый угол → центр → нижний левый -->
+            <polygon points="13,2 6,13 11,13 11,22 18,11 13,11"
+                     fill="#cc3333" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        </svg>
+        Итоги квиза
+         <svg class="svg-icon svg-icon--bolt">
+             viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg"
+             aria-hidden="true">
+            <!-- Зигзаг молнии: верхний правый угол → центр → нижний левый -->
+            <polygon points="13,2 6,13 11,13 11,22 18,11 13,11"
+                     fill="#cc3333" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        </svg>
+        </p>
+        <div id="progress">Вопросов: 0 / 15</div>
+    </div>
+
+</aside>
+
+</div>
+
+
+
+
+</main>
+
+<footer class="footer">
+    <div class="footer-overlay">
+        <p>© 2026 Rock Encyclopedia</p>
+        <p> Vladislav Lysenya</p>
+        <p> vlysenya7@gmail.com</p>
+        <p> 4255 1901 3090 7739</p>
+    </div>
+</footer>
+<audio id="guitarSound" src="song/guitar2.mp3" preload="auto"></audio>
+<script src="js/rock-quiz.js"></script>
+
+</body>
+</html>

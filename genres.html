@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Жанры рока</title>
+    <link rel="stylesheet" href="css/genres.css">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-overlay">
+        <div class="header-title">
+            <img src="images/logo.jpg" class="logo" alt="Logo">
+            <img src="images/guitar8.png" class="hanging-guitar" id="guitar" alt="Guitar">
+            <h1>Rock Genres</h1>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Главная</a></li>
+                <li><a href="rock-quiz.html">Квиз</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+<div class="layout">
+
+<!-- ===== КОНТЕНТ ===== -->
+<div class="content">
+<canvas id="bgCanvas"></canvas>
+
+<!-- Поиск -->
+
+<!-- ===== КЛАССИЧЕСКИЙ РОК ===== -->
+<section id="classic">
+<h2>Классический рок</h2>
+<div class="genre-content">
+    <img src="images/genres/classic.jpg" class="genre-img-left" alt="Classic Rock">
+  <p>Классический рок — это не столько строго определённый музыкальный жанр, сколько радиоформат и собирательный канон, охватывающий золотую эпоху рок-музыки примерно с середины <span class="kw-gold">1960-х</span> до начала <span class="kw-gold">1980-х годов</span>. В этот период формируется не только музыкальный язык рока, но и его культурная идентичность: меняется подход к концертам, появляется культ рок-звезды, усиливается роль студийной записи как самостоятельного искусства. Ядром направления стали такие группы, как <span class="kw-red">The Beatles</span>, <span class="kw-red">The Rolling Stones</span>, <span class="kw-red">Led Zeppelin</span>, <span class="kw-red">Pink Floyd</span>, <span class="kw-red">The Doors</span> и <span class="kw-red">Queen</span>. Для классического рока характерны выразительные гитарные риффы, аналоговое звучание, сложные аранжировки и тексты, отражающие дух контркультуры, социальные изменения и философские поиски эпохи.</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Let It Be</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/letitbe.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Paint It Black</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Paint It, Black.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== ХАРД РОК ===== -->
+<section id="hard">
+<h2>Хард-рок</h2>
+<div class="genre-content">
+    <img src="images/genres/hard.jpg" class="genre-img-right" alt="Hard Rock">
+<p>
+Хард-рок — жанр рок-музыки, сформировавшийся во второй половине <span class="kw-gold">1960-х годов</span> в Великобритании и США как более тяжёлое и энергичное развитие блюз-рока. Он отличается насыщенным, плотным звучанием, построенным на перегруженных гитарных риффах, мощной ритм-секции и выразительном вокале. Важную роль играет сценическая подача: хард-рок активно развивал идею масштабных концертов и шоу. Ключевыми фигурами стали <span class="kw-red">Led Zeppelin</span>, <span class="kw-red">Deep Purple</span>, <span class="kw-red">Black Sabbath</span>, <span class="kw-red">AC/DC</span> и <span class="kw-red">Queen</span>, оказавшие огромное влияние на развитие металла и тяжёлой музыки в целом.</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Paranoid</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Paranoid.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Back in Black</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Back In Black.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== ПАНК ===== -->
+<section id="punk">
+<h2>Панк-рок</h2>
+<div class="genre-content">
+    <img src="images/genres/punk.jpg" class="genre-img-left" alt="Punk Rock">
+  <p>
+Панк-рок — жанр, возникший в середине <span class="kw-gold">1970-х годов</span> как протест против усложнения и коммерциализации рок-музыки. Он стал не только музыкальным, но и культурным движением, основанным на идеях независимости и отрицания мейнстрима. Панк отличается минимализмом, высокой скоростью, агрессией и предельной прямолинейностью. Музыка строится на простых аккордах и коротких композициях, а тексты затрагивают социальные, политические и личные темы. Основные представители: <span class="kw-red">Ramones</span>, <span class="kw-red">Sex Pistols</span>, <span class="kw-red">The Clash</span> и <span class="kw-red">Dead Kennedys</span>.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">I Was Made for Lovin' You</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/lovin.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">We Will Rock You</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Queen.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== МЕТАЛ ===== -->
+<section id="metal">
+<h2>Хэви-метал</h2>
+<div class="genre-content">
+    <img src="images/genres/metal.jpg" class="genre-img-right" alt="Heavy Metal">
+ <p>
+Хэви-метал — жанр, сформировавшийся на рубеже <span class="kw-gold">1960–1970-х годов</span>, который стал более тяжёлым и мрачным развитием хард-рока. Он характеризуется высокой громкостью, плотными гитарными риффами, сложными соло и особой эстетикой, связанной с мифологией, фантазией и философскими темами. Метал быстро приобрёл глобальную популярность и породил множество поджанров. Основоположниками считаются <span class="kw-red">Black Sabbath</span>, <span class="kw-red">Deep Purple</span> и <span class="kw-red">Led Zeppelin</span>, чьё влияние определило звучание тяжёлой музыки на десятилетия вперёд.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Sad But True</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/sadbuttrue.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Death or Glory</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/death.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== АЛЬТЕРНАТИВА ===== -->
+<section id="alt">
+<h2>Альтернативный рок</h2>
+<div class="genre-content">
+    <img src="images/genres/alt.jpg" class="genre-img-left" alt="Alternative Rock">
+ <p>
+Альтернативный рок — широкое и разнообразное направление, получившее распространение с <span class="kw-gold">1980-х годов</span> как альтернатива коммерческому мейнстриму. Он объединяет множество поджанров, включая гранж, инди-рок, пост-панк и брит-поп, и отличается стремлением к экспериментам и индивидуальности. Прорыв произошёл в начале <span class="kw-gold">1990-х</span>, когда такие группы, как <span class="kw-red">Nirvana</span>, <span class="kw-red">Pearl Jam</span>, <span class="kw-red">Oasis</span> и <span class="kw-red">Blur</span>, вывели альтернативную музыку в массовую культуру и изменили представление о популярной музыке.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Creep</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Creep.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Smells Like Teen Spirit</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/slts.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== НЬЮ-МЕТАЛ ===== -->
+<section id="nu-metal">
+<h2>Нью-метал</h2>
+<div class="genre-content">
+    <img src="images/genres/new.jpg" class="genre-img-right" alt="Nu-Metal">
+  <p>
+Ню-метал — поджанр, возникший в середине <span class="kw-gold">1990-х годов</span>, объединивший тяжёлый металл с элементами хип-хопа, электроники и фанка. Он отличается ритмичными гитарными партиями, пониженным строем, акцентом на грув и разнообразием вокальных техник — от рэпа до агрессивного скриминга. Жанр стал одним из самых популярных направлений конца XX века. Среди ключевых представителей — <span class="kw-red">Korn</span>, <span class="kw-red">Deftones</span>, <span class="kw-red">Limp Bizkit</span>, <span class="kw-red">Slipknot</span> и <span class="kw-red">Linkin Park</span>.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">In the End</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/In the End.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Rollin'</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Rollin'.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== МЕТАЛКОР ===== -->
+<section id="metalcore">
+<h2>Металкор</h2>
+<div class="genre-content">
+    <img src="images/genres/bring.jpg" class="genre-img-left" alt="Metalcore">
+  <p>
+Металкор — жанр, возникший в конце <span class="kw-gold">1980-х — 1990-х годов</span>, объединяющий агрессию хардкор-панка с технической сложностью металла. Он отличается контрастом между тяжёлыми и мелодичными частями, использованием брейкдаунов, а также сочетанием скриминга и чистого вокала. Металкор стал одной из ключевых сцен 2000-х годов и оказал влияние на современную тяжёлую музыку. Среди известных групп — <span class="kw-red">Killswitch Engage</span>, <span class="kw-red">Parkway Drive</span> и <span class="kw-red">Bring Me the Horizon</span>.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Empire (Let Them Sing)</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Empire.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Blackhole</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Blackhole.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== АЛЬТЕРНАТИВНЫЙ МЕТАЛ ===== -->
+<section id="alt-metal">
+<h2>Альтернативный метал</h2>
+<div class="genre-content">
+    <img src="images/genres/alter.jpg" class="genre-img-right" alt="Alternative Metal">
+  <p>
+Альтернативный метал — жанр, возникший в середине <span class="kw-gold">1980-х годов</span> как экспериментальное направление, объединяющее тяжёлый металл с альтернативным роком и другими стилями. Он отличается нестандартными структурами, сложными ритмами и широким спектром влияний — от фанка до индустриальной музыки. Этот жанр часто ориентирован на поиск нового звучания и разрушение традиционных рамок. Ключевые исполнители: <span class="kw-red">Faith No More</span>, <span class="kw-red">Tool</span>, <span class="kw-red">Rage Against the Machine</span> и <span class="kw-red">Deftones</span>.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Lonely Day</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/lonlyday.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Change</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Change.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== ДЭТКОР ===== -->
+<section id="deathcore">
+<h2>Дэткор</h2>
+<div class="genre-content">
+    <img src="images/genres/det.jpg" class="genre-img-left" alt="Deathcore">
+   <p>
+Дэткор — экстремальный поджанр, сформировавшийся в конце <span class="kw-gold">1990-х — начале 2000-х годов</span>, объединяющий брутальность дэт-метала с ритмической структурой металкора. Он характеризуется максимально тяжёлым звучанием, использованием бласт-битов, брейкдаунов и экстремальных вокальных техник. Музыка дэткора часто направлена на создание интенсивного и агрессивного звукового опыта. Пионеры жанра — <span class="kw-red">Despised Icon</span>, <span class="kw-red">Suicide Silence</span>, <span class="kw-red">Whitechapel</span> и <span class="kw-red">Carnifex</span>.
+</p>
+    <ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">I Long for Rest</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/long.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">The Comedown</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/comedown.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+<!-- ===== БЛЭК МЕТАЛ ===== -->
+<section id="black-metal">
+<h2>Блэк метал</h2>
+<div class="genre-content">
+    <img src="images/genres/black.jpg" class="genre-img-right" alt="Black Metal">
+ <p>
+Блэк-метал — экстремальный жанр, сформировавшийся в начале <span class="kw-gold">1990-х годов</span> в Скандинавии и ставший одним из самых атмосферных направлений тяжёлой музыки. Он отличается сырым звучанием, быстрыми тремоло-риффами, бласт-битами и характерным скриминговым вокалом. Важную роль играет эстетика — сценический образ, философия и идеология. Тексты часто связаны с мифологией, оккультизмом и анти-религиозными темами. Среди ключевых фигур — <span class="kw-red">Mayhem</span>, <span class="kw-red">Burzum</span>, <span class="kw-red">Darkthrone</span>, <span class="kw-red">Immortal</span> и <span class="kw-red">Emperor</span>.
+</p>
+<ul></ul>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Bartzabel</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/Bartzabel.mp3"></audio>
+    </div>
+    <div class="player">
+        <div class="top-row">
+            <button class="play-btn">▶</button>
+            <div class="equalizer"><span></span><span></span><span></span><span></span></div>
+            <span class="track">Pagan Fears</span>
+        </div>
+        <div class="progress"><div class="progress-bar"></div></div>
+        <audio><source src="song/fears.mp3"></audio>
+    </div>
+    <div class="section-clear"></div>
+</div>
+</section>
+
+</div><!-- end .content -->
+
+<!-- ===== SIDEBAR ===== -->
+<aside class="sidebar">
+    <div class="info-box1">
+        <h3>Навигация</h3>
+        <a href="#classic">Классический рок</a>
+        <a href="#hard">Хард-рок</a>
+        <a href="#punk">Панк-рок</a>
+        <a href="#metal">Хэви-метал</a>
+        <a href="#alt">Альтернатива</a>
+        <a href="#nu-metal">Нью-метал</a>
+        <a href="#metalcore">Металкор</a>
+        <a href="#alt-metal">Альт метал</a>
+        <a href="#deathcore">Дэткор</a>
+        <a href="#black-metal">Блэк метал</a>
+    </div>
+    <div class="info-box1">
+        <h3>Дополнительная информация<svg class="svg-icon svg-icon--bolt">
+             viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg"
+             aria-hidden="true">
+            <!-- Зигзаг молнии: верхний правый угол → центр → нижний левый -->
+            <polygon points="13,2 6,13 11,13 11,22 18,11 13,11"
+                     fill="#cc3333" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        </svg></h3>
+        <p>Представленные жанры — лишь основные вехи, тогда как всего их существуют сотни: дум, пауэр, трэш, спид, прогрессив, фолк, индастриал, готик, сладж, стоунер — в метал-лагере; пост-рок, пост-хардкор, эмо, хардкор, скейт-панк, поп-панк, краст — в панк- и альтернативной среде; плюс десятки гибридных форм.</p>
+    </div>
+</aside>
+
+</div><!-- end .layout -->
+</main>
+
+<footer class="footer">
+    <div class="footer-overlay">
+        <p>© 2026 Rock Encyclopedia</p>
+        <p>Vladislav Lysenya</p>
+        <p>vlysenya7@gmail.com</p>
+    </div>
+</footer>
+
+<audio id="guitarSound" src="song/guitar1.mp3" preload="auto"></audio>
+<script src="js/genres.js"></script>
+
+</body>
+</html>

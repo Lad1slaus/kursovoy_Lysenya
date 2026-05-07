@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Linkin Park — Rock Encyclopedia</title>
+    <meta name="description" content="История Linkin Park, участники и альбомы">
+
+    <!-- Подключаем стили страницы группы -->
+    <link rel="stylesheet" href="css/bands1.css">
+</head>
+
+<body>
+
+    <!--  CANVAS-ФОН -->
+    <canvas id="bgCanvas"></canvas>
+
+
+    <!-- ШАПКА (HEADER)-->
+    <header class="header">
+        <div class="header-overlay">
+
+            <!-- Логотип сайта: переход на главную -->
+            <a href="index.html">
+                <img src="images/logo.jpg" class="logo" alt="Rock Encyclopedia">
+            </a>
+
+            <!-- Изображение-название группы.
+                 data-video — путь к видео
+                 Атрибуты aria-* улучшают доступность -->
+            <img
+                src="images/lp.png"
+                class="title-img"
+                id="videoTrigger"
+                data-video="video/lp.mp4"
+                role="button"
+            >
+
+            <!-- Декоративная гитара -->
+            <img
+                src="images/guitar3.png"
+                class="hanging-guitar"
+                id="guitar"
+                alt=""
+            >
+
+        </div>
+    </header>
+
+
+    <!-- 
+         ОСНОВНОЙ КОНТЕНТ-->
+    <main>
+        <div class="layout">
+
+            <div class="content">
+
+                <section id="lp">
+                    <h2>Linkin Park</h2>
+
+                    <!-- История группы -->
+                    <p>
+                        История <span class="kw-red">Linkin Park</span> началась в <span class="kw-gold">1996 году</span> в Агура-Хиллз, Калифорния, когда трое старшеклассников —
+                        Майк Шинода (вокал, клавишные) и Брэд Дэлсон (гитара) вместе с Робом Бурдоном (барабанщиком) —
+                        основали группу под названием <span class="kw-red">Xero</span>. Несмотря на талант, группа не могла найти постоянного вокалиста,
+                        пока менеджер Джефф Блу не познакомил их с Честером Беннингтоном (бывшим фронтменом Grey Daze),
+                        чьи нечеловеческие скримы и мелодичный тенор мгновенно вписались в агрессивный рэп-рок Майка.
+                        Парни переименовались в Linkin Park (искажённое «Lincoln Park» в честь парка в Санта-Монике,
+                        но домен lincolnpark.com был занят) и в <span class="kw-gold">1999 году</span> записали демо-кассету <span class="kw-blue">Hybrid Theory EP</span>.
+                    </p>
+
+                    <div class="fact-box">
+                        <strong>Инсайд:</strong> Свою первую демо-кассету они разослали по всем крупным лейблам. Их отвергли 44 раза, но они упорно верили в своё «гибридное звучание» — смесь ню-метала, хип-хопа, электроники и поп-мелодий. И эта вера перевернула индустрию.
+                    </div>
+
+                    <h3>Участники</h3>
+
+                    <!-- 
+                         ГАЛЕРЕЯ УЧАСТНИКОВ ГРУППЫ-->
+                    <div class="gallery">
+
+                        <!-- Честер Беннингтон -->
+                        <div class="card" data-info="Честер Чарльз Беннингтон родился 20 марта 1976 года в Финиксе, Аризона. Его детство было кошмаром: родители развелись, когда ему было 11 лет, и он подвергался сексуальному насилию со стороны знакомого старшего возраста (об этом он впервые публично рассказал в 2011 году, спровоцировав волну откровений). Чтобы заглушить боль, он начал употреблять кокаин и метамфетамин в подростковом возрасте. Его спасла музыка: он пел в группе Grey Daze, записал с ними три альбома, но ушёл из-за творческих разногласий. В 1999 году ему позвонил Майк Шинода и попросил прислать вокальные демо. Честер записал партию для «One Step Closer» за один дубль — и история пошла.
+Честер обладал уникальным голосом — от нежного чистого тенора до жуткого скрима, который он мог держать часами. Он стал голосом поколения, поющего о депрессии и одиночестве, но за кулисами боролся с демонами всю жизнь. Он пережил два развода, алкоголизм, наркотическую зависимость (в 2006 году прошёл реабилитацию) и тяжелую депрессию. 20 июля 2017 года, в день рождения своего близкого друга Криса Корнелла (который повесился двумя месяцами ранее), Честер покончил с собой у себя дома в Палос-Вердес, Калифорния. Ему был 41 год. Его смерть вызвала глобальную дискуссию о ментальном здоровье в музыке, а его наследие остаётся священным для миллионов. Linkin Park никогда не заменяли его двойником, и даже с новой вокалисткой каждая песня Честера исполняется как реквием.">
+                            <img src="images/chest.jpg" alt="Chester Bennington">
+                            <p>Chester Bennington — вокал (до 2017)</p>
+                        </div>
+
+                        <!-- Майк Шинода -->
+                        <div class="card" data-info="Майкл Кенидзи Шинода родился 11 февраля 1977 года в Панорама-Сити, Калифорния, в семье японских иммигрантов. Он вырос в Агура-Хиллз, где в старшей школе познакомился с будущим гитаристом Брэдом Дэлсоном. Майк с детства учился играть на пианино, а в колледже (Art Center College of Design) изучал иллюстрацию и графический дизайн — именно он нарисовал логотип группы (знаменитого «солдата с крыльями») и оформил все ранние обложки. До Linkin Park он создал группу Xero, где сам писал песни, играл на клавишах и писал рэп-партии, но понимал, что ему нужен второй вокалист с мощным голосом — так в группу пришёл Честер.
+После смерти Честера Майк стал бессменным лидером и «мозгом» Linkin Park. Он выпустил сольный проект Post Traumatic (2018) — честный альбом о горе и травме, а также сайд-проект Fort Minor с хитом «Remember the Name». В 2024 году именно Шинода инициировал возвращение группы, лично пригласив Эмили Армстронг после того, как услышал её кавер на песни Linkin Park. Майк сегодня выступает как фронтмен и главный медиатор между новой вокалисткой и старыми фанатами. Он продолжает рисовать, выпускает лимитированные принты и ведёт YouTube-канал, где разбирает треки по дорожкам продюсирования.">
+                            <img src="images/mike.jpg" alt="Mike Shinoda">
+                            <p>Mike Shinoda — вокал, рэп</p>
+                        </div>
+
+                        <!-- Брэд Дэлсон -->
+                        <div class="card" data-info="Брэдфорд Филип Дэлсон родился 1 декабря 1977 года в Агура-Хиллз, Калифорния, в еврейской семье. Он вырос в тихом пригороде и учился в одной школе с Майком Шинодой. Брэд был отличником и поступил в UCLA (Калифорнийский университет) по специальности «коммуникации», но никогда не прекращал играть на гитаре. В отличие от многих метал-гитаристов, Брэд не играет соло в классическом понимании — его стиль заключается в создании текстурных рифов с использованием педалей эффектов, за что он отвечает за эмоциональные зацепки, такие как вступление в «Numb» или главный рифф «What I've Done».
+Брэд всегда был «финансистом» и «адвокатом» группы: именно он вёл переговоры с Warner Bros. и защищал группу от грабительских контрактов. После смерти Честера Брэд взял паузу в турах, сосредоточившись на семье (у него трое детей) и студийной работе. В 2024 году он объявил, что больше не будет участвовать в полноценных мировых турах, но остаётся соавтором и студийным продюсером.">
+                            <img src="images/brad.jpg" alt="Brad Delson">
+                            <p>Brad Delson — гитара</p>
+                        </div>
+
+                        <!-- Дэйв «Феникс» Фаррелл -->
+                        <div class="card" data-info="Дэйв Фаррелл родился 8 февраля 1977 года в Плимуте, Массачусетс, но вырос в Лос-Анджелесе. Прозвище «Феникс» он получил во времена игры в своей первой группе Tasty Snax. Дэйв присоединился к Xero после окончания колледжа, но ненадолго покинул группу в 1999 году, чтобы ездить в гастроли со своей второй группой The Snax — и именно в это отсутствие Linkin Park записали демо и подписали контракт. Он успел вернуться как раз к записи Hybrid Theory.
+Дэйв — самый «незаметный» участник на сцене, но критически важный для звучания: его басовые линии связывают гитарные рифы Брэда с электронными партиями Майка, создавая плотную стену звука. Вне музыки Дэйв — заядлый спортсмен: он увлекается триатлоном и даже участвовал в Ironman Hawaii.">
+                            <img src="images/dave.jpg" alt="Dave Farrell">
+                            <p>Dave "Phoenix" Farrell — бас</p>
+                        </div>
+
+                        <!-- Джо Хан -->
+                        <div class="card" data-info="Джозеф «Джо» Хан родился 15 марта 1977 года в Далласе, Техас, в семье корейских иммигрантов. Он вырос в Глендейле, Калифорния, и в старшей школе увлёкся скретчингом и диджеингом. Джо поступил в Art Center College of Design, но бросил учёбу ради музыки. В 1996 году он присоединился к Xero, привнеся в группу то, чего не было ни у кого в ню-метале: семплы, шумы, сирены, индустриальные текстуры и кинематографический подход к звуку.
+Джо — не просто диджей, а «звуковой архитектор» Linkin Park. Он придумал знаменитое вступление к «Crawling», добавил вертолётные звуки в «Papercut» и создал «пулемётный» эффект в «Faint». Главное его наследие — режиссура: Джо снял почти все клипы группы начиная с Meteora, включая культовые «Somewhere I Belong» и «Breaking the Habit» (полностью анимированный).">
+                            <img src="images/joe.jpg" alt="Joe Hahn">
+                            <p>Joe Hahn — DJ</p>
+                        </div>
+
+                        <!-- Роб Бурдон -->
+                        <div class="card" data-info="Роберт Грегори Бурдон родился 20 января 1979 года в Калабасасе, Калифорния. Он познакомился с Брэдом Дэлсоном в колледже и сразу присоединился к Xero. Роб никогда не учился в музыкальной школе — он самоучка, который просто «чувствовал ритм». Его стиль игры в Linkin Park — минимализм с ударом: он редко использует сложные полиритмы, но его доли идеально попадают в «карманы» электроники.
+Роб — самый закрытый участник группы. После смерти Честера он тяжело переживал утрату. Когда в 2024 году группа анонсировала возвращение, выяснилось, что Роб решил окончательно покинуть коллектив — он сообщил об этом Майку ещё в 2022 году, сославшись на желание «жить тихой жизнью». На его место пришёл Колин Бриттэн, но Роб остаётся консультантом по ударным в студии.">
+                            <img src="images/rob.jpg" alt="Rob Bourdon">
+                            <p>Rob Bourdon — барабаны</p>
+                        </div>
+
+                        <!-- Эмили Армстронг -->
+                        <div class="card" data-info="Эмили Луиза Армстронг родилась 6 мая 1986 года в Лос-Анджелесе. Она выросла в музыкальной семье, начала играть на гитаре в 11 лет, а в 2005 году основала группу Dead Sara, которая смешивала панк, блюз-рок и гранж. В 2023 году Майк Шинода случайно наткнулся на кавер Эмили, где она исполняла «Crawling» а капелла во время локдауна, и был потрясён.
+После долгих уговоров (Эмили не хотела заменять Честера), она согласилась присоединиться к Linkin Park в 2024 году, предварительно записав с группой 5 треков, чтобы «проверить химию». Её голос — хриплый, мощный блюз-рок — отличается от голоса Честера, но умеет те же крайности: от нежного фальцета до истеричного скрима. Она продолжает вести свою группу Dead Sara параллельно. Её главное правило на сцене: «Не смотри на пустое место слева. Честер здесь, и он в каждом из вас».">
+                            <img src="images/emili.jpg" alt="Emily Armstrong">
+                            <p>Emily Armstrong — вокал с 2024</p>
+                        </div>
+
+                    </div><!-- /gallery (участники) -->
+
+
+                    <h3>Альбомы</h3>
+
+                    <!--  ГАЛЕРЕЯ АЛЬБОМОВ -->
+                    <div class="gallery">
+
+                        <!-- Hybrid Theory (2000) -->
+                        <div class="card" data-info="Papercut
+One Step Closer
+With You
+Points of Authority
+Crawling
+Runaway
+By Myself
+In the End
+A Place for My Head
+Forgotten
+Cure for the Itch (инструментал)
+Pushing Me Away
+Бонус-треки делюкс-издания: High Voltage, My December">
+                            <img src="images/hybrid.jpg" alt="Hybrid Theory">
+                            <p>Hybrid Theory (2000)</p>
+                        </div>
+
+                        <!-- Meteora (2003) -->
+                        <div class="card" data-info="Foreword (инструментал)
+Don't Stay
+Somewhere I Belong
+Lying from You
+Hit the Floor
+Easier to Run
+Faint
+Figure.09
+Breaking the Habit
+From the Inside
+Nobody's Listening
+Session (инструментал)
+Numb
+Бонус-треки делюкс-издания: Lying from You (Live), Breaking the Habit (Live), Numb (Live)">
+                            <img src="images/meteora.jpg" alt="Meteora">
+                            <p>Meteora (2003)</p>
+                        </div>
+
+                        <!-- Minutes to Midnight (2007) -->
+                        <div class="card" data-info="Wake (инструментал)
+Given Up
+Leave Out All the Rest
+Bleed It Out
+Shadow of the Day
+What I've Done
+Hands Held High
+No More Sorrow
+Valentine's Day
+In Between
+In Pieces
+The Little Things Give You Away">
+                            <img src="images/minutes.jpg" alt="Minutes to Midnight">
+                            <p>Minutes to Midnight (2007)</p>
+                        </div>
+
+                        <!-- A Thousand Suns (2010) -->
+                        <div class="card" data-info="The Requiem (инструментал)
+The Radiance (инструментально-вокальный фрагмент)
+Burning in the Skies
+Empty Spaces (инструментал)
+When They Come for Me
+Robot Boy
+Jornada del Muerto (инструментал)
+Waiting for the End
+Blackout
+Wretches and Kings
+Wisdom, Justice, and Love (инструментал с речью Мартина Лютера Кинга)
+Iridescent
+Fallout (инструментал)
+The Catalyst
+The Messenger">
+                            <img src="images/suns.jpg" alt="A Thousand Suns">
+                            <p>A Thousand Suns (2010)</p>
+                        </div>
+
+                        <!-- Living Things (2012) -->
+                        <div class="card" data-info="Lost in the Echo
+In My Remains
+Burn It Down
+Lies Greed Misery
+I'll Be Gone
+Castle of Glass
+Victimized
+Roads Untraveled
+Skin to Bone
+Until It Breaks
+Tinfoil (инструментал)
+Powerless">
+                            <img src="images/living.jpg" alt="Living Things">
+                            <p>Living Things (2012)</p>
+                        </div>
+
+                        <!-- The Hunting Party (2014) -->
+                        <div class="card" data-info="Keys to the Kingdom
+All for Nothing (при участии Page Hamilton из Helmet)
+Guilty All the Same (при участии Rakim)
+The Summoning (инструментал)
+War
+Wastelands
+Until It's Gone
+Rebellion (при участии Daron Malakian из System of a Down)
+Mark the Graves
+Drawbar (при участии Tom Morello из Rage Against The Machine)
+Final Masquerade
+A Line in the Sand">
+                            <img src="images/party.jpg" alt="The Hunting Party">
+                            <p>The Hunting Party (2014)</p>
+                        </div>
+
+                        <!-- One More Light (2017) -->
+                        <div class="card" data-info="Nobody Can Save Me
+Good Goodbye (при участии Pusha T и Stormzy)
+Talking to Myself
+Battle Symphony
+Invisible
+Heavy (при участии Kiiara)
+Sorry for Now
+Halfway Right
+One More Light
+Sharp Edges">
+                            <img src="images/light.jpg" alt="One More Light">
+                            <p>One More Light (2017)</p>
+                        </div>
+
+                        <!-- From Zero (2024) -->
+                        <div class="card" data-info="From Zero (Intro) (инструментал)
+The Emptiness Machine
+Cut the Bridge
+Heavy Is the Crown
+Over Each Other
+Casualty
+Overflow
+Two Faced
+Stained
+IGYEIH
+Good Things Go">
+                            <img src="images/zero.jpg" alt="From Zero">
+                            <p>From Zero (2024)</p>
+                        </div>
+
+                    </div><!-- /gallery (альбомы) -->
+
+
+                    <!-- ИСТОРИЯ ГРУППЫ 
+                         .text-with-photo — обёртка для clearfix
+                         .inline-photo.float-right / .float-left —
+                         фото справа или слева от текста-->
+
+                    <!-- Блок 1: Hybrid Theory — фото справа -->
+                    <div class="text-with-photo">
+
+                        <figure class="inline-photo float-right">
+                            <img src="images/DOP/album.png" alt="Hybrid Theory — обложка альбома">
+                            <figcaption>All Album</figcaption>
+                        </figure>
+
+                        <p>
+                            Подписав контракт с Warner Bros., группа выпустила дебютный альбом <span class="kw-blue">Hybrid Theory (2000)</span>,
+                            который стал феноменом: продан тиражом более 30 миллионов копий (самый продаваемый дебют XXI века
+                            на тот момент). Синглы «In the End» (с культовым фортепианным риффом), «Crawling» (премия «Грэмми»
+                            за лучшее хард-рок исполнение) и «One Step Closer» сделали <span class="kw-red">Linkin Park</span> голосом поколения,
+                            говорившим о депрессии, травле и внутренней боли доступным языком. Второй альбом <span class="kw-blue">Meteora (2003)</span>
+                            повторил формулу, но добавил больше оркестровок и восточных мотивов.
+                        </p>
+
+                    </div><!-- /text-with-photo -->
+
+                    <!-- Блок 2: A Thousand Suns — фото слева -->
+                    <div class="text-with-photo">
+
+                        <figure class="inline-photo float-left">
+                            <img src="images/DOP/suns.png" alt="A Thousand Suns — обложка альбома">
+                            <figcaption>A Thousand Suns, 2010</figcaption>
+                        </figure>
+
+                        <p>
+                            Решив сломать шаблоны, Linkin Park выпустили <span class="kw-blue">Minutes to Midnight (2007)</span>, где практически исчезли
+                            рэп-партии Майка и скримы Честера, уступив место классическому року и протестным текстам.
+                            Ещё радикальнее стал <span class="kw-blue">A Thousand Suns (2010)</span> — концептуальная пластинка о ядерной войне и страхе,
+                            почти без гитар, полная электроники, эмбиента и spoken word. Это был самый спорный альбом:
+                            одни называли его шедевром, другие — предательством.
+                        </p>
+
+                    </div><!-- /text-with-photo -->
+
+                    <!-- Блок 3: One More Light / трагедия — фото справа -->
+                    <div class="text-with-photo">
+
+                        <figure class="inline-photo float-right">
+                            <img src="images/DOP/chest.png" alt="Chester Bennington">
+                            <figcaption>Chester Bennington, 1976–2017</figcaption>
+                        </figure>
+
+                        <p>
+                            Последним прижизненным альбомом стал <span class="kw-blue">One More Light (2017)</span> — радикальный уход в поп-музыку.
+                            Критики уничтожили пластинку за «коммерческое самоубийство», а фанаты освистали сингл «Heavy».
+                            Однако Честер защищал альбом как «самый честный и личный». За кулисами его демоны победили:
+                            <span class="kw-gold">20 июля 2017 года</span> Честер Беннингтон покончил с собой. Мир метался между шоком и горем.
+                            Группа замолчала почти на семь лет.
+                        </p>
+
+                    </div><!-- /text-with-photo -->
+
+                    <!-- Блок 4: Возвращение 2024 — фото слева -->
+                    <div class="text-with-photo">
+
+                        <figure class="inline-photo float-left">
+                            <img src="images/DOP/arm.png" alt="From Zero — обложка альбома">
+                            <figcaption>From Zero, 2024</figcaption>
+                        </figure>
+
+                        <p>
+                            В <span class="kw-gold">сентябре 2024 года</span> Linkin Park шокировали мир: они объявили о возвращении с новой вокалисткой —
+                            Эмили Армстронг (экс-фронтвумен группы Dead Sara). Её звонкий, грубоватый тембр и мощные скримы
+                            напомнили Честера, но без попытки копировать. Альбом <span class="kw-blue">From Zero (ноябрь 2024)</span> сочетает все эры группы.
+                            Фанаты разделились, но Linkin Park вновь хедлайнеры Coachella и Download, а продажи туров бьют рекорды.
+                            История продолжается.
+                        </p>
+
+                    </div><!-- /text-with-photo -->
+
+                </section><!-- /section#lp -->
+
+            </div><!-- /content -->
+
+
+            <!--
+               сайдбар-->
+            <aside class="sidebar">
+
+                <!-- Поле поиска по странице -->
+                <div class="info-box1">
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Поиск по странице..."
+                        aria-label="Поиск по содержимому страницы"
+                    >
+                </div>
+
+                <!-- Навигация по разделам сайта -->
+                <div class="info-box">
+                    <h3>Страницы</h3>
+                    <nav aria-label="Навигация по сайту">
+                        <ul>
+                            <li><a href="index.html">Главная</a></li>
+                            <li><a href="genres.html">Жанры</a></li>
+                            <li><a href="rock-quiz.html">Квиз</a></li>
+                        </ul>
+                    </nav>
+                </div>
+<div>
+                <div class="info-box">
+            <h3>Группы для ознакомления       </h3>
+            <ul>
+                <li><a href="bands.html">Linkin Park</a></li>
+                <li><a href="bands1.html">Motionless in White</a></li>
+                <li><a href="bands2.html">Bring me the horizont</a></li>
+                <li><a href="bands3.html">Three Days Grace</a></li>
+                <li><a href="bands4.html">Nirvana</a></li>
+            </ul>
+</div>
+                <!-- Сайдбар: важные синглы вне альбомов -->
+                <div class="info-box">
+                    <h3>Отдельные синглы и важные песни          <svg class="svg-icon svg-icon--bolt">
+             viewBox="0 0 24 24"
+             xmlns="http://www.w3.org/2000/svg"
+             aria-hidden="true">
+            <!-- Зигзаг молнии: верхний правый угол → центр → нижний левый -->
+            <polygon points="13,2 6,13 11,13 11,22 18,11 13,11"
+                     fill="#cc3333" stroke="rgba(255,255,255,0.3)" stroke-width="0.5"/>
+        </svg></h3>
+                    <ul>
+                        <li>New Divide (2009, для фильма «Трансформеры: Месть падших»)</li>
+                        <li>Not Alone (2010, для сборника Download to Donate for Haiti)</li>
+                        <li>Lost (2023, ранее неизданная демо-запись эпохи Meteora)</li>
+                        <li>Fighting Myself (2023, найденная демо-запись с Meteora)</li>
+                        <li>More the Victim (2023, с 20-летнего юбилейного издания Meteora)</li>
+                        <li>Friendly Fire (2024, ранее неизданный трек сессий One More Light)</li>
+                        <li>QWERTY (Live 2006, студийная версия не выпущена)</li>
+                    </ul>
+                </div>
+
+            </aside><!-- /sidebar -->
+
+        </div><!-- /layout -->
+    </main>
+
+
+    <!-- 
+         ФУТЕР -->
+    <footer class="footer">
+        <div class="footer-overlay">
+            <p>© 2026 Rock Encyclopedia</p>
+            <p>Vladislav Lysenya</p>
+            <p>vlysenya7@gmail.com</p>
+        </div>
+    </footer>
+
+
+    <!--
+         МОДАЛЬНОЕ ОКНО ДЛЯ КАРТОЧЕК
+         JS заполняет #modal-img, #modal-title, #modal-text-->
+    <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content">
+            <!-- Кнопка закрытия -->
+            <button class="close" aria-label="Закрыть">&times;</button>
+
+            <!-- Изображение участника / обложка альбома -->
+            <img id="modal-img" alt="">
+
+            <!-- Имя / название альбома -->
+            <h2 id="modal-title"></h2>
+
+            <!-- Биография или список треков — заполняется через JS -->
+            <p id="modal-text"></p>
+        </div>
+    </div>
+
+
+    <!-- видеоплеер-->
+    <div class="video-modal" id="videoModal" aria-live="polite">
+        <div class="video-box">
+            <!-- Кнопка закрытия плеера -->
+            <button class="video-close" id="videoClose" aria-label="Закрыть видео">✕</button>
+
+            <!-- Видеоплеер -->
+            <video id="cornerVideo" controls>
+                <source src="video/lp.mp4" type="video/mp4">
+                Ваш браузер не поддерживает видео.
+            </video>
+        </div>
+    </div>
+
+
+    <!-- Аудио для звука гитары  -->
+    <audio id="guitarSound" src="song/guitar.mp3" preload="auto"></audio>
+
+
+    <!-- Основной JS файл страницы -->
+    <script src="js/bands1.js"></script>
+
+</body>
+</html>

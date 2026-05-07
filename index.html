@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интернет-энциклопедия рока</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Metal+Mania&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="header">
+    <div class="header-overlay">
+        <div class="header-title">
+        <img src="images/logo.jpg" alt="logo" class="logo">
+        <img src="images/guitar6.png" class="hanging-guitar" id="guitar">
+      <h1> Internet Encyclopedia of Rock</h1>
+    </div>
+        <nav>
+            <ul>
+                <li><a href="genres.html">Жанры</a></li>
+                <li><a href="rock-quiz.html">Квиз</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+<canvas id="bgCanvas"></canvas>
+<div class="layout">
+
+    <!-- ЛЕВАЯ ЧАСТЬ -->
+    <div class="content">
+<!-- ===== ОБЪЯСНЕНИЕ ===== -->
+<section class="intro" id="intro">
+    <h2>Что такое рок и металл?</h2>
+
+ <p>
+    <strong><span class="kw-red">Рок</span></strong> — это одно из самых влиятельных направлений популярной музыки,
+    возникшее в середине <span class="kw-gold">XX века</span>. Его основой стали такие жанры, как блюз,
+    ритм-н-блюз и кантри. Главной особенностью рок-музыки является использование
+    электрогитары, бас-гитары и ударных инструментов.
+</p>
+
+<p>
+    <strong><span class="kw-red">Рок</span></strong>-музыка отличается не только звучанием, но и особой культурой.
+    Она стала символом свободы, самовыражения и протеста против социальных норм.
+    В разные периоды рок отражал настроение общества — от оптимизма <span class="kw-gold">1960-х</span> до
+    мрачной рефлексии <span class="kw-gold">1990-х годов</span>.
+</p>
+
+<p>
+    Одной из ключевых особенностей рока является его разнообразие.
+    Со временем появилось множество поджанров: от лёгкого классического рока
+    до экстремальных форм металла. Каждый из них имеет свои особенности,
+    аудиторию и стиль исполнения.
+</p>
+
+<p>
+    <strong><span class="kw-red">Металл</span></strong> — это более тяжёлое направление рока, сформировавшееся в конце 
+    <span class="kw-gold">1960-х</span> и начале <span class="kw-gold">1970-х годов</span>. Он отличается мощным звучанием, агрессивными гитарными
+    риффами и зачастую мрачной тематикой текстов.
+</p>
+
+<p>
+    В отличие от классического рока, металл делает акцент на скорости,
+    технической сложности и интенсивности звучания. Со временем металл
+    разделился на множество поджанров, таких как хэви-метал, трэш-метал,
+    блэк-метал и дэт-метал.
+</p>
+
+
+    <img src="images/guitar.jpg" class="content-img" alt="">
+</section>
+
+
+<!-- ===== ИСТОРИЯ ===== -->
+<section class="history">
+    <h2>История рока</h2>
+   <!-- 1960 -->
+    <article class="history-block" id="history">
+        <h3>1960-е — Классический рок</h3>
+
+        <figure class="float-left">
+            <img src="images/history/1960s.jpg" alt="">
+            <figcaption>Эпоха классического рока</figcaption>
+        </figure>
+
+        <p>
+    В <span class="kw-gold">1960-е годы</span> рок-музыка выходит на международный уровень и становится одним из
+    главных музыкальных направлений в мире. Этот период известен как «британское вторжение»,
+    когда такие группы, как <span class="kw-red">The Beatles</span>, 
+    <span class="kw-red">The Rolling Stones</span> и <span class="kw-red">The Who</span>, 
+    завоевали мировую популярность.
+</p>
+
+<p>
+    Музыка становится более разнообразной и экспериментальной. Возникают новые стили,
+    такие как <span class="kw">психоделический рок</span>, а также <span class="kw">арт-рок</span> и 
+    <span class="kw">гаражный рок</span>. Музыканты начинают активно использовать студийные технологии и эффекты.
+</p>
+
+        <div class="clear"></div>
+    </article>
+
+    <!-- 1970 -->
+    <article class="history-block">
+        <h3>1970-е — Хард-рок и металл</h3>
+
+        <figure class="float-right">
+            <img src="images/history/1970s.jpg" alt="">
+            <figcaption>Развитие тяжёлого рока</figcaption>
+        </figure>
+
+<p>
+    В <span class="kw-gold">1970-е годы</span> рок-музыка становится значительно тяжелее и разнообразнее. Появляются
+    такие группы, как <span class="kw-red">Led Zeppelin</span>, <span class="kw-red">Deep Purple</span> и
+    <span class="kw-red">Black Sabbath</span>, которые формируют основу хард-рока и хэви-метала.
+</p>
+
+<p>
+    Параллельно развивается <span class="kw">прогрессивный рок</span>, представленный группами 
+    <span class="kw-red">Pink Floyd</span>, <span class="kw-red">Genesis</span> и <span class="kw-red">Yes</span>.
+    Музыка становится более сложной, с длинными композициями, концептуальными альбомами
+    и философскими темами.
+</p>
+
+<p>
+    В этот период рок окончательно закрепляется как доминирующее направление мировой музыки,
+    а концерты превращаются в масштабные шоу с использованием света и спецэффектов.
+</p>
+
+        <div class="clear"></div>
+    </article>
+
+    <!-- 1980 -->
+    <article class="history-block">
+        <h3>1980-е — Панк и металл</h3>
+
+        <figure class="float-left">
+            <img src="images/history/1980s.jpg" alt="">
+            <figcaption>Панк и трэш-метал</figcaption>
+        </figure>
+
+        <p>
+    В <span class="kw-gold">1980-е годы</span> рок-музыка разделяется на множество направлений. 
+    <span class="kw-red">Панк-рок</span> становится символом протеста и минимализма. 
+    Яркие представители: <span class="kw-red">Ramones</span>,
+    <span class="kw-red">Sex Pistols</span> и <span class="kw-red">The Clash</span>.
+</p>
+
+<p>
+    В это же время активно развивается <span class="kw-red">трэш-метал</span> — более агрессивное и быстрое направление,
+    представленное группами <span class="kw-red">Metallica</span>, <span class="kw-red">Slayer</span> и
+    <span class="kw-red">Megadeth</span>.
+</p>
+
+<p>
+    Также популярность набирает <span class="kw">глэм-рок</span>, отличающийся ярким внешним видом и сценическими
+    шоу. Музыка становится более коммерческой и ориентированной на массовую аудиторию.
+</p>
+
+        <div class="clear"></div>
+    </article>
+
+    <!-- 1990 -->
+    <article class="history-block">
+        <h3>1990-е — Альтернатива и гранж</h3>
+
+        <figure class="float-right">
+            <img src="images/history/1990s.jpg" alt="">
+            <figcaption>Гранж и альтернатива</figcaption>
+        </figure>
+
+<p>
+    В <span class="kw-gold">1990-е годы</span> рок-музыка переживает трансформацию. Появляется 
+    <span class="kw-red">гранж</span> — более мрачное и эмоциональное направление. 
+    Главные представители: <span class="kw-red">Nirvana</span>,
+    <span class="kw-red">Pearl Jam</span> и <span class="kw-red">Soundgarden</span>.
+</p>
+<p>
+    <span class="kw-red">Альтернативный рок</span> становится доминирующим направлением, предлагая новые формы
+    самовыражения и отход от классических стандартов рок-музыки.
+</p>
+
+        <p>
+<p>
+    Также развивается <span class="kw-red">ню-метал</span>, сочетающий элементы рока, хип-хопа и электроники.
+    Его представляют <span class="kw-red">Linkin Park</span> и <span class="kw-red">Korn</span>.
+</p>
+
+        <div class="clear"></div>
+    </article>
+
+    
+<!-- 2000 -->
+<article class="history-block">
+    <h3>2000-е — Возрождение и новые направления</h3>
+
+    <figure class="float-left">
+        <img src="images/history/2000s.jpg" alt="">
+        <figcaption>Рок-музыка 2000-х</figcaption>
+    </figure>
+
+<p>
+    В <span class="kw-gold">2000-е годы</span> рок-музыка переживает новое развитие и адаптацию к цифровой эпохе.
+    Несмотря на рост популярности поп-музыки и хип-хопа, рок остаётся важной частью
+    мировой музыкальной сцены.
+</p>
+
+<p>
+    Появляются такие группы, как <span class="kw-red">Linkin Park</span>, <span class="kw-red">Muse</span>,
+    <span class="kw-red">Coldplay</span> и <span class="kw-red">Arctic Monkeys</span>. 
+    Они привносят новые элементы в рок, включая электронику, атмосферные звучания и эксперименты с формой.
+</p>
+
+<p>
+    Особенно популярным становится <span class="kw-red">альтернативный рок</span> и <span class="kw-red">ню-метал</span>,
+    сочетающий тяжёлые гитарные риффы с элементами рэпа и электронной музыки. 
+    Музыкальная индустрия активно переходит в цифровой формат, что влияет на распространение и популярность
+    рок-музыки.
+</p>
+
+    <div class="clear"></div>
+</article>
+
+
+<!-- СОВРЕМЕННОСТЬ -->
+<article class="history-block">
+    <h3>2010-е — настоящее время</h3>
+
+    <figure class="float-right">
+        <img src="images/history/modern.jpg" alt="">
+        <figcaption>Современная рок-сцена</figcaption>
+    </figure>
+
+<p>
+    В современное время рок-музыка продолжает активно развиваться, несмотря на сильную
+    конкуренцию со стороны других жанров. Современные группы часто смешивают рок с
+    электронной музыкой, попом и даже хип-хопом, создавая новые гибридные стили.
+</p>
+
+<p>
+    Одними из ярких представителей современной сцены являются 
+    <span class="kw-red">Bring Me The Horizon</span>, <span class="kw-red">Motionless In White</span> и 
+    <span class="kw-red">Falling In Reverse</span>. Эти группы сочетают элементы металкора,
+    альтернативного рока и электронной музыки.
+</p>
+
+<p>
+    Их творчество отличается разнообразием: от тяжёлых агрессивных треков до
+    мелодичных и атмосферных композиций. Это показывает, что рок остаётся гибким
+    жанром, способным адаптироваться к новым музыкальным тенденциям.
+</p>
+
+
+    <div class="clear"></div>
+</article>
+
+</section>
+
+
+<!-- ===== ПОДЖАНРЫ ===== -->
+<section class="genres full-width" id="genres">
+    <h2>Поджанры рока и металла</h2>
+
+    <p>
+        Со временем рок-музыка разделилась на множество направлений, каждое из которых
+        имеет свои особенности звучания, тематику и аудиторию.
+    </p>
+
+    <ul id="genreList">
+
+
+
+    </ul>
+
+    <button id="toggleBtn">Скрыть/Показать</button>
+</section>
+    </div>
+     <aside class="sidebar">
+<div class="info-box1">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Поиск по странице..."
+        aria-label="Поиск по содержимому страницы"
+    >
+</div>
+        <div class="info-box1">
+            <h3>Путиводитель по странице</h3>
+            <a href="#intro">Что из себя представляют эти жанры?</a><br>
+            <a href="#history">Как развивались жанры и их уникальность</a><br>
+            <a href="#genreList">Какие есть жанры,информация и ссылки</a><br>
+            <a href="#podval"> Инфо о нас</a>
+        </div>
+        <div class="info-box1">
+            <h3>Группы для ознакомления</h3>
+            <ul>
+                <li><a href="bands.html">Linkin Park</a></li>
+                <li><a href="bands1.html">Motionless in White</a></li>
+                <li><a href="bands2.html">Bring me the horizont</a></li>
+                <li><a href="bands3.html">Three Days Grace</a></li>
+                <li><a href="bands4.html">Nirvana</a></li>
+            </ul>
+        </div>
+
+        <div class="info-box2">
+            <h3>Популярные группы</h3>
+            <ul>
+                <li>Led Zeppelin</li>
+                <li>Metallica</li>
+                <li>Nirvana</li>
+                <li>Linkin Park</li>
+            </ul>
+        </div>
+
+        <div class="info-box3">
+            <h3>Современные группы</h3>
+            <ul>
+                <li>Bring Me The Horizon</li>
+                <li>Motionless In White</li>
+                <li>Falling In Reverse</li>
+            </ul>
+        </div>
+
+    </aside>
+
+</div>
+</main>
+
+<footer class="footer" id="podval">
+    <div class="footer-overlay">
+        <p>© 2026 Rock Encyclopedia</p>
+        <p> Vladislav Lysenya</p>
+        <p> vlysenya7@gmail.com</p>
+        <p> 4255 1901 3090 7739</p>
+    </div>
+</footer>
+<audio id="guitarSound" src="song/guitar3.mp3" preload="auto"></audio>
+<script src="js/script.js"></script>
+</body>
+</html>
